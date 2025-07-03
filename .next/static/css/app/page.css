@@ -1,0 +1,1443 @@
+/*!******************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./styles/contrast-improvements.css ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************/
+/* Melhorias de contraste para acessibilidade e legibilidade */
+
+/* Variáveis CSS para cores com melhor contraste */
+:root {
+  /* Cores de fundo melhoradas */
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --bg-card: #1e293b;
+  --bg-modal: #1a202c;
+  
+  /* Cores de texto melhoradas */
+  --text-primary: #f8fafc;
+  --text-secondary: #e2e8f0;
+  --text-muted: #cbd5e1;
+  --text-disabled: #94a3b8;
+  
+  /* Bordas com melhor definição */
+  --border-primary: #475569;
+  --border-secondary: #64748b;
+  --border-focus: #3b82f6;
+  
+  /* Estados interativos */
+  --hover-bg: #2d3748;
+  --active-bg: #4a5568;
+  
+  /* Cores de estado com melhor contraste */
+  --success-bg: #166534;
+  --success-text: #dcfce7;
+  --error-bg: #dc2626;
+  --error-text: #fee2e2;
+  --warning-bg: #d97706;
+  --warning-text: #fed7aa;
+  --info-bg: #1d4ed8;
+  --info-text: #dbeafe;
+}
+
+/* Melhorias gerais de contraste */
+.text-white {
+  color: var(--text-primary) !important;
+}
+
+.text-gray-300 {
+  color: var(--text-secondary) !important;
+}
+
+.text-gray-400 {
+  color: var(--text-muted) !important;
+}
+
+.text-gray-500 {
+  color: var(--text-disabled) !important;
+}
+
+/* Cards e containers com melhor contraste */
+.bg-gray-800,
+.bg-gray-800\/50 {
+  background-color: var(--bg-card) !important;
+  border-color: var(--border-primary) !important;
+}
+
+.bg-gray-900,
+.bg-gray-900\/50 {
+  background-color: var(--bg-primary) !important;
+}
+
+/* Bordas mais visíveis */
+.border-gray-700,
+.border-gray-700\/50 {
+  border-color: var(--border-primary) !important;
+}
+
+.border-gray-600 {
+  border-color: var(--border-secondary) !important;
+}
+
+/* Estados de hover melhorados */
+.hover\:bg-gray-700:hover {
+  background-color: var(--hover-bg) !important;
+}
+
+.hover\:text-white:hover {
+  color: var(--text-primary) !important;
+}
+
+/* Inputs e controles com melhor visibilidade */
+input, textarea, select {
+  background-color: var(--bg-tertiary) !important;
+  border-color: var(--border-secondary) !important;
+  color: var(--text-primary) !important;
+}
+
+input::-moz-placeholder, textarea::-moz-placeholder {
+  color: var(--text-muted) !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-muted) !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--border-focus) !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3) !important;
+}
+
+/* Badges e labels com melhor contraste */
+.badge {
+  background-color: var(--bg-tertiary) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-secondary) !important;
+}
+
+/* Botões com melhor definição */
+.btn-outline {
+  border-color: var(--border-secondary) !important;
+  color: var(--text-secondary) !important;
+}
+
+.btn-outline:hover {
+  background-color: var(--hover-bg) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-focus) !important;
+}
+
+/* Notificações com contraste adequado */
+.notification-success {
+  background-color: var(--success-bg) !important;
+  color: var(--success-text) !important;
+  border: 1px solid #15803d !important;
+}
+
+.notification-error {
+  background-color: var(--error-bg) !important;
+  color: var(--error-text) !important;
+  border: 1px solid #b91c1c !important;
+}
+
+.notification-warning {
+  background-color: var(--warning-bg) !important;
+  color: var(--warning-text) !important;
+  border: 1px solid #c2410c !important;
+}
+
+.notification-info {
+  background-color: var(--info-bg) !important;
+  color: var(--info-text) !important;
+  border: 1px solid #1e40af !important;
+}
+
+/* Melhorias específicas para badges de raridade */
+.rarity-common {
+  background-color: #374151 !important;
+  color: #f9fafb !important;
+  border: 1px solid #6b7280 !important;
+}
+
+.rarity-uncommon {
+  background-color: #1e40af !important;
+  color: #dbeafe !important;
+  border: 1px solid #3b82f6 !important;
+}
+
+.rarity-rare {
+  background-color: #7c2d12 !important;
+  color: #fed7aa !important;
+  border: 1px solid #ea580c !important;
+}
+
+.rarity-mythic {
+  background-color: #581c87 !important;
+  color: #e9d5ff !important;
+  border: 1px solid #8b5cf6 !important;
+}
+
+/* Símbolos de mana com melhor contraste */
+.mana-symbol {
+  font-weight: 600 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
+  border: 1px solid rgba(0, 0, 0, 0.3) !important;
+}
+
+.mana-w {
+  background: linear-gradient(145deg, #fbbf24, #f59e0b) !important;
+  color: #111827 !important;
+}
+
+.mana-u {
+  background: linear-gradient(145deg, #3b82f6, #1d4ed8) !important;
+  color: #f8fafc !important;
+}
+
+.mana-b {
+  background: linear-gradient(145deg, #4b5563, #1f2937) !important;
+  color: #f8fafc !important;
+}
+
+.mana-r {
+  background: linear-gradient(145deg, #ef4444, #dc2626) !important;
+  color: #f8fafc !important;
+}
+
+.mana-g {
+  background: linear-gradient(145deg, #22c55e, #16a34a) !important;
+  color: #f8fafc !important;
+}
+
+/* Melhorias para seleções de formato */
+.format-standard {
+  background-color: #1e40af !important;
+  color: #dbeafe !important;
+}
+
+.format-pioneer {
+  background-color: #7c2d12 !important;
+  color: #fed7aa !important;
+}
+
+.format-modern {
+  background-color: #166534 !important;
+  color: #dcfce7 !important;
+}
+
+.format-legacy {
+  background-color: #581c87 !important;
+  color: #e9d5ff !important;
+}
+
+.format-commander {
+  background-color: #b45309 !important;
+  color: #fef3c7 !important;
+}
+
+/* Curva de mana com melhor visibilidade */
+.mana-curve-bar {
+  background: linear-gradient(90deg, #3b82f6, #1d4ed8) !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+}
+
+.mana-curve-text {
+  color: var(--text-primary) !important;
+  font-weight: 600 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7) !important;
+}
+
+/* Melhorias para estatísticas de deck */
+.stat-number {
+  color: var(--text-primary) !important;
+  font-weight: 700 !important;
+}
+
+.stat-label {
+  color: var(--text-muted) !important;
+  font-weight: 500 !important;
+}
+
+/* Contraste para links e elementos interativos */
+.interactive-element {
+  color: var(--text-secondary) !important;
+  transition: color 0.2s ease !important;
+}
+
+.interactive-element:hover {
+  color: var(--text-primary) !important;
+}
+
+/* Melhorias para dropdowns e selects */
+.dropdown-item {
+  background-color: var(--bg-card) !important;
+  color: var(--text-secondary) !important;
+  border-bottom: 1px solid var(--border-primary) !important;
+}
+
+.dropdown-item:hover {
+  background-color: var(--hover-bg) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Melhorias para modais */
+.modal-overlay {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+}
+
+.modal-content {
+  background-color: var(--bg-modal) !important;
+  border: 1px solid var(--border-primary) !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Melhorias para tooltips */
+.tooltip {
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-secondary) !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Estados de foco melhorados para acessibilidade */
+.focus-visible:focus,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #3b82f6 !important;
+  outline-offset: 2px !important;
+}
+
+/* Melhorias específicas para cartas adicionadas recentemente */
+.recent-card {
+  background-color: var(--bg-card) !important;
+  border: 1px solid var(--border-secondary) !important;
+}
+
+.recent-card .card-name {
+  color: var(--text-primary) !important;
+  font-weight: 600 !important;
+}
+
+.recent-card .card-time {
+  color: var(--text-muted) !important;
+  font-size: 0.875rem !important;
+}
+
+/* Melhorias para a seção de regras */
+.rules-section {
+  background-color: var(--bg-card) !important;
+  border: 1px solid var(--border-primary) !important;
+}
+
+.rules-title {
+  color: var(--text-primary) !important;
+  font-weight: 700 !important;
+}
+
+.rules-content {
+  color: var(--text-secondary) !important;
+  line-height: 1.6 !important;
+}
+
+.rules-category {
+  background-color: var(--bg-tertiary) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-secondary) !important;
+}
+
+/* Melhorias para filtros de pesquisa */
+.search-filter {
+  background-color: var(--bg-tertiary) !important;
+  border: 1px solid var(--border-secondary) !important;
+  color: var(--text-primary) !important;
+}
+
+.search-filter:focus {
+  border-color: var(--border-focus) !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25) !important;
+}
+
+.filter-tag {
+  background-color: var(--bg-card) !important;
+  color: var(--text-secondary) !important;
+  border: 1px solid var(--border-primary) !important;
+}
+
+.filter-tag:hover {
+  background-color: var(--hover-bg) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Responsividade com contraste mantido */
+@media (max-width: 768px) {
+  .mobile-text {
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+  }
+  
+  .mobile-contrast {
+    background-color: var(--bg-card) !important;
+    padding: 1rem !important;
+    border-radius: 0.5rem !important;
+  }
+}
+
+/* Print styles com contraste adequado */
+@media print {
+  * {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+}
+
+/*!********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./styles/critical-contrast-fixes.css ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************/
+/* Correções específicas de contraste baseadas na análise das imagens fornecidas */
+
+/* Melhorias específicas para badges de raridade - mais contraste */
+.rarity-common,
+[class*="common"] {
+  background-color: #4b5563 !important;
+  color: #f9fafb !important;
+  border: 1px solid #9ca3af !important;
+  font-weight: 600 !important;
+}
+
+.rarity-uncommon,
+[class*="uncommon"] {
+  background-color: #1e40af !important;
+  color: #dbeafe !important;
+  border: 1px solid #60a5fa !important;
+  font-weight: 600 !important;
+}
+
+.rarity-rare,
+[class*="rare"] {
+  background-color: #dc2626 !important;
+  color: #fecaca !important;
+  border: 1px solid #f87171 !important;
+  font-weight: 600 !important;
+}
+
+.rarity-mythic,
+[class*="mythic"] {
+  background-color: #7c2d12 !important;
+  color: #fed7aa !important;
+  border: 1px solid #fb923c !important;
+  font-weight: 600 !important;
+}
+
+/* Textos sobre fundos escuros - melhor contraste */
+.text-gray-400 {
+  color: #cbd5e1 !important; /* Mais claro que o original */
+}
+
+.text-gray-500 {
+  color: #9ca3af !important; /* Mais claro que o original */
+}
+
+/* Tempo/data nas cartas recentes - melhor visibilidade */
+.recent-card .card-time,
+.card-time {
+  color: #d1d5db !important;
+  font-weight: 500 !important;
+}
+
+/* Texto de pesquisa vazio - melhor contraste */
+.search-empty-state {
+  color: #e5e7eb !important;
+  font-size: 1.1rem !important;
+  line-height: 1.6 !important;
+}
+
+/* Placeholders com melhor visibilidade */
+::-moz-placeholder {
+  color: #9ca3af !important;
+  opacity: 1 !important;
+}
+::placeholder {
+  color: #9ca3af !important;
+  opacity: 1 !important;
+}
+
+/* Melhorias específicas para botões de pesquisa */
+.search-button {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  border: 1px solid #1d4ed8 !important;
+  font-weight: 600 !important;
+}
+
+.search-button:hover {
+  background-color: #1d4ed8 !important;
+  border-color: #1e40af !important;
+}
+
+/* Tags de exemplo de pesquisa */
+.search-example-tag {
+  background-color: #374151 !important;
+  color: #e5e7eb !important;
+  border: 1px solid #6b7280 !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 0.5rem !important;
+  font-weight: 500 !important;
+}
+
+.search-example-tag:hover {
+  background-color: #4b5563 !important;
+  color: #f9fafb !important;
+  border-color: #9ca3af !important;
+}
+
+/* Melhorias para categorias de regras */
+.rules-category-active {
+  background-color: #1d4ed8 !important;
+  color: #ffffff !important;
+  border: 1px solid #2563eb !important;
+}
+
+.rules-category-inactive {
+  background-color: #374151 !important;
+  color: #d1d5db !important;
+  border: 1px solid #6b7280 !important;
+}
+
+.rules-category-inactive:hover {
+  background-color: #4b5563 !important;
+  color: #f9fafb !important;
+  border-color: #9ca3af !important;
+}
+
+/* Texto em dropdowns - melhor legibilidade */
+.dropdown-option {
+  background-color: #1f2937 !important;
+  color: #e5e7eb !important;
+  padding: 0.75rem 1rem !important;
+  border-bottom: 1px solid #374151 !important;
+}
+
+.dropdown-option:hover {
+  background-color: #374151 !important;
+  color: #f9fafb !important;
+}
+
+.dropdown-option:last-child {
+  border-bottom: none !important;
+}
+
+/* Notificações com contraste aprimorado */
+.notification {
+  padding: 1rem 1.5rem !important;
+  border-radius: 0.5rem !important;
+  font-weight: 500 !important;
+  border-width: 1px !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3) !important;
+}
+
+.notification-success {
+  background-color: #065f46 !important;
+  color: #d1fae5 !important;
+  border-color: #059669 !important;
+}
+
+.notification-error {
+  background-color: #991b1b !important;
+  color: #fee2e2 !important;
+  border-color: #dc2626 !important;
+}
+
+.notification-warning {
+  background-color: #92400e !important;
+  color: #fed7aa !important;
+  border-color: #d97706 !important;
+}
+
+.notification-info {
+  background-color: #1e40af !important;
+  color: #dbeafe !important;
+  border-color: #2563eb !important;
+}
+
+/* Cards de deck com melhor definição */
+.deck-card {
+  background-color: #1e293b !important;
+  border: 1px solid #475569 !important;
+  border-radius: 0.75rem !important;
+}
+
+.deck-card:hover {
+  border-color: #64748b !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4) !important;
+}
+
+.deck-card-title {
+  color: #f8fafc !important;
+  font-weight: 700 !important;
+  font-size: 1.125rem !important;
+}
+
+.deck-card-description {
+  color: #cbd5e1 !important;
+  line-height: 1.5 !important;
+}
+
+/* Estatísticas com números mais visíveis */
+.stat-container {
+  background-color: #334155 !important;
+  border-radius: 0.5rem !important;
+  padding: 1rem !important;
+  border: 1px solid #475569 !important;
+}
+
+.stat-number {
+  color: #f8fafc !important;
+  font-size: 1.875rem !important;
+  font-weight: 800 !important;
+}
+
+.stat-label {
+  color: #cbd5e1 !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+}
+
+/* Mana symbols com melhor contraste */
+.mana-symbol {
+  font-weight: 700 !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
+  border: 2px solid rgba(0, 0, 0, 0.3) !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Melhorias para labels de formulário */
+.form-label {
+  color: #e2e8f0 !important;
+  font-weight: 600 !important;
+  margin-bottom: 0.5rem !important;
+  display: block !important;
+}
+
+/* Botões com estados bem definidos */
+.btn-primary {
+  background-color: #1d4ed8 !important;
+  color: #ffffff !important;
+  border: 1px solid #1e40af !important;
+  font-weight: 600 !important;
+}
+
+.btn-primary:hover {
+  background-color: #1e40af !important;
+  border-color: #1e3a8a !important;
+  transform: translateY(-1px) !important;
+}
+
+.btn-secondary {
+  background-color: #374151 !important;
+  color: #e5e7eb !important;
+  border: 1px solid #6b7280 !important;
+  font-weight: 500 !important;
+}
+
+.btn-secondary:hover {
+  background-color: #4b5563 !important;
+  color: #f9fafb !important;
+  border-color: #9ca3af !important;
+}
+
+/* Links com melhor visibilidade */
+.link-primary {
+  color: #60a5fa !important;
+  text-decoration: underline !important;
+  text-underline-offset: 2px !important;
+}
+
+.link-primary:hover {
+  color: #93c5fd !important;
+}
+
+/* Foco visível para acessibilidade */
+.focus-visible:focus,
+*:focus-visible {
+  outline: 3px solid #60a5fa !important;
+  outline-offset: 2px !important;
+  border-radius: 0.25rem !important;
+}
+
+/* Melhorias para modais */
+.modal-header {
+  border-bottom: 1px solid #475569 !important;
+  padding-bottom: 1rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
+.modal-title {
+  color: #f8fafc !important;
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+}
+
+.modal-body {
+  color: #e2e8f0 !important;
+  line-height: 1.6 !important;
+}
+
+/* Tooltips melhorados */
+.tooltip {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+  border: 1px solid #475569 !important;
+  padding: 0.5rem 0.75rem !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Correções específicas para o layout de 3 colunas */
+@media (min-width: 1024px) {
+  .deck-viewer-sidebar {
+    min-width: 280px !important;
+  }
+  
+  .deck-viewer-main {
+    flex: 1 !important;
+    min-width: 0 !important;
+  }
+}
+
+/* Melhorias para dispositivos móveis */
+@media (max-width: 768px) {
+  .mobile-improved-contrast {
+    background-color: #1e293b !important;
+    padding: 1rem !important;
+    margin: 0.5rem !important;
+    border-radius: 0.75rem !important;
+    border: 1px solid #475569 !important;
+  }
+  
+  .mobile-text {
+    font-size: 1rem !important;
+    line-height: 1.6 !important;
+    color: #e2e8f0 !important;
+  }
+  
+  .mobile-title {
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    color: #f8fafc !important;
+    margin-bottom: 0.5rem !important;
+  }
+}
+
+/*!****************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./styles/palette.css ***!
+  \****************************************************************************************************************************************************************************************************************************************************************/
+/*
+  HeroUI Design System
+  Baseado em NextUI e moderna paleta de cores
+*/
+
+/* Paleta HeroUI centralizada */
+:root {
+  /* Primary Colors */
+  --hero-primary: #0070F3;
+  --hero-primary-50: #EFF6FF;
+  --hero-primary-100: #DBEAFE;
+  --hero-primary-500: #0070F3;
+  --hero-primary-600: #0061D1;
+  --hero-primary-700: #0052AA;
+  
+  /* Secondary Colors */
+  --hero-secondary: #7C3AED;
+  --hero-secondary-50: #F5F3FF;
+  --hero-secondary-500: #7C3AED;
+  --hero-secondary-600: #6D28D9;
+  
+  /* Success Colors */
+  --hero-success: #17C964;
+  --hero-success-50: #F0FDF4;
+  --hero-success-500: #17C964;
+  --hero-success-600: #16A34A;
+  
+  /* Warning Colors */
+  --hero-warning: #F5A524;
+  --hero-warning-50: #FFFBEB;
+  --hero-warning-500: #F5A524;
+  --hero-warning-600: #D97706;
+  
+  /* Danger Colors */
+  --hero-danger: #F31260;
+  --hero-danger-50: #FEF2F2;
+  --hero-danger-500: #F31260;
+  --hero-danger-600: #DC2626;
+  
+  /* Neutral Colors */
+  --hero-foreground: #11181C;
+  --hero-background: #FFFFFF;
+  --hero-divider: #E4E4E7;
+  --hero-focus: #0070F3;
+  --hero-content1: #FFFFFF;
+  --hero-content2: #F4F4F5;
+  --hero-content3: #E4E4E7;
+  --hero-content4: #D4D4D8;
+  
+  /* Dark mode */
+  --hero-dark-foreground: #ECEDEE;
+  --hero-dark-background: #000000;
+  --hero-dark-divider: #27272A;
+  --hero-dark-content1: #18181B;
+  --hero-dark-content2: #27272A;
+  --hero-dark-content3: #3F3F46;
+  --hero-dark-content4: #52525B;
+}
+
+body {
+  background: #111827;
+  color: #F9FAFB;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+}
+
+/* HeroUI Dark Global Classes */
+.card-global {
+  background: #1F2937;
+  border: 1px solid #374151;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  color: #F9FAFB;
+  transition: all 0.2s ease;
+}
+
+.card-global:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  transform: translateY(-1px);
+}
+
+.button-global {
+  background: #0EA5E9;
+  color: white;
+  border: 1px solid #0EA5E9;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.button-global:hover {
+  background: #0284C7;
+  border-color: #0284C7;
+  transform: translateY(-1px);
+}
+
+.badge-global {
+  background: #1F2937;
+  color: #F9FAFB;
+  border: 1px solid #374151;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.accent-global {
+  color: #0EA5E9;
+}
+
+.cream-global {
+  color: #F9FAFB;
+}
+
+.cream-global\/80 {
+  color: rgba(249, 250, 251, 0.8);
+}
+/* HeroUI Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  background: var(--hero-content2);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--hero-primary);
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--hero-primary-600);
+}
+
+/* MTG Mana Symbols */
+.mana-symbol {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 14px;
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+  position: relative;
+  box-shadow: inset 0 1px 3px rgba(255,255,255,0.3), 0 1px 2px rgba(0,0,0,0.4);
+}
+
+.mana-symbol:before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  opacity: 0.9;
+}
+
+/* Branco - Planície */
+.mana-w {
+  background: linear-gradient(135deg, #FFFEF7 0%, #F5F5DC 50%, #E6E6C2 100%);
+  border: 2px solid #D4D4AA;
+  color: #8B4513;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.6);
+}
+
+/* Azul - Ilha */
+.mana-u {
+  background: linear-gradient(135deg, #4A90E2 0%, #2171B5 50%, #084594 100%);
+  border: 2px solid #1A5490;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+/* Preto - Pântano */
+.mana-b {
+  background: linear-gradient(135deg, #2C2C2C 0%, #1A1A1A 50%, #0A0A0A 100%);
+  border: 2px solid #444444;
+  color: #CCCCCC;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+/* Vermelho - Montanha */
+.mana-r {
+  background: linear-gradient(135deg, #D73027 0%, #A50F15 50%, #67000D 100%);
+  border: 2px solid #A50F15;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+/* Verde - Floresta */
+.mana-g {
+  background: linear-gradient(135deg, #31A354 0%, #238B45 50%, #006D2C 100%);
+  border: 2px solid #238B45;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+/* Incolor - Artefato */
+.mana-c {
+  background: linear-gradient(135deg, #9ECAE1 0%, #6BAED6 50%, #3182BD 100%);
+  border: 2px solid #4292C6;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+/* Hover effects para botões de mana */
+.mana-button {
+  transition: all 0.3s ease;
+  transform: scale(1);
+  border-radius: 8px;
+  min-width: 100px;
+  position: relative;
+  overflow: hidden;
+}
+
+.mana-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.mana-button.selected {
+  transform: scale(1.02);
+  box-shadow: 0 0 15px rgba(255,255,255,0.6), 0 4px 8px rgba(0,0,0,0.3);
+}
+
+/* Cores específicas para botões ativos */
+.border-mana-w-500 { 
+  border-color: #D4D4AA !important; 
+  box-shadow: 0 0 10px rgba(212, 212, 170, 0.5) !important;
+}
+.bg-mana-w-500 { 
+  background: linear-gradient(135deg, #FFFEF7 0%, #F5F5DC 100%) !important; 
+  color: #8B4513 !important; 
+}
+
+.border-mana-u-500 { 
+  border-color: #1A5490 !important; 
+  box-shadow: 0 0 10px rgba(26, 84, 144, 0.5) !important;
+}
+.bg-mana-u-500 { 
+  background: linear-gradient(135deg, #4A90E2 0%, #2171B5 100%) !important; 
+  color: white !important; 
+}
+
+.border-mana-b-500 { 
+  border-color: #444444 !important; 
+  box-shadow: 0 0 10px rgba(68, 68, 68, 0.5) !important;
+}
+.bg-mana-b-500 { 
+  background: linear-gradient(135deg, #2C2C2C 0%, #1A1A1A 100%) !important; 
+  color: #CCCCCC !important; 
+}
+
+.border-mana-r-500 { 
+  border-color: #A50F15 !important; 
+  box-shadow: 0 0 10px rgba(165, 15, 21, 0.5) !important;
+}
+.bg-mana-r-500 { 
+  background: linear-gradient(135deg, #D73027 0%, #A50F15 100%) !important; 
+  color: white !important; 
+}
+
+.border-mana-g-500 { 
+  border-color: #238B45 !important; 
+  box-shadow: 0 0 10px rgba(35, 139, 69, 0.5) !important;
+}
+.bg-mana-g-500 { 
+  background: linear-gradient(135deg, #31A354 0%, #238B45 100%) !important; 
+  color: white !important; 
+}
+
+.border-mana-c-500 { 
+  border-color: #4292C6 !important; 
+  box-shadow: 0 0 10px rgba(66, 146, 198, 0.5) !important;
+}
+.bg-mana-c-500 { 
+  background: linear-gradient(135deg, #9ECAE1 0%, #6BAED6 100%) !important; 
+  color: white !important; 
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: var(--hero-dark-background);
+    color: var(--hero-dark-foreground);
+  }
+  
+  .card-global {
+    background: var(--hero-dark-content1);
+    border-color: var(--hero-dark-divider);
+    color: var(--hero-dark-foreground);
+  }
+  
+  .cream-global {
+    color: var(--hero-dark-foreground);
+  }
+  
+  .cream-global\/80 {
+    color: rgba(236, 237, 238, 0.8);
+  }
+}
+/*!*************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./styles/deck-constructor.css ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************/
+/* Estilos para animações e transições do construtor de decks */
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.deck-card-hover {
+  transition: all 0.3s ease;
+}
+
+.deck-card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.deck-card-animate {
+  animation: slideIn 0.5s ease-out;
+}
+
+.notification-enter {
+  animation: slideIn 0.3s ease-out;
+}
+
+.modal-backdrop {
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modal-content {
+  animation: scaleIn 0.2s ease-out;
+}
+
+.loading-pulse {
+  animation: pulse 2s infinite;
+}
+
+/* Gradientes personalizados */
+.gradient-deck-bg {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+}
+
+.gradient-mana-w {
+  background: linear-gradient(45deg, #fef3c7, #f59e0b);
+}
+
+.gradient-mana-u {
+  background: linear-gradient(45deg, #dbeafe, #3b82f6);
+}
+
+.gradient-mana-b {
+  background: linear-gradient(45deg, #f3f4f6, #374151);
+}
+
+.gradient-mana-r {
+  background: linear-gradient(45deg, #fee2e2, #ef4444);
+}
+
+.gradient-mana-g {
+  background: linear-gradient(45deg, #dcfce7, #22c55e);
+}
+
+/* Scrollbar personalizada */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(55, 65, 81, 0.3);
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(107, 114, 128, 0.7);
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(107, 114, 128, 0.9);
+}
+
+/* Efeitos de hover para cartas */
+.card-hover-effect {
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-hover-effect::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.card-hover-effect:hover::before {
+  left: 100%;
+}
+
+.card-hover-effect:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Animações para estatísticas */
+.stat-bar {
+  transition: width 0.8s ease-in-out;
+}
+
+.stat-number {
+  animation: slideIn 0.6s ease-out;
+}
+
+/* Botões com efeitos */
+.btn-gradient {
+  background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+  transition: all 0.3s ease;
+}
+
+.btn-gradient:hover {
+  background: linear-gradient(45deg, #2563eb, #7c3aed);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+}
+
+/* Loading states */
+.loading-shimmer {
+  background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Responsive melhorias */
+@media (max-width: 768px) {
+  .deck-card-hover:hover {
+    transform: none;
+  }
+  
+  .card-hover-effect:hover {
+    transform: none;
+  }
+}
+
+/* Tooltips personalizados */
+.tooltip {
+  position: relative;
+}
+
+.tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1f2937;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 1000;
+}
+
+.tooltip:hover::after {
+  opacity: 1;
+}
+
+/* Melhorias para acessibilidade */
+.focus-visible:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Estados de carregamento para cards */
+.card-loading {
+  background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/*!*****************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./styles/moxfield.css ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************/
+/* Estilos específicos do Moxfield para o DeckViewer */
+
+/* Scrollbar estilo Moxfield */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(30, 30, 35, 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(80, 80, 90, 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 100, 120, 0.6);
+}
+
+/* Estilos para os badges de mana */
+.mana-symbol {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.mana-w {
+  background: linear-gradient(145deg, #fffbd5, #f5f2c3);
+  color: #111;
+}
+
+.mana-u {
+  background: linear-gradient(145deg, #aae0fa, #93d0f0);
+  color: #111;
+}
+
+.mana-b {
+  background: linear-gradient(145deg, #cbc2bf, #a19996);
+  color: #111;
+}
+
+.mana-r {
+  background: linear-gradient(145deg, #f9aa8f, #e69880);
+  color: #111;
+}
+
+.mana-g {
+  background: linear-gradient(145deg, #9bd8b3, #8bc9a5);
+  color: #111;
+}
+
+/* Estilos de hover para as cartas */
+.deck-card-hover {
+  transition: all 0.2s ease;
+}
+
+.deck-card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Layout moxfield específico */
+.moxfield-layout {
+  display: grid;
+  grid-template-columns: minmax(250px, 25%) minmax(400px, 1fr) minmax(250px, 25%);
+  gap: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+  .moxfield-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Cabeçalho e navegação do Moxfield */
+.moxfield-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: rgba(22, 22, 26, 0.97);
+  -webkit-backdrop-filter: blur(8px);
+          backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(50, 50, 60, 0.5);
+}
+
+.moxfield-nav-link {
+  color: rgba(200, 200, 210, 0.8);
+  font-size: 0.875rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.25rem;
+  transition: all 0.15s ease;
+}
+
+.moxfield-nav-link:hover {
+  background-color: rgba(60, 60, 70, 0.5);
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.moxfield-nav-link.active {
+  color: white;
+  background-color: rgba(70, 70, 80, 0.7);
+  font-weight: 500;
+}
+
+/* Seções de cartas */
+.card-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  background-color: rgba(40, 40, 50, 0.8);
+  border-bottom: 1px solid rgba(60, 60, 70, 0.5);
+}
+
+.card-type-header {
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: rgba(30, 30, 40, 0.6);
+  padding: 0.25rem 0.75rem;
+  color: rgba(200, 200, 210, 0.9);
+}
+
+.card-item {
+  display: flex;
+  padding: 0.375rem 0.75rem;
+  align-items: center;
+  border-bottom: 1px solid rgba(50, 50, 60, 0.2);
+  transition: background-color 0.15s ease;
+}
+
+.card-item:hover {
+  background-color: rgba(50, 50, 60, 0.3);
+}
+
+.card-item:last-child {
+  border-bottom: none;
+}
+
+/* Estilos para os tooltips */
+.card-tooltip {
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  background-color: rgba(20, 20, 25, 0.95);
+  border: 1px solid rgba(70, 70, 80, 0.5);
+  border-radius: 0.375rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  padding: 0.75rem;
+  z-index: 100;
+  transition: all 0.2s ease;
+  pointer-events: none;
+  max-width: 320px;
+}
+
+*:hover > .card-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
