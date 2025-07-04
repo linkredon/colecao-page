@@ -1,8 +1,15 @@
 "use client"
 
+import { useState, useMemo } from 'react'
+import { useAppContext } from '@/contexts/AppContext'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import DeckImporter from './DeckImporter'
+import DeckViewerComponent from './DeckViewerComponent'
+import DeckBuilder from './DeckBuilder'
 import CompactConstructor from './ConstrutorDecks-compact'
 
-export default CompactConstructor
 import { 
   Plus, 
   Trash2, 

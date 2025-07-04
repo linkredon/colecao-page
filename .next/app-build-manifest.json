@@ -1,31 +1,73 @@
 {
   "pages": {
+    "/_not-found/page": [
+      "static/chunks/webpack-037fd2bde8a29664.js",
+      "static/chunks/4bd1b696-15ad69fdfae3d4eb.js",
+      "static/chunks/684-059f50b5be8ac840.js",
+      "static/chunks/main-app-e5789e636fc83ac3.js",
+      "static/chunks/app/_not-found/page-7b137d85f9de4771.js"
+    ],
     "/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/layout.css",
-      "static/chunks/app/layout.js"
+      "static/chunks/webpack-037fd2bde8a29664.js",
+      "static/chunks/4bd1b696-15ad69fdfae3d4eb.js",
+      "static/chunks/684-059f50b5be8ac840.js",
+      "static/chunks/main-app-e5789e636fc83ac3.js",
+      "static/css/54bde3c6bafb91f2.css",
+      "static/css/f9d9e138342ce0b7.css",
+      "static/css/8e0c97d8f47abbe8.css",
+      "static/css/97709c90cf3f8d23.css",
+      "static/chunks/275-44a979e05460fc0e.js",
+      "static/chunks/166-e16411b5b72166da.js",
+      "static/chunks/670-2ad7176dbbeb7c0c.js",
+      "static/chunks/286-3325ec19a8aa7543.js",
+      "static/chunks/app/layout-fb275a96efdc9d57.js"
+    ],
+    "/api/redirect/route": [
+      "static/chunks/webpack-037fd2bde8a29664.js",
+      "static/chunks/4bd1b696-15ad69fdfae3d4eb.js",
+      "static/chunks/684-059f50b5be8ac840.js",
+      "static/chunks/main-app-e5789e636fc83ac3.js",
+      "static/chunks/app/api/redirect/route-e9184c0f7f402997.js"
+    ],
+    "/colecao-redirect/page": [
+      "static/chunks/webpack-037fd2bde8a29664.js",
+      "static/chunks/4bd1b696-15ad69fdfae3d4eb.js",
+      "static/chunks/684-059f50b5be8ac840.js",
+      "static/chunks/main-app-e5789e636fc83ac3.js",
+      "static/chunks/app/colecao-redirect/page-4dcd7a3d9878de53.js"
     ],
     "/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/page.css",
-      "static/chunks/app/page.js"
+      "static/chunks/webpack-037fd2bde8a29664.js",
+      "static/chunks/4bd1b696-15ad69fdfae3d4eb.js",
+      "static/chunks/684-059f50b5be8ac840.js",
+      "static/chunks/main-app-e5789e636fc83ac3.js",
+      "static/css/155ea26b5f6d40b9.css",
+      "static/css/8e0c97d8f47abbe8.css",
+      "static/chunks/275-44a979e05460fc0e.js",
+      "static/chunks/166-e16411b5b72166da.js",
+      "static/chunks/366-aad6bb4e51d4e24e.js",
+      "static/chunks/670-2ad7176dbbeb7c0c.js",
+      "static/chunks/286-3325ec19a8aa7543.js",
+      "static/chunks/22-3eb0e8524511b291.js",
+      "static/chunks/app/page-78e60ac839c4792d.js"
     ],
     "/colecao-selector/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/colecao-selector/page.js"
+      "static/chunks/webpack-037fd2bde8a29664.js",
+      "static/chunks/4bd1b696-15ad69fdfae3d4eb.js",
+      "static/chunks/684-059f50b5be8ac840.js",
+      "static/chunks/main-app-e5789e636fc83ac3.js",
+      "static/chunks/app/colecao-selector/page-f95a0576ecb4fca2.js"
     ],
     "/colecao-improved/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/colecao-improved/page.js"
-    ],
-    "/_not-found/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/_not-found/page.js"
+      "static/chunks/webpack-037fd2bde8a29664.js",
+      "static/chunks/4bd1b696-15ad69fdfae3d4eb.js",
+      "static/chunks/684-059f50b5be8ac840.js",
+      "static/chunks/main-app-e5789e636fc83ac3.js",
+      "static/css/6a575856d6c48aee.css",
+      "static/chunks/275-44a979e05460fc0e.js",
+      "static/chunks/670-2ad7176dbbeb7c0c.js",
+      "static/chunks/22-3eb0e8524511b291.js",
+      "static/chunks/app/colecao-improved/page-f5da09a351140459.js"
     ]
   }
 }

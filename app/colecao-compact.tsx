@@ -452,8 +452,16 @@ export default function ColecaoCompact({
     }
   }
 
+  // Import do componente CollectionPageLink
+  const CollectionPageLink = React.lazy(() => import('@/components/CollectionPageLink'));
+
   return (
     <div className="quantum-compact">
+      {/* Link para a nova versão da coleção */}
+      <React.Suspense fallback={<div className="mb-4 p-4 bg-blue-900/20 border border-blue-700/30 rounded-lg">Carregando...</div>}>
+        <CollectionPageLink />
+      </React.Suspense>
+      
       {/* Notificação */}
       {notification.visible && (
         <div className={`quantum-notification ${

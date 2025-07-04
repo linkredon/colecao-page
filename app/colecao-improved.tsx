@@ -26,7 +26,28 @@ interface CollectionCard {
   foil: boolean;
 }
 
-export default function ColecaoImproved() {
+interface UserCollection {
+  id: string;
+  name: string;
+  description: string;
+  cards: CollectionCard[];
+  createdAt: string;
+  updatedAt: string;
+  isPublic: boolean;
+}
+
+// Props do componente
+export interface ColecaoImprovedProps {
+  allCards: MTGCard[];
+  setAllCards: (cards: MTGCard[]) => void;
+  exportCollectionToCSV: (collection: UserCollection) => void;
+}
+
+export default function ColecaoImproved({
+  allCards,
+  setAllCards,
+  exportCollectionToCSV
+}: ColecaoImprovedProps) {
   // Estado para as tabs principais
   const [activeTab, setActiveTab] = useState('pesquisa');
   

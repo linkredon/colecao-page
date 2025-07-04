@@ -13,27 +13,9 @@ import { getImageUrl } from '@/utils/imageService';
 import { cardMatchesSearchTerm } from '@/utils/translationService';
 
 // Tipos para o componente
-interface MTGCard {
-  id: string;
-  name: string;
-  set_name: string;
-  set_code: string;
-  collector_number: string;
-  rarity: string;
-  mana_cost?: string;
-  cmc: number;
-  type_line: string;
-  image_uris?: {
-    small?: string;
-    normal?: string;
-  };
-  card_faces?: Array<{
-    image_uris?: {
-      small?: string;
-      normal?: string;
-    };
-  }>;
-}
+import type { MTGCard as MTGCardFull } from "@/types/mtg";
+
+type MTGCard = MTGCardFull;
 
 interface CollectionCard {
   card: MTGCard;
@@ -157,7 +139,7 @@ export default function ColecaoSimples() {
         setNotification(prev => ({ ...prev, show: false }));
       }, 3000);
     } catch (error) {
-      console.error("Erro ao adicionar carta:", error);
+        adicionarCarta(selectedCard as MTGCardFull);
       setNotification({
         show: true,
         message: "Erro ao adicionar carta à coleção",

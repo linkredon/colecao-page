@@ -1,0 +1,463 @@
+/* Estilos melhorados para a interface de coleção */
+
+.collection-container {
+  --transition-speed: 0.3s;
+  --hover-scale: 1.03;
+  --card-border-radius: 8px;
+}
+
+/* Animação de entrada para componentes */
+.fade-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Controle de quantidade com animações */
+.quantity-control {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(30, 30, 35, 0.6);
+  transition: all 0.2s ease-in-out;
+}
+
+.quantity-control:hover {
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+.quantity-button {
+  width: 40px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(55, 65, 81, 0.6);
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+  border: none;
+  outline: none;
+  color: #ffffff;
+}
+
+.quantity-button:hover {
+  background-color: rgba(75, 85, 99, 0.8);
+}
+
+.quantity-button:active {
+  transform: scale(0.95);
+}
+
+.quantity-input {
+  width: 50px;
+  height: 100%;
+  text-align: center;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 1rem;
+}
+
+.quantity-input::-webkit-inner-spin-button, 
+.quantity-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Efeitos para cards */
+.card-item {
+  transition: transform var(--transition-speed) ease-out, 
+              box-shadow var(--transition-speed) ease-out,
+              border-color 0.2s ease;
+  will-change: transform, box-shadow;
+}
+
+.card-item:hover {
+  transform: scale(var(--hover-scale));
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+.card-item-selected {
+  border-color: rgb(59, 130, 246) !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+/* Botões com efeitos */
+.action-button {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.action-button::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.3);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1, 1) translate(-50%, -50%);
+  transform-origin: 50% 50%;
+}
+
+.action-button:active::after {
+  opacity: 1;
+  width: 200px;
+  height: 200px;
+  animation: ripple 0.6s ease-out;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0, 0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(3, 3);
+    opacity: 0;
+  }
+}
+
+/* Tabs estilizadas */
+.collection-tabs {
+  display: flex;
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(30, 41, 59, 0.5);
+  padding: 4px;
+}
+
+.tab-button {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.tab-button.active {
+  background: rgba(59, 130, 246, 0.8);
+  color: white;
+}
+
+.tab-button:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Badges estilizados */
+.card-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.badge-common { background: rgba(156, 163, 175, 0.3); color: #e5e7eb; }
+.badge-uncommon { background: rgba(52, 211, 153, 0.2); color: #6ee7b7; }
+.badge-rare { background: rgba(252, 211, 77, 0.2); color: #fcd34d; }
+.badge-mythic { background: rgba(251, 113, 133, 0.2); color: #fb7185; }
+
+/* Lista de cards com hover */
+.card-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+.card-list-item {
+  position: relative;
+  border-radius: var(--card-border-radius);
+  overflow: hidden;
+  background: rgba(30, 41, 59, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
+}
+
+.card-list-item:hover {
+  border-color: rgba(59, 130, 246, 0.5);
+  transform: translateY(-4px);
+}
+
+.card-image-container {
+  position: relative;
+  padding-top: 140%; /* Relação de aspecto das cartas de Magic */
+}
+
+.card-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.card-list-item:hover .card-image {
+  transform: scale(1.05);
+}
+
+.card-info {
+  padding: 8px;
+  background: rgba(17, 24, 39, 0.7);
+}
+
+.card-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 4px;
+}
+
+.card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Barra de pesquisa refinada */
+.search-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  color: rgba(255, 255, 255, 0.4);
+  transition: color 0.2s;
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  padding-left: 40px;
+  background-color: rgba(17, 24, 39, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: white;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  background-color: rgba(30, 41, 59, 0.8);
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.search-input:focus + .search-icon {
+  color: rgba(59, 130, 246, 0.8);
+}
+
+/* Filtros com animação */
+.filter-container {
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+}
+
+.filter-toggle {
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(30, 41, 59, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 8px;
+}
+
+.filter-content {
+  padding: 16px;
+  border-radius: 8px;
+  background: rgba(17, 24, 39, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Notificação com animação */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 1000;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  animation: slideIn 0.3s ease, fadeOut 0.3s 2.7s ease forwards;
+  max-width: 400px;
+}
+
+.notification-success {
+  background: rgba(16, 185, 129, 0.9);
+  border-left: 4px solid rgb(16, 185, 129);
+}
+
+.notification-error {
+  background: rgba(239, 68, 68, 0.9);
+  border-left: 4px solid rgb(239, 68, 68);
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Responsividade para telas pequenas */
+@media (max-width: 768px) {
+  .card-list {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 12px;
+  }
+  
+  .quantity-control {
+    height: 36px;
+  }
+  
+  .quantity-button {
+    width: 36px;
+  }
+  
+  .quantity-input {
+    width: 40px;
+    font-size: 0.875rem;
+  }
+  
+  .tab-button {
+    padding: 8px;
+    font-size: 0.875rem;
+  }
+}
+
+/* Detalhes de carta em foco */
+.card-details {
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(17, 24, 39, 0.7);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  transition: all 0.3s ease;
+}
+
+.card-details:hover {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.15);
+}
+
+.details-header {
+  padding: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.details-content {
+  padding: 16px;
+}
+
+/* Animação para esqueleto de carregamento */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.05) 25%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Presets de quantidade com efeitos */
+.quantity-preset {
+  display: flex;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.preset-button {
+  min-width: 36px;
+  height: 28px;
+  border-radius: 4px;
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preset-button:hover {
+  background: rgba(59, 130, 246, 0.3);
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+.preset-button.active {
+  background: rgba(59, 130, 246, 0.8);
+  border-color: rgba(59, 130, 246, 1);
+}
+
+/* Grid de cartas expandível */
+.expandable-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+  transition: all 0.3s ease;
+}
