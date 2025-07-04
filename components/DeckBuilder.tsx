@@ -95,36 +95,34 @@ const CollectionDisplay: React.FC<CollectionDisplayProps> = ({
 
   if (filteredCards.length === 0) {
     return (
-      <Card className="bg-gray-800/50 border-gray-700">
-        <CardContent className="text-center py-12">
-          <Library className="w-16 h-16 mx-auto mb-4 text-gray-500" />
-          <h3 className="text-xl font-medium text-white mb-2">Nenhuma carta encontrada</h3>
-          <p className="text-gray-400">
-            {searchTerm.trim() || raridade !== 'all' || tipo !== 'all' 
-              ? 'Tente ajustar os filtros' 
-              : 'Sua coleção está vazia'}
-          </p>
-        </CardContent>
-      </Card>
+      <div className="mtg-card text-center py-12">
+        <Library className="w-16 h-16 mx-auto mb-4 text-slate-500" />
+        <h3 className="text-xl font-medium text-white mb-2">Nenhuma carta encontrada</h3>
+        <p className="text-slate-400">
+          {searchTerm.trim() || raridade !== 'all' || tipo !== 'all' 
+            ? 'Tente ajustar os filtros' 
+            : 'Sua coleção está vazia'}
+        </p>
+      </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
       {filteredCards.map((collectionCard: any) => {
         const card = collectionCard.card;
         const inDeck = currentDeck.cards.find((dc: any) => dc.card.id === card.id);
         const isRecentlyAdded = recentlyAdded.has(card.id);
         
         return (
-          <Card 
+          <div 
             key={card.id} 
-            className={`bg-gray-800/50 border-gray-700/50 hover:border-blue-500/50 transition-all duration-200 ${
-              isRecentlyAdded ? 'border-green-500/70 shadow-lg shadow-green-500/20' : ''
+            className={`mtg-card-mini transition-all duration-200 ${
+              isRecentlyAdded ? 'border-green-500/70 shadow-lg shadow-green-500/20 scale-105' : ''
             }`}
           >
-            <CardContent className="p-3 sm:p-4">
-              <div className="flex gap-2 sm:gap-3">
+            <div className="p-4">
+              <div className="flex gap-3">
                 {/* Imagem da carta */}
                 <div className="flex-shrink-0">
                   {getCardImage(card) && (
@@ -132,13 +130,13 @@ const CollectionDisplay: React.FC<CollectionDisplayProps> = ({
                       <Image
                         src={getCardImage(card)}
                         alt={card.name}
-                        width={50}
-                        height={70}
-                        className="rounded border border-gray-600 sm:w-[60px] sm:h-[84px]"
+                        width={60}
+                        height={84}
+                        className="rounded-lg border border-slate-600"
                       />
                       {isRecentlyAdded && (
-                        <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
-                          <Plus className="w-2.5 h-2.5 text-white" />
+                        <div className="absolute -top-1 -right-1 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
+                          <Plus className="w-3 h-3 text-white" />
                         </div>
                       )}
                     </div>
@@ -147,92 +145,85 @@ const CollectionDisplay: React.FC<CollectionDisplayProps> = ({
                 
                 {/* Informações da carta */}
                 <div className="flex-1 min-w-0">
-                  <h4 className="font-medium text-white text-xs sm:text-sm truncate mb-1" title={card.name}>
+                  <h4 className="font-medium text-white text-sm truncate mb-1" title={card.name}>
                     {card.name}
                   </h4>
-                  <p className="text-xs text-gray-400 mb-1 truncate" title={card.set_name}>
+                  <p className="text-xs text-slate-400 mb-1 truncate" title={card.set_name}>
                     {card.set_name}
                   </p>
-                  <p className="text-xs text-gray-400 mb-2 line-clamp-2 sm:line-clamp-1" title={card.type_line}>
+                  <p className="text-xs text-slate-400 mb-3 line-clamp-2" title={card.type_line}>
                     {card.type_line}
                   </p>
                   
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-2">
-                    <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
-                      <Badge variant="secondary" className="text-xs h-5">
-                        {collectionCard.quantity}x coleção
-                      </Badge>
-                      {inDeck && (
-                        <Badge variant="outline" className="text-xs h-5 border-green-600 text-green-400">
-                          {inDeck.quantity}x deck
-                        </Badge>
-                      )}
-                    </div>
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="mtg-badge mtg-badge-secondary text-xs">
+                      {collectionCard.quantity}x coleção
+                    </span>
+                    {inDeck && (
+                      <span className="mtg-badge mtg-badge-success text-xs">
+                        {inDeck.quantity}x deck
+                      </span>
+                    )}
                   </div>
                   
                   {/* Botões de adicionar */}
-                  <div className="flex gap-1 mt-2 flex-wrap">
-                    <Button
-                      size="sm"
+                  <div className="flex gap-1 flex-wrap">
+                    <button
                       onClick={() => handleAddCard(card, 'mainboard', 1)}
                       disabled={addingCard === card.id}
-                      className={`h-6 px-2 text-xs transition-all duration-200 flex-shrink-0 ${
+                      className={`h-7 px-3 text-xs rounded-lg transition-all flex items-center gap-1 ${
                         recentlyAdded.has(card.id) 
-                          ? 'bg-green-500 hover:bg-green-600 shadow-md scale-105' 
-                          : 'bg-green-600 hover:bg-green-700'
+                          ? 'bg-green-500 hover:bg-green-600 text-white shadow-md scale-105' 
+                          : 'bg-green-600 hover:bg-green-700 text-white'
                       }`}
                     >
                       {addingCard === card.id ? (
-                        <div className="w-3 h-3 border border-white border-t-transparent rounded-full animate-spin mr-1" />
+                        <div className="w-3 h-3 border border-white border-t-transparent rounded-full animate-spin" />
                       ) : (
-                        <Plus className="w-3 h-3 mr-1" />
+                        <Plus className="w-3 h-3" />
                       )}
                       <span className="hidden sm:inline">Principal</span>
                       <span className="sm:hidden">Main</span>
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
+                    </button>
+                    <button
                       onClick={() => handleAddCard(card, 'sideboard', 1)}
                       disabled={addingCard === card.id}
-                      className={`h-6 px-2 text-xs transition-all duration-200 flex-shrink-0 ${
+                      className={`h-7 px-3 text-xs rounded-lg transition-all flex items-center gap-1 ${
                         recentlyAdded.has(card.id)
                           ? 'border-green-500 text-green-400 bg-green-900/20 shadow-md scale-105'
-                          : 'border-gray-600 text-gray-300 hover:bg-gray-700'
-                      }`}
+                          : 'border-slate-600 text-slate-300 hover:bg-slate-700'
+                      } border`}
                     >
                       {addingCard === card.id ? (
-                        <div className="w-3 h-3 border border-current border-t-transparent rounded-full animate-spin mr-1" />
+                        <div className="w-3 h-3 border border-current border-t-transparent rounded-full animate-spin" />
                       ) : (
-                        <Plus className="w-3 h-3 mr-1" />
+                        <Plus className="w-3 h-3" />
                       )}
                       Side
-                    </Button>
+                    </button>
                     {currentDeck.format === 'Commander' && (
-                      <Button
-                        size="sm"
-                        variant="outline"
+                      <button
                         onClick={() => handleAddCard(card, 'commander', 1)}
                         disabled={addingCard === card.id}
-                        className={`h-6 px-2 text-xs transition-all duration-200 flex-shrink-0 ${
+                        className={`h-7 px-3 text-xs rounded-lg transition-all flex items-center gap-1 ${
                           recentlyAdded.has(card.id)
                             ? 'border-yellow-400 text-yellow-300 bg-yellow-900/30 shadow-md scale-105'
                             : 'border-yellow-600 text-yellow-400 hover:bg-yellow-900/20'
-                        }`}
+                        } border`}
                       >
                         {addingCard === card.id ? (
-                          <div className="w-3 h-3 border border-current border-t-transparent rounded-full animate-spin mr-1" />
+                          <div className="w-3 h-3 border border-current border-t-transparent rounded-full animate-spin" />
                         ) : (
-                          <Plus className="w-3 h-3 mr-1" />
+                          <Plus className="w-3 h-3" />
                         )}
                         Cmd
-                      </Button>
+                      </button>
                     )}
                   </div>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         );
       })}
     </div>
@@ -414,67 +405,90 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({ deckId, onSave, onCancel }) =
   }, []);
   
   return (
-    <div className="max-w-7xl mx-auto p-4 space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-white">
-            {existingDeck ? `Editando: ${existingDeck.name}` : 'Construtor de Decks'}
-          </h1>
-          <p className="text-gray-400">
-            {existingDeck ? 'Faça alterações no seu deck' : 'Crie e personalize seu novo deck'}
-          </p>
+    <div className="mtg-section">
+      {/* Header Section */}
+      <div className="mtg-card text-center mb-8">
+        <div className="mtg-card-header justify-center">
+          <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-600 to-purple-700 flex items-center justify-center mb-6 mx-auto shadow-xl">
+            <Target className="w-10 h-10 text-white" />
+          </div>
         </div>
-        
-        <div className="flex items-center gap-2">
-          <DeckImporter 
-            onImportSuccess={() => {/* TODO: Refresh deck list */}}
-            onImportError={(error) => console.error(error)}
-          />
-          
-          <Button
-            onClick={handleSaveDeck}
-            disabled={!deckInfo.name.trim()}
-            className="bg-green-600 hover:bg-green-700"
-          >
-            <Save className="w-4 h-4 mr-2" />
-            {existingDeck ? 'Salvar Alterações' : 'Salvar Deck'}
-          </Button>
-          
-          {onCancel && (
-            <Button variant="outline" onClick={onCancel} className="border-gray-600 text-gray-300 hover:bg-gray-700">
-              Cancelar
-            </Button>
-          )}
+        <h1 className="mtg-section-title">
+          {existingDeck ? `Editando: ${existingDeck.name}` : 'Deck Builder Pro'}
+        </h1>
+        <p className="mtg-section-subtitle">
+          {existingDeck ? 'Faça alterações no seu deck com ferramentas avançadas' : 'Crie e personalize seu deck com ferramentas profissionais'}
+        </p>
+        <div className="flex items-center justify-center gap-4 mt-6">
+          <div className="mtg-status mtg-status-info">
+            <Package className="w-3 h-3" />
+            {deckStats.total} cartas no deck
+          </div>
+        </div>
+      </div>
+
+      {/* Action Bar */}
+      <div className="mtg-card mb-8">
+        <div className="mtg-card-header">
+          <Settings className="mtg-card-icon" />
+          <div className="mtg-card-content flex-1">
+            <h3 className="mtg-card-title">Ações do Deck</h3>
+            <p className="mtg-card-description">Gerencie e configure seu deck</p>
+          </div>
+          <div className="flex items-center gap-3">
+            <DeckImporter 
+              onImportSuccess={() => {/* TODO: Refresh deck list */}}
+              onImportError={(error) => console.error(error)}
+            />
+            
+            <button
+              onClick={handleSaveDeck}
+              disabled={!deckInfo.name.trim()}
+              className="mtg-button mtg-button-primary"
+            >
+              <Save className="w-4 h-4" />
+              <span>{existingDeck ? 'Salvar Alterações' : 'Salvar Deck'}</span>
+            </button>
+            
+            {onCancel && (
+              <button onClick={onCancel} className="mtg-button mtg-button-secondary">
+                Cancelar
+              </button>
+            )}
+          </div>
         </div>
       </div>
       
       {/* Informações do Deck */}
-      <Card className="bg-gray-800/50 border-gray-700">
-        <CardHeader>
-          <CardTitle className="text-white">Informações do Deck</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="mtg-card mb-8">
+        <div className="mtg-card-header">
+          <Info className="mtg-card-icon" />
+          <div className="mtg-card-content">
+            <h3 className="mtg-card-title">Configurações do Deck</h3>
+            <p className="mtg-card-description">Defina as informações básicas do seu deck</p>
+          </div>
+        </div>
+        <div className="px-6 pb-6 space-y-6">
+          <div className="mtg-grid-2">
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">Nome do Deck *</label>
+              <label className="mtg-label">Nome do Deck *</label>
               <Input
                 value={deckInfo.name}
                 onChange={(e) => setDeckInfo(prev => ({ ...prev, name: e.target.value }))}
                 placeholder="Digite o nome do deck..."
-                className="bg-gray-700/50 border-gray-600 text-white"
+                className="mtg-input"
               />
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">Formato</label>
+              <label className="mtg-label">Formato</label>
               <Select value={deckInfo.format} onValueChange={(value) => setDeckInfo(prev => ({ ...prev, format: value }))}>
-                <SelectTrigger className="bg-gray-700/50 border-gray-600 text-white">
+                <SelectTrigger className="mtg-select">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="mtg-dropdown">
                   {['Standard', 'Pioneer', 'Modern', 'Legacy', 'Vintage', 'Commander', 'Historic', 'Pauper', 'Brawl', 'Casual'].map(format => (
-                    <SelectItem key={format} value={format}>{format}</SelectItem>
+                    <SelectItem key={format} value={format} className="mtg-dropdown-item">{format}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -482,24 +496,28 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({ deckId, onSave, onCancel }) =
           </div>
           
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Descrição</label>
+            <label className="mtg-label">Descrição</label>
             <Textarea
               value={deckInfo.description}
               onChange={(e) => setDeckInfo(prev => ({ ...prev, description: e.target.value }))}
               placeholder="Descreva a estratégia do seu deck..."
-              className="bg-gray-700/50 border-gray-600 text-white"
-              rows={2}
+              className="mtg-textarea"
+              rows={3}
             />
           </div>
           
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Cores do Deck</label>
-            <div className="flex flex-wrap gap-2">
-              {['W', 'U', 'B', 'R', 'G'].map(color => (
-                <Button
+            <label className="mtg-label">Cores do Deck</label>
+            <div className="flex flex-wrap gap-3">
+              {[
+                { color: 'W', name: 'Branco', bg: 'from-yellow-400 to-orange-500' },
+                { color: 'U', name: 'Azul', bg: 'from-blue-500 to-cyan-600' },
+                { color: 'B', name: 'Preto', bg: 'from-gray-700 to-gray-900' },
+                { color: 'R', name: 'Vermelho', bg: 'from-red-500 to-orange-600' },
+                { color: 'G', name: 'Verde', bg: 'from-green-500 to-emerald-600' }
+              ].map(({ color, name, bg }) => (
+                <button
                   key={color}
-                  size="sm"
-                  variant={deckInfo.colors.includes(color) ? 'default' : 'outline'}
                   onClick={() => {
                     setDeckInfo(prev => ({
                       ...prev,
@@ -508,171 +526,163 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({ deckId, onSave, onCancel }) =
                         : [...prev.colors, color]
                     }));
                   }}
-                  className={`text-xs ${
+                  className={`w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold transition-all ${
                     deckInfo.colors.includes(color)
-                      ? 'bg-blue-600 hover:bg-blue-700'
-                      : 'border-gray-600 text-gray-300 hover:bg-gray-700'
+                      ? `bg-gradient-to-br ${bg} scale-110 ring-2 ring-white/30`
+                      : 'bg-slate-700 hover:bg-slate-600'
                   }`}
+                  title={name}
                 >
-                  {color === 'W' ? 'Branco' :
-                   color === 'U' ? 'Azul' :
-                   color === 'B' ? 'Preto' :
-                   color === 'R' ? 'Vermelho' : 'Verde'}
-                </Button>
+                  {color}
+                </button>
               ))}
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
       
       {/* Estatísticas do Deck */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="bg-gray-800/50 border-gray-700">
-          <CardContent className="p-4 text-center">
-            <div className="text-xl font-bold text-white">{deckStats.total}</div>
-            <div className="text-gray-400 text-sm">Total</div>
-          </CardContent>
-        </Card>
+      <div className="mtg-grid gap-6 mb-8">
+        <div className="text-center p-6 bg-gradient-to-br from-blue-500/10 to-blue-600/20 rounded-xl border border-blue-500/30">
+          <div className="text-3xl font-bold text-blue-400 mb-2">{deckStats.total}</div>
+          <div className="text-slate-300 font-medium">Total de Cartas</div>
+        </div>
         
-        <Card className="bg-gray-800/50 border-gray-700">
-          <CardContent className="p-4 text-center">
-            <div className="text-xl font-bold text-blue-400">{deckStats.mainboard}</div>
-            <div className="text-gray-400 text-sm">Principal</div>
-          </CardContent>
-        </Card>
+        <div className="text-center p-6 bg-gradient-to-br from-green-500/10 to-green-600/20 rounded-xl border border-green-500/30">
+          <div className="text-3xl font-bold text-green-400 mb-2">{deckStats.mainboard}</div>
+          <div className="text-slate-300 font-medium">Deck Principal</div>
+        </div>
         
-        <Card className="bg-gray-800/50 border-gray-700">
-          <CardContent className="p-4 text-center">
-            <div className="text-xl font-bold text-green-400">{deckStats.sideboard}</div>
-            <div className="text-gray-400 text-sm">Sideboard</div>
-          </CardContent>
-        </Card>
+        <div className="text-center p-6 bg-gradient-to-br from-purple-500/10 to-purple-600/20 rounded-xl border border-purple-500/30">
+          <div className="text-3xl font-bold text-purple-400 mb-2">{deckStats.sideboard}</div>
+          <div className="text-slate-300 font-medium">Sideboard</div>
+        </div>
         
-        <Card className="bg-gray-800/50 border-gray-700">
-          <CardContent className="p-4 text-center">
-            <div className="text-xl font-bold text-purple-400">{deckStats.commander}</div>
-            <div className="text-gray-400 text-sm">Commander</div>
-          </CardContent>
-        </Card>
+        <div className="text-center p-6 bg-gradient-to-br from-yellow-500/10 to-yellow-600/20 rounded-xl border border-yellow-500/30">
+          <div className="text-3xl font-bold text-yellow-400 mb-2">{deckStats.commander}</div>
+          <div className="text-slate-300 font-medium">Commander</div>
+        </div>
       </div>
       
       {/* Tabs principais */}
-      <Card className="bg-gray-800/50 border-gray-700">
-        <CardContent className="p-6">
-          <div className="flex flex-col sm:flex-row gap-2">
-            <Button
-              variant={activeTab === 'search' ? 'default' : 'outline'}
+      <div className="mtg-card mb-8">
+        <div className="px-6 pt-6 pb-2">
+          <div className="mtg-tabs">
+            <button
               onClick={() => setActiveTab('search')}
-              className={`flex-1 ${activeTab === 'search' ? 'bg-blue-600 hover:bg-blue-700' : 'border-gray-600 text-gray-300 hover:bg-gray-700'}`}
+              className={`mtg-tab ${activeTab === 'search' ? 'mtg-tab-active' : ''}`}
             >
-              <Search className="w-4 h-4 mr-2" />
-              Buscar Cartas
-            </Button>
+              <Search className="w-4 h-4" />
+              <span>Buscar Cartas</span>
+            </button>
             
-            <Button
-              variant={activeTab === 'collection' ? 'default' : 'outline'}
+            <button
               onClick={() => setActiveTab('collection')}
-              className={`flex-1 ${activeTab === 'collection' ? 'bg-blue-600 hover:bg-blue-700' : 'border-gray-600 text-gray-300 hover:bg-gray-700'}`}
+              className={`mtg-tab ${activeTab === 'collection' ? 'mtg-tab-active' : ''}`}
             >
-              <Library className="w-4 h-4 mr-2" />
-              Da Coleção
-            </Button>
+              <Library className="w-4 h-4" />
+              <span>Da Coleção</span>
+            </button>
             
-            <Button
-              variant={activeTab === 'deck' ? 'default' : 'outline'}
+            <button
               onClick={() => setActiveTab('deck')}
-              className={`flex-1 ${activeTab === 'deck' ? 'bg-blue-600 hover:bg-blue-700' : 'border-gray-600 text-gray-300 hover:bg-gray-700'}`}
+              className={`mtg-tab ${activeTab === 'deck' ? 'mtg-tab-active' : ''}`}
             >
-              <Target className="w-4 h-4 mr-2" />
-              Deck Atual ({deckStats.total})
-            </Button>
+              <Target className="w-4 h-4" />
+              <span>Deck Atual ({deckStats.total})</span>
+            </button>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
       
       {/* Conteúdo das Tabs */}
       {activeTab === 'search' && (
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div className="mtg-grid-wide gap-8">
           {/* Filtros de Busca */}
-          <Card className="bg-gray-800/50 border-gray-700">
-            <CardHeader className="pb-3">
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-white text-lg">Filtros</CardTitle>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={clearSearchFilters}
-                  className="border-gray-600 text-gray-300 hover:bg-gray-700"
-                >
-                  <RefreshCw className="w-3 h-3" />
-                </Button>
+          <div className="mtg-card">
+            <div className="mtg-card-header">
+              <Filter className="mtg-card-icon" />
+              <div className="mtg-card-content flex-1">
+                <h3 className="mtg-card-title">Filtros de Busca</h3>
+                <p className="mtg-card-description">Configure os parâmetros para encontrar as cartas perfeitas</p>
               </div>
-            </CardHeader>
-            <CardContent className="space-y-4">
+              <button
+                onClick={clearSearchFilters}
+                className="mtg-button mtg-button-ghost"
+                title="Limpar filtros"
+              >
+                <RefreshCw className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="px-6 pb-6 space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">Nome da carta</label>
+                <label className="mtg-label">Nome da carta</label>
                 <Input
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && searchCards()}
-                  placeholder="Nome da carta..."
-                  className="bg-gray-700/50 border-gray-600 text-white"
+                  placeholder="Digite o nome da carta..."
+                  className="mtg-input"
                 />
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">Raridade</label>
+                <label className="mtg-label">Raridade</label>
                 <Select value={raridade} onValueChange={setRaridade}>
-                  <SelectTrigger className="bg-gray-700/50 border-gray-600 text-white">
+                  <SelectTrigger className="mtg-select">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">Todas</SelectItem>
-                    <SelectItem value="common">Comum</SelectItem>
-                    <SelectItem value="uncommon">Incomum</SelectItem>
-                    <SelectItem value="rare">Rara</SelectItem>
-                    <SelectItem value="mythic">Mítica</SelectItem>
+                  <SelectContent className="mtg-dropdown">
+                    <SelectItem value="all" className="mtg-dropdown-item">Todas</SelectItem>
+                    <SelectItem value="common" className="mtg-dropdown-item">Comum</SelectItem>
+                    <SelectItem value="uncommon" className="mtg-dropdown-item">Incomum</SelectItem>
+                    <SelectItem value="rare" className="mtg-dropdown-item">Rara</SelectItem>
+                    <SelectItem value="mythic" className="mtg-dropdown-item">Mítica</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">Tipo</label>
+                <label className="mtg-label">Tipo</label>
                 <Select value={tipo} onValueChange={setTipo}>
-                  <SelectTrigger className="bg-gray-700/50 border-gray-600 text-white">
+                  <SelectTrigger className="mtg-select">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">Todos</SelectItem>
-                    <SelectItem value="creature">Criatura</SelectItem>
-                    <SelectItem value="instant">Instantâneo</SelectItem>
-                    <SelectItem value="sorcery">Feitiço</SelectItem>
-                    <SelectItem value="artifact">Artefato</SelectItem>
-                    <SelectItem value="enchantment">Encantamento</SelectItem>
-                    <SelectItem value="planeswalker">Planeswalker</SelectItem>
-                    <SelectItem value="land">Terreno</SelectItem>
+                  <SelectContent className="mtg-dropdown">
+                    <SelectItem value="all" className="mtg-dropdown-item">Todos</SelectItem>
+                    <SelectItem value="creature" className="mtg-dropdown-item">Criatura</SelectItem>
+                    <SelectItem value="instant" className="mtg-dropdown-item">Instantâneo</SelectItem>
+                    <SelectItem value="sorcery" className="mtg-dropdown-item">Feitiço</SelectItem>
+                    <SelectItem value="artifact" className="mtg-dropdown-item">Artefato</SelectItem>
+                    <SelectItem value="enchantment" className="mtg-dropdown-item">Encantamento</SelectItem>
+                    <SelectItem value="planeswalker" className="mtg-dropdown-item">Planeswalker</SelectItem>
+                    <SelectItem value="land" className="mtg-dropdown-item">Terreno</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">CMC</label>
+                <label className="mtg-label">CMC (Custo Convertido de Mana)</label>
                 <Input
                   value={cmc}
                   onChange={(e) => setCmc(e.target.value)}
                   placeholder="Ex: 3, <=2, >=4"
-                  className="bg-gray-700/50 border-gray-600 text-white"
+                  className="mtg-input"
                 />
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">Cores</label>
-                <div className="flex flex-wrap gap-2">
-                  {['W', 'U', 'B', 'R', 'G'].map(color => (
-                    <Button
+                <label className="mtg-label">Cores</label>
+                <div className="flex flex-wrap gap-3">
+                  {[
+                    { color: 'W', name: 'Branco', bg: 'from-yellow-400 to-orange-500' },
+                    { color: 'U', name: 'Azul', bg: 'from-blue-500 to-cyan-600' },
+                    { color: 'B', name: 'Preto', bg: 'from-gray-700 to-gray-900' },
+                    { color: 'R', name: 'Vermelho', bg: 'from-red-500 to-orange-600' },
+                    { color: 'G', name: 'Verde', bg: 'from-green-500 to-emerald-600' }
+                  ].map(({ color, name, bg }) => (
+                    <button
                       key={color}
-                      size="sm"
-                      variant={manaColors.includes(color) ? 'default' : 'outline'}
                       onClick={() => {
                         setManaColors(prev => 
                           prev.includes(color) 
@@ -680,110 +690,109 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({ deckId, onSave, onCancel }) =
                             : [...prev, color]
                         );
                       }}
-                      className={`text-xs ${
+                      className={`w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold transition-all ${
                         manaColors.includes(color)
-                          ? 'bg-blue-600 hover:bg-blue-700'
-                          : 'border-gray-600 text-gray-300 hover:bg-gray-700'
+                          ? `bg-gradient-to-br ${bg} scale-110 ring-2 ring-white/30`
+                          : 'bg-slate-700 hover:bg-slate-600'
                       }`}
+                      title={name}
                     >
                       {color}
-                    </Button>
+                    </button>
                   ))}
                 </div>
               </div>
               
-              <Button 
-                className="w-full bg-blue-600 hover:bg-blue-700"
+              <button 
+                className="mtg-button mtg-button-primary w-full"
                 onClick={searchCards}
                 disabled={isSearching}
               >
-                <Search className="w-4 h-4 mr-2" />
-                {isSearching ? 'Buscando...' : 'Buscar Cartas'}
-              </Button>
-            </CardContent>
-          </Card>
+                <Search className="w-4 h-4" />
+                <span>{isSearching ? 'Buscando...' : 'Buscar Cartas'}</span>
+                {isSearching && <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin ml-2" />}
+              </button>
+            </div>
+          </div>
           
           {/* Resultados da Busca */}
-          <div className="lg:col-span-3">
-            <Card className="bg-gray-800/50 border-gray-700">
-              <CardHeader>
-                <CardTitle className="text-white">
+          <div className="mtg-card flex-1">
+            <div className="mtg-card-header">
+              <Eye className="mtg-card-icon" />
+              <div className="mtg-card-content">
+                <h3 className="mtg-card-title">
                   Resultados da Busca {searchResults.length > 0 && `(${searchResults.length})`}
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="min-h-[200px]">
-                  {isSearching && (
-                    <div className="text-center py-12 text-gray-400">
-                      <Loader2 className="w-12 h-12 mx-auto mb-4 opacity-50 animate-spin" />
-                      <p>Pesquisando cartas...</p>
-                    </div>
-                  )}
-                  
-                  {!isSearching && searchError && (
-                    <div className="text-center py-12 text-gray-400">
-                      <AlertCircle className="w-12 h-12 mx-auto mb-4 opacity-50 text-red-400" />
-                      <p className="text-red-400">{searchError}</p>
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
-                        onClick={searchCards}
-                        className="mt-4 border-gray-600 text-gray-300 hover:bg-gray-700"
-                      >
-                        Tentar novamente
-                      </Button>
-                    </div>
-                  )}
-                  
-                  {!isSearching && !searchError && searchResults.length === 0 && (
-                    <div className="text-center py-12 text-gray-400">
-                      <Search className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                      <p>Use os filtros ao lado para pesquisar cartas</p>
-                    </div>
-                  )}
-                  
-                  {!isSearching && !searchError && searchResults.length > 0 && (
-                    <SearchCardList 
-                      cards={searchResults}
-                      collection={[]} // Empty since we're in deck builder
-                      onAddCard={(card, quantity) => handleAddCardToDeck(card, 'mainboard', quantity)}
-                      className="mb-6"
-                    />
-                  )}
-                </div>
-              </CardContent>
-            </Card>
+                </h3>
+                <p className="mtg-card-description">Clique nas cartas para adicioná-las ao seu deck</p>
+              </div>
+            </div>
+            <div className="px-6 pb-6">
+              <div className="min-h-[400px]">
+                {isSearching && (
+                  <div className="text-center py-12 text-slate-400">
+                    <Loader2 className="w-12 h-12 mx-auto mb-4 opacity-50 animate-spin" />
+                    <p>Pesquisando cartas...</p>
+                  </div>
+                )}
+                
+                {!isSearching && searchError && (
+                  <div className="text-center py-12 text-slate-400">
+                    <AlertCircle className="w-12 h-12 mx-auto mb-4 opacity-50 text-red-400" />
+                    <p className="text-red-400">{searchError}</p>
+                    <button 
+                      onClick={searchCards}
+                      className="mtg-button mtg-button-secondary mt-4"
+                    >
+                      Tentar novamente
+                    </button>
+                  </div>
+                )}
+                
+                {!isSearching && !searchError && searchResults.length === 0 && (
+                  <div className="text-center py-12 text-slate-400">
+                    <Search className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                    <p>Use os filtros ao lado para pesquisar cartas</p>
+                  </div>
+                )}
+                
+                {!isSearching && !searchError && searchResults.length > 0 && (
+                  <SearchCardList 
+                    cards={searchResults}
+                    collection={[]} // Empty since we're in deck builder
+                    onAddCard={(card, quantity) => handleAddCardToDeck(card, 'mainboard', quantity)}
+                    className="mb-6"
+                  />
+                )}
+              </div>
+            </div>
           </div>
         </div>
       )}
       
       {activeTab === 'collection' && (
-        <div className="space-y-4">
+        <div className="space-y-6">
           {/* Header da coleção */}
-          <Card className="bg-gray-800/50 border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Library className="w-5 h-5" />
-                Minha Coleção
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-400 text-sm mb-4">
-                Selecione cartas da sua coleção para adicionar ao deck
-              </p>
-              
+          <div className="mtg-card">
+            <div className="mtg-card-header">
+              <Library className="mtg-card-icon" />
+              <div className="mtg-card-content">
+                <h3 className="mtg-card-title">Sua Coleção Pessoal</h3>
+                <p className="mtg-card-description">Selecione cartas da sua coleção para adicionar ao deck</p>
+              </div>
+            </div>
+            <div className="px-6 pb-6">
               {/* Estatísticas da coleção */}
               {currentCollection && (
-                <div className="flex items-center gap-4 mb-4 p-3 bg-gray-900/50 rounded-lg">
+                <div className="flex items-center gap-4 mb-6 p-4 bg-slate-800/50 rounded-xl border border-slate-700/50">
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                    <span className="text-sm text-gray-300">
+                    <span className="text-sm text-slate-300">
                       <span className="font-semibold text-white">{currentCollection.cards.length}</span> cartas únicas
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                    <span className="text-sm text-gray-300">
+                    <span className="text-sm text-slate-300">
                       <span className="font-semibold text-white">
                         {currentCollection.cards.reduce((sum: number, card: any) => sum + card.quantity, 0)}
                       </span> cartas totais
@@ -793,43 +802,52 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({ deckId, onSave, onCancel }) =
               )}
               
               {/* Filtros da coleção */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                <Input
-                  placeholder="Buscar na coleção..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="bg-gray-900/50 border-gray-600 text-white"
-                />
-                <Select value={raridade} onValueChange={setRaridade}>
-                  <SelectTrigger className="bg-gray-900/50 border-gray-600 text-white">
-                    <SelectValue placeholder="Raridade" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-gray-800 border-gray-600">
-                    <SelectItem value="all">Todas</SelectItem>
-                    <SelectItem value="common">Comum</SelectItem>
-                    <SelectItem value="uncommon">Incomum</SelectItem>
-                    <SelectItem value="rare">Rara</SelectItem>
-                    <SelectItem value="mythic">Mítica</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Select value={tipo} onValueChange={setTipo}>
-                  <SelectTrigger className="bg-gray-900/50 border-gray-600 text-white">
-                    <SelectValue placeholder="Tipo" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-gray-800 border-gray-600">
-                    <SelectItem value="all">Todos</SelectItem>
-                    <SelectItem value="creature">Criatura</SelectItem>
-                    <SelectItem value="instant">Mágica Instantânea</SelectItem>
-                    <SelectItem value="sorcery">Feitiço</SelectItem>
-                    <SelectItem value="artifact">Artefato</SelectItem>
-                    <SelectItem value="enchantment">Encantamento</SelectItem>
-                    <SelectItem value="planeswalker">Planeswalker</SelectItem>
-                    <SelectItem value="land">Terreno</SelectItem>
-                  </SelectContent>
-                </Select>
+              <div className="mtg-grid-3 gap-4">
+                <div>
+                  <label className="mtg-label">Buscar na coleção</label>
+                  <Input
+                    placeholder="Nome da carta..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="mtg-input"
+                  />
+                </div>
+                <div>
+                  <label className="mtg-label">Raridade</label>
+                  <Select value={raridade} onValueChange={setRaridade}>
+                    <SelectTrigger className="mtg-select">
+                      <SelectValue placeholder="Raridade" />
+                    </SelectTrigger>
+                    <SelectContent className="mtg-dropdown">
+                      <SelectItem value="all" className="mtg-dropdown-item">Todas</SelectItem>
+                      <SelectItem value="common" className="mtg-dropdown-item">Comum</SelectItem>
+                      <SelectItem value="uncommon" className="mtg-dropdown-item">Incomum</SelectItem>
+                      <SelectItem value="rare" className="mtg-dropdown-item">Rara</SelectItem>
+                      <SelectItem value="mythic" className="mtg-dropdown-item">Mítica</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <label className="mtg-label">Tipo</label>
+                  <Select value={tipo} onValueChange={setTipo}>
+                    <SelectTrigger className="mtg-select">
+                      <SelectValue placeholder="Tipo" />
+                    </SelectTrigger>
+                    <SelectContent className="mtg-dropdown">
+                      <SelectItem value="all" className="mtg-dropdown-item">Todos</SelectItem>
+                      <SelectItem value="creature" className="mtg-dropdown-item">Criatura</SelectItem>
+                      <SelectItem value="instant" className="mtg-dropdown-item">Mágica Instantânea</SelectItem>
+                      <SelectItem value="sorcery" className="mtg-dropdown-item">Feitiço</SelectItem>
+                      <SelectItem value="artifact" className="mtg-dropdown-item">Artefato</SelectItem>
+                      <SelectItem value="enchantment" className="mtg-dropdown-item">Encantamento</SelectItem>
+                      <SelectItem value="planeswalker" className="mtg-dropdown-item">Planeswalker</SelectItem>
+                      <SelectItem value="land" className="mtg-dropdown-item">Terreno</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
 
           {/* Lista de cartas da coleção */}
           <CollectionDisplay 
@@ -844,55 +862,71 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({ deckId, onSave, onCancel }) =
       )}
       
       {activeTab === 'deck' && (
-        <div className="space-y-4">
+        <div className="space-y-6">
           {/* Controles do Deck */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Select value={deckViewCategory} onValueChange={(value: any) => setDeckViewCategory(value)}>
-                <SelectTrigger className="w-48 bg-gray-700/50 border-gray-600 text-white">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">Todas as cartas</SelectItem>
-                  <SelectItem value="mainboard">Deck Principal</SelectItem>
-                  <SelectItem value="sideboard">Sideboard</SelectItem>
-                  <SelectItem value="commander">Commander</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            
-            <div className="flex items-center gap-1 bg-gray-800 rounded-lg p-1">
-              <Button
-                size="sm"
-                variant={viewMode === 'list' ? 'default' : 'ghost'}
-                onClick={() => setViewMode('list')}
-                className="h-8 w-8 p-0"
-              >
-                <List className="h-4 w-4" />
-              </Button>
-              <Button
-                size="sm"
-                variant={viewMode === 'grid' ? 'default' : 'ghost'}
-                onClick={() => setViewMode('grid')}
-                className="h-8 w-8 p-0"
-              >
-                <Grid3X3 className="h-4 w-4" />
-              </Button>
+          <div className="mtg-card">
+            <div className="mtg-card-header">
+              <Package className="mtg-card-icon" />
+              <div className="mtg-card-content flex-1">
+                <h3 className="mtg-card-title">Visualização do Deck</h3>
+                <p className="mtg-card-description">Gerencie as cartas do seu deck atual</p>
+              </div>
+              <div className="flex items-center gap-4">
+                <div>
+                  <label className="mtg-label text-xs">Categoria</label>
+                  <Select value={deckViewCategory} onValueChange={(value: any) => setDeckViewCategory(value)}>
+                    <SelectTrigger className="w-48 mtg-select">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="mtg-dropdown">
+                      <SelectItem value="all" className="mtg-dropdown-item">Todas as cartas</SelectItem>
+                      <SelectItem value="mainboard" className="mtg-dropdown-item">Deck Principal</SelectItem>
+                      <SelectItem value="sideboard" className="mtg-dropdown-item">Sideboard</SelectItem>
+                      <SelectItem value="commander" className="mtg-dropdown-item">Commander</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div className="flex items-center gap-1 bg-slate-800 rounded-lg p-1">
+                  <button
+                    onClick={() => setViewMode('list')}
+                    className={`h-8 w-8 p-0 rounded transition-colors ${
+                      viewMode === 'list' 
+                        ? 'bg-blue-600 text-white' 
+                        : 'text-slate-400 hover:text-white hover:bg-slate-700'
+                    }`}
+                    title="Vista em lista"
+                  >
+                    <List className="h-4 w-4 mx-auto" />
+                  </button>
+                  <button
+                    onClick={() => setViewMode('grid')}
+                    className={`h-8 w-8 p-0 rounded transition-colors ${
+                      viewMode === 'grid' 
+                        ? 'bg-blue-600 text-white' 
+                        : 'text-slate-400 hover:text-white hover:bg-slate-700'
+                    }`}
+                    title="Vista em grade"
+                  >
+                    <Grid3X3 className="h-4 w-4 mx-auto" />
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
           
           {/* Lista de Cartas do Deck */}
-          <Card className="bg-gray-800/50 border-gray-700">
-            <CardContent className="p-6">
+          <div className="mtg-card">
+            <div className="px-6 pt-6 pb-6">
               {filteredDeckCards.length === 0 ? (
-                <div className="text-center py-12 text-gray-400">
+                <div className="text-center py-12 text-slate-400">
                   <Package className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                  <p>Nenhuma carta nesta categoria</p>
-                  <p className="text-sm">Use a aba "Buscar Cartas" para adicionar cartas ao deck</p>
+                  <h3 className="text-lg font-medium text-white mb-2">Nenhuma carta nesta categoria</h3>
+                  <p className="text-sm">Use as abas "Buscar Cartas" ou "Da Coleção" para adicionar cartas ao deck</p>
                 </div>
               ) : (
                 <div className={viewMode === 'grid' 
-                  ? 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3'
+                  ? 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'
                   : 'space-y-3'
                 }>
                   {filteredDeckCards.map(deckCard => {
@@ -900,45 +934,50 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({ deckId, onSave, onCancel }) =
                     
                     if (viewMode === 'grid') {
                       return (
-                        <Card key={`${deckCard.card.id}-${deckCard.category}`} className="bg-gray-800/50 border-gray-700 hover:border-blue-500 transition-colors">
-                          <CardContent className="p-2">
-                            <div className="relative">
-                              <div className="aspect-[63/88] bg-gray-900 rounded overflow-hidden mb-2">
-                                {imageUrl ? (
-                                  <Image
-                                    src={imageUrl}
-                                    alt={deckCard.card.name}
-                                    fill
-                                    className="object-cover cursor-pointer hover:scale-105 transition-transform"
-                                    onClick={() => openModal(deckCard.card)}
-                                    sizes="150px"
-                                  />
-                                ) : (
-                                  <div className="w-full h-full flex items-center justify-center text-gray-400 text-xs text-center p-2">
-                                    {deckCard.card.name}
-                                  </div>
-                                )}
-                              </div>
-                              
-                              <div className="absolute top-1 left-1 bg-blue-600 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold">
-                                {deckCard.quantity}
-                              </div>
-                              
-                              <div className="text-xs">
-                                <p className="text-white font-medium truncate">{deckCard.card.name}</p>
-                                <Badge variant="outline" className="text-xs">
-                                  {deckCard.category}
-                                </Badge>
-                              </div>
+                        <div key={`${deckCard.card.id}-${deckCard.category}`} className="mtg-card-mini">
+                          <div className="relative">
+                            <div className="aspect-[63/88] bg-slate-900 rounded-lg overflow-hidden mb-2">
+                              {imageUrl ? (
+                                <Image
+                                  src={imageUrl}
+                                  alt={deckCard.card.name}
+                                  fill
+                                  className="object-cover cursor-pointer hover:scale-105 transition-transform"
+                                  onClick={() => openModal(deckCard.card)}
+                                  sizes="150px"
+                                />
+                              ) : (
+                                <div className="w-full h-full flex items-center justify-center text-slate-400 text-xs text-center p-2">
+                                  {deckCard.card.name}
+                                </div>
+                              )}
                             </div>
-                          </CardContent>
-                        </Card>
+                            
+                            <div className="absolute top-1 left-1 bg-blue-600 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold shadow-lg">
+                              {deckCard.quantity}
+                            </div>
+                            
+                            <div className="text-xs">
+                              <p className="text-white font-medium truncate mb-1" title={deckCard.card.name}>
+                                {deckCard.card.name}
+                              </p>
+                              <span className={`inline-block px-2 py-1 rounded text-xs font-medium ${
+                                deckCard.category === 'mainboard' ? 'bg-green-500/20 text-green-400' :
+                                deckCard.category === 'sideboard' ? 'bg-purple-500/20 text-purple-400' :
+                                'bg-yellow-500/20 text-yellow-400'
+                              }`}>
+                                {deckCard.category === 'mainboard' ? 'Main' :
+                                 deckCard.category === 'sideboard' ? 'Side' : 'Cmd'}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
                       );
                     }
 
                     return (
-                      <div key={`${deckCard.card.id}-${deckCard.category}`} className="flex items-center gap-3 p-3 bg-gray-800/30 rounded-lg hover:bg-gray-800/50 transition-colors group">
-                        <div className="w-12 h-16 bg-gray-900 rounded overflow-hidden flex-shrink-0">
+                      <div key={`${deckCard.card.id}-${deckCard.category}`} className="flex items-center gap-4 p-4 bg-slate-800/30 rounded-xl hover:bg-slate-800/50 transition-colors group border border-slate-700/30">
+                        <div className="w-12 h-16 bg-slate-900 rounded-lg overflow-hidden flex-shrink-0">
                           {imageUrl ? (
                             <Image
                               src={imageUrl}
@@ -950,61 +989,60 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({ deckId, onSave, onCancel }) =
                             />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center">
-                              <span className="text-xs text-gray-500 text-center">{deckCard.card.set_code}</span>
+                              <span className="text-xs text-slate-500 text-center">{deckCard.card.set_code}</span>
                             </div>
                           )}
                         </div>
                         
                         <div className="flex-1 min-w-0">
                           <h4 className="text-white font-medium truncate">{deckCard.card.name}</h4>
-                          <p className="text-gray-400 text-sm truncate">{deckCard.card.type_line}</p>
+                          <p className="text-slate-400 text-sm truncate">{deckCard.card.type_line}</p>
                           <div className="flex items-center gap-2 mt-1">
-                            <Badge variant="outline" className="text-xs">
+                            <span className={`inline-block px-2 py-1 rounded text-xs font-medium ${
+                              deckCard.category === 'mainboard' ? 'bg-green-500/20 text-green-400' :
+                              deckCard.category === 'sideboard' ? 'bg-purple-500/20 text-purple-400' :
+                              'bg-yellow-500/20 text-yellow-400'
+                            }`}>
                               {deckCard.category}
-                            </Badge>
-                            <span className="text-gray-500 text-xs">{deckCard.card.set_name}</span>
+                            </span>
+                            <span className="text-slate-500 text-xs">{deckCard.card.set_name}</span>
                           </div>
                         </div>
                         
                         <div className="flex items-center gap-2">
-                          <div className="flex items-center gap-1 bg-gray-700 rounded">
-                            <Button
-                              size="sm"
-                              variant="ghost"
+                          <div className="flex items-center gap-1 bg-slate-700 rounded-lg">
+                            <button
                               onClick={() => handleUpdateQuantity(deckCard.card.id, deckCard.category, deckCard.quantity - 1)}
-                              className="h-8 w-8 p-0 hover:bg-red-600"
+                              className="h-8 w-8 p-0 hover:bg-red-600 text-red-400 hover:text-white rounded-l-lg transition-colors flex items-center justify-center"
                             >
                               <Minus className="h-3 w-3" />
-                            </Button>
+                            </button>
                             
-                            <span className="text-white text-sm w-8 text-center">{deckCard.quantity}</span>
+                            <span className="text-white text-sm w-8 text-center bg-slate-800 py-1">{deckCard.quantity}</span>
                             
-                            <Button
-                              size="sm"
-                              variant="ghost"
+                            <button
                               onClick={() => handleUpdateQuantity(deckCard.card.id, deckCard.category, deckCard.quantity + 1)}
-                              className="h-8 w-8 p-0 hover:bg-green-600"
+                              className="h-8 w-8 p-0 hover:bg-green-600 text-green-400 hover:text-white rounded-r-lg transition-colors flex items-center justify-center"
                             >
                               <Plus className="h-3 w-3" />
-                            </Button>
+                            </button>
                           </div>
                           
-                          <Button
-                            size="sm"
-                            variant="ghost"
+                          <button
                             onClick={() => handleRemoveCardFromDeck(deckCard.card.id, deckCard.category)}
-                            className="h-8 w-8 p-0 text-red-400 hover:text-red-300 hover:bg-red-600/20"
+                            className="h-8 w-8 p-0 text-red-400 hover:text-red-300 hover:bg-red-600/20 rounded-lg transition-colors flex items-center justify-center"
+                            title="Remover carta"
                           >
                             <X className="h-3 w-3" />
-                          </Button>
+                          </button>
                         </div>
                       </div>
                     );
                   })}
                 </div>
               )}
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
       )}
     </div>

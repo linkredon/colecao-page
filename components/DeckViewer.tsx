@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo } from 'react';
 import '../styles/moxfield.css';
+import '../styles/deck-viewer-compact.css';
 import { useAppContext } from '@/contexts/AppContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { translatePtToEn, cardMatchesSearchTerm } from '@/utils/translationService';
@@ -169,320 +170,262 @@ const DeckViewer: React.FC<DeckViewerProps> = ({ deckId, onClose, onEdit }) => {
   };
 
   return (
-    <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 min-h-[calc(100vh-80px)]">
-      {/* Header estilo Moxfield */}
-      <div className="sticky top-0 z-30 bg-slate-900/95 backdrop-blur-md border-b border-slate-700/50 shadow-lg">
-        <div className="px-6 py-4">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
-            <div className="flex items-center gap-4">
-              <Button variant="ghost" onClick={onClose} className="text-gray-400 hover:text-white p-2">
-                <ArrowLeft className="w-4 h-4" />
-              </Button>
-              
-              <div>
-                <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-                  {deck.name}
-                  <Badge className="ml-2 bg-indigo-700 hover:bg-indigo-600 text-white">{deck.format}</Badge>
-                </h1>
-                <div className="flex items-center gap-2 mt-1">
-                  {deck.colors.length > 0 && (
-                    <div className="flex gap-1">
-                      {deck.colors.map(color => (
-                        <div 
-                          key={color}
-                          className={`w-5 h-5 rounded-full mana-symbol mana-${color.toLowerCase()} shadow-sm`}
-                          title={color}
-                        />
-                      ))}
-                    </div>
-                  )}
-                  <span className="text-gray-400 text-sm">
-                    {stats.total} cartas • {stats.unique} únicas
-                  </span>
-                  {deck.description && (
-                    <span className="text-gray-500 text-sm hidden md:inline">
-                      • {deck.description.substring(0, 50)}{deck.description.length > 50 ? "..." : ""}
-                    </span>
-                  )}
-                </div>
-              </div>
-            </div>
+    <div className="quantum-card min-h-[calc(100vh-80px)] p-0 m-0">
+      {/* Header compacto */}
+      <div className="sticky top-0 z-30 bg-black/90 backdrop-blur-md border-b border-cyan-500/30 shadow-lg">
+        <div className="flex items-center justify-between gap-2 p-2">
+          <div className="flex items-center gap-2">
+            <button 
+              onClick={onClose}
+              className="quantum-btn compact"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              Voltar
+            </button>
             
-            <div className="flex flex-wrap items-center gap-2 mt-2 md:mt-0">
-              <Button variant="outline" size="sm" onClick={exportDeckList} className="border-[#3a3a42] text-gray-300 hover:bg-[#2b2b33]/80 h-8">
-                <Download className="w-3 h-3 mr-1" />
-                Exportar
-              </Button>
-              
-              <Button variant="outline" size="sm" onClick={handleDuplicate} className="border-[#3a3a42] text-gray-300 hover:bg-[#2b2b33]/80 h-8">
-                <Copy className="w-3 h-3 mr-1" />
-                Duplicar
-              </Button>
-              
-              <Button variant="outline" size="sm" onClick={() => setEditMode(true)} className="border-indigo-700/50 text-indigo-400 hover:bg-indigo-700/10 h-8">
-                <Edit3 className="w-3 h-3 mr-1" />
-                Editar
-              </Button>
-              
-              <Dialog open={showDeleteConfirm} onOpenChange={setShowDeleteConfirm}>
-                <DialogTrigger asChild>
-                  <Button variant="outline" size="sm" className="border-red-700/50 text-red-400 hover:bg-red-700/10 h-8">
-                    <Trash2 className="w-3 h-3" />
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="rounded-lg text-card-foreground bg-gray-800/80 backdrop-blur-xl shadow-2xl overflow-hidden border-0">
-                  <DialogHeader>
-                    <DialogTitle className="text-white">Deletar Deck</DialogTitle>
-                  </DialogHeader>
-                  <div className="space-y-4">
-                    <p className="text-gray-300">
-                      Tem certeza que deseja deletar o deck "{deck.name}"? Esta ação não pode ser desfeita.
-                    </p>
-                    <div className="flex justify-end gap-2">
-                      <Button variant="outline" onClick={() => setShowDeleteConfirm(false)} className="border-[#3a3a42] text-gray-300 hover:bg-[#2b2b33]">
-                        Cancelar
-                      </Button>
-                      <Button onClick={handleDelete} className="bg-red-600 hover:bg-red-700">
-                        Deletar
-                      </Button>
-                    </div>
-                  </div>
-                </DialogContent>
-              </Dialog>
-            </div>
+            <h2 className="text-md font-bold text-cyan-400 truncate ml-2">{deck.name}</h2>
+            <span className="quantum-badge primary text-xs">{deck.format}</span>
           </div>
           
-          {/* Navegação secundária */}
-          <div className="flex flex-wrap items-center gap-2 mt-3 border-t border-[#2b2b30] pt-3">
-            <Button variant="ghost" size="sm" className="h-8 text-sm text-gray-300 hover:text-white hover:bg-[#2b2b33] bg-[#2b2b33]/50">
-              <Eye className="w-3 h-3 mr-1" />
-              Visualizar
-            </Button>
-            <Button variant="ghost" size="sm" className="h-8 text-sm text-gray-300 hover:text-white hover:bg-[#2b2b33]">
-              <PieChart className="w-3 h-3 mr-1" />
-              Estatísticas
-            </Button>
-            <Button variant="ghost" size="sm" className="h-8 text-sm text-gray-300 hover:text-white hover:bg-[#2b2b33]">
-              <Settings className="w-3 h-3 mr-1" />
-              Configurações
-            </Button>
+          <div className="flex items-center gap-1">
+            <button className="quantum-btn compact" onClick={handleDuplicate}>
+              <Copy className="w-3.5 h-3.5" />
+            </button>
+            <button className="quantum-btn compact" onClick={() => setEditMode(true)}>
+              <Edit3 className="w-3.5 h-3.5" />
+            </button>
+            <button className="quantum-btn compact" onClick={exportDeckList}>
+              <Download className="w-3.5 h-3.5" />
+            </button>
+            <button className="quantum-btn compact" onClick={() => setShowDeleteConfirm(true)}>
+              <Trash2 className="w-3.5 h-3.5 text-red-500" />
+            </button>
+          </div>
+        </div>
+        
+        {/* Filtros compactos */}
+        <div className="flex flex-wrap items-center gap-1 mx-2 mb-2">
+          <div className="relative flex-1 min-w-[180px]">
+            <Search className="absolute left-2 top-1.5 w-3.5 h-3.5 text-gray-400" />
+            <input 
+              type="text" 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Filtrar cartas..." 
+              className="quantum-input pl-8 h-7 py-0 text-sm"
+            />
+          </div>
+          
+          <div className="flex gap-1">
+            <button 
+              onClick={() => setFilterCategory('all')}
+              className={`quantum-btn compact ${filterCategory === 'all' ? 'primary' : ''}`}
+            >
+              Todas
+            </button>
+            <button 
+              onClick={() => setFilterCategory('mainboard')}
+              className={`quantum-btn compact ${filterCategory === 'mainboard' ? 'primary' : ''}`}
+            >
+              Main ({stats.mainboard})
+            </button>
+            {stats.sideboard > 0 && (
+              <button 
+                onClick={() => setFilterCategory('sideboard')}
+                className={`quantum-btn compact ${filterCategory === 'sideboard' ? 'primary' : ''}`}
+              >
+                Side ({stats.sideboard})
+              </button>
+            )}
+            {stats.commander > 0 && (
+              <button 
+                onClick={() => setFilterCategory('commander')}
+                className={`quantum-btn compact ${filterCategory === 'commander' ? 'primary' : ''}`}
+              >
+                Cmd ({stats.commander})
+              </button>
+            )}
+          </div>
+          
+          <div className="flex gap-1">
+            <button 
+              onClick={() => setViewMode('grid')}
+              className={`quantum-btn compact ${viewMode === 'grid' ? 'secondary' : ''}`}
+            >
+              <Grid3X3 className="w-3.5 h-3.5" />
+            </button>
+            <button 
+              onClick={() => setViewMode('spoiler')}
+              className={`quantum-btn compact ${viewMode === 'spoiler' ? 'secondary' : ''}`}
+            >
+              <List className="w-3.5 h-3.5" />
+            </button>
           </div>
         </div>
       </div>
 
       {/* Modal de Edição */}
       <Dialog open={editMode} onOpenChange={setEditMode}>
-        <DialogContent className="rounded-lg text-card-foreground bg-gray-800/80 backdrop-blur-xl shadow-2xl overflow-hidden border-0 max-w-2xl">
+        <DialogContent className="quantum-card">
           <DialogHeader>
-            <DialogTitle className="text-white">Editar Deck</DialogTitle>
+            <h2 className="quantum-card-title">Editar Deck</h2>
           </DialogHeader>
-          <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">Nome do Deck</label>
-                <Input
-                  value={editedDeck.name}
-                  onChange={(e) => setEditedDeck(prev => ({ ...prev, name: e.target.value }))}
-                  className="bg-gray-700/50 border-gray-600 text-white"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">Formato</label>
-                <Select value={editedDeck.format} onValueChange={(value) => setEditedDeck(prev => ({ ...prev, format: value }))}>
-                  <SelectTrigger className="bg-gray-700/50 border-gray-600 text-white">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {['Standard', 'Pioneer', 'Modern', 'Legacy', 'Vintage', 'Commander', 'Historic', 'Pauper', 'Brawl', 'Casual'].map(format => (
-                      <SelectItem key={format} value={format}>{format}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-            
-            <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">Descrição</label>
-              <Textarea
-                value={editedDeck.description}
-                onChange={(e) => setEditedDeck(prev => ({ ...prev, description: e.target.value }))}
-                className="bg-gray-700/50 border-gray-600 text-white"
-                rows={3}
+          <div className="space-y-3">
+            <div className="quantum-form-group">
+              <label className="quantum-label" htmlFor="name">Nome do Deck</label>
+              <input 
+                id="name"
+                type="text" 
+                className="quantum-input"
+                value={editedDeck.name}
+                onChange={(e) => setEditedDeck({...editedDeck, name: e.target.value})}
               />
             </div>
             
-            <div className="flex justify-end gap-2">
-              <Button variant="outline" onClick={() => setEditMode(false)} className="border-gray-600 text-gray-300 hover:bg-gray-700">
+            <div className="quantum-form-group">
+              <label className="quantum-label" htmlFor="format">Formato</label>
+              <Select 
+                value={editedDeck.format}
+                onValueChange={(value) => setEditedDeck({...editedDeck, format: value})}
+              >
+                <SelectTrigger className="quantum-select">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Standard">Standard</SelectItem>
+                  <SelectItem value="Modern">Modern</SelectItem>
+                  <SelectItem value="Commander">Commander</SelectItem>
+                  <SelectItem value="Pioneer">Pioneer</SelectItem>
+                  <SelectItem value="Legacy">Legacy</SelectItem>
+                  <SelectItem value="Vintage">Vintage</SelectItem>
+                  <SelectItem value="Pauper">Pauper</SelectItem>
+                  <SelectItem value="Limited">Limited</SelectItem>
+                  <SelectItem value="Historic">Historic</SelectItem>
+                  <SelectItem value="Brawl">Brawl</SelectItem>
+                  <SelectItem value="Outro">Outro</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div className="quantum-form-group">
+              <label className="quantum-label" htmlFor="description">Descrição</label>
+              <Textarea 
+                id="description"
+                className="quantum-textarea"
+                value={editedDeck.description}
+                onChange={(e) => setEditedDeck({...editedDeck, description: e.target.value})}
+              />
+            </div>
+            
+            <div className="flex justify-end gap-2 mt-4">
+              <Button className="quantum-btn" onClick={() => setEditMode(false)}>
                 Cancelar
               </Button>
-              <Button onClick={handleSave} className="bg-blue-600 hover:bg-blue-700">
-                <Save className="w-4 h-4 mr-2" />
-                Salvar
+              <Button className="quantum-btn primary" onClick={handleSave}>
+                Salvar Alterações
               </Button>
             </div>
           </div>
         </DialogContent>
       </Dialog>
 
-      {/* Layout principal - 3 colunas */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 px-4 pb-8">
+      {/* Layout compacto - 3 colunas */}
+      <div className="grid grid-cols-12 gap-2 p-2">
         {/* Coluna esquerda - Lista de cartas */}
-        <div className="lg:col-span-3 space-y-4" style={{ maxHeight: 'calc(100vh - 180px)', overflow: 'auto' }}>
-          <div className="sticky top-0 z-10 bg-gray-900/95 backdrop-blur-sm pb-2">
-            <div className="flex items-center gap-2 mb-3">
-              <div className="relative flex-grow">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-                <Input
-                  placeholder="Buscar cartas..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 bg-gray-800 border-gray-700 text-white h-9 text-sm"
-                />
-              </div>
-              <Button variant="outline" size="sm" className="h-9 px-2 border-gray-700 bg-gray-800">
-                <Filter className="h-4 w-4" />
-              </Button>
+        <div className="col-span-12 sm:col-span-3 space-y-2" style={{ maxHeight: 'calc(100vh - 140px)', overflow: 'auto' }}>
+          <div className="quantum-card-dense">
+            <div className="text-xs text-center p-1 border-b border-cyan-500/20 mb-2">
+              <span className="text-cyan-400">{stats.unique}</span> cartas únicas • <span className="text-cyan-400">{stats.total}</span> total
             </div>
             
-            <div className="flex flex-wrap gap-1 mb-2">
-              <Badge 
-                variant={filterCategory === 'all' ? 'default' : 'outline'} 
-                className="bg-gray-700 hover:bg-gray-600 border-0 text-xs cursor-pointer"
-                onClick={() => setFilterCategory('all')}
-              >
-                Todas
-              </Badge>
-              <Badge 
-                variant={filterCategory === 'mainboard' ? 'default' : 'outline'} 
-                className="bg-blue-800/50 hover:bg-blue-700/60 text-blue-200 border-blue-700/50 text-xs cursor-pointer"
-                onClick={() => setFilterCategory('mainboard')}
-              >
-                Principal
-              </Badge>
-              {deck.cards.filter(c => c.category === 'commander').length > 0 && (
-                <Badge 
-                  variant={filterCategory === 'commander' ? 'default' : 'outline'} 
-                  className="bg-amber-800/50 hover:bg-amber-700/60 text-amber-200 border-amber-700/50 text-xs cursor-pointer"
-                  onClick={() => setFilterCategory('commander')}
-                >
-                  Commander
-                </Badge>
-              )}
-              {deck.cards.filter(c => c.category === 'sideboard').length > 0 && (
-                <Badge 
-                  variant={filterCategory === 'sideboard' ? 'default' : 'outline'} 
-                  className="bg-green-800/50 hover:bg-green-700/60 text-green-200 border-green-700/50 text-xs cursor-pointer"
-                  onClick={() => setFilterCategory('sideboard')}
-                >
-                  Sideboard
-                </Badge>
-              )}
-            </div>
+            <DeckCardsList 
+              cards={filteredCards} 
+              onUpdateQuantity={handleUpdateQuantity}
+              onRemoveCard={handleRemoveCard}
+              onCardClick={openModal}
+            />
           </div>
-          
-          <DeckCardsList 
-            cards={filteredCards} 
-            onUpdateQuantity={handleUpdateQuantity}
-            onRemoveCard={handleRemoveCard}
-            onCardClick={openModal}
-          />
         </div>
 
         {/* Coluna central - Visualização */}
-        <div className="lg:col-span-6" style={{ maxHeight: 'calc(100vh - 180px)', overflow: 'auto' }}>
-          <Card className="bg-gray-800/40 border border-gray-700 shadow-md">
-            <CardHeader className="p-3 border-b border-gray-700 bg-gray-800/70">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <CardTitle className="text-gray-200 text-base">Visualização</CardTitle>
-                  <Badge variant="outline" className="text-xs bg-gray-700/50 border-gray-600 ml-2">
-                    {filteredCards.reduce((sum, c) => sum + c.quantity, 0)} cartas
-                  </Badge>
-                </div>
-                <div className="flex items-center gap-1 bg-gray-700/60 rounded-md p-1">
-                  <Button
-                    size="sm"
-                    variant={viewMode === 'grid' ? 'default' : 'ghost'}
-                    onClick={() => setViewMode('grid')}
-                    className="h-7 w-7 p-0"
-                  >
-                    <Grid3X3 className="h-3.5 w-3.5" />
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant={viewMode === 'spoiler' ? 'default' : 'ghost'}
-                    onClick={() => setViewMode('spoiler')}
-                    className="h-7 w-7 p-0"
-                  >
-                    <List className="h-3.5 w-3.5" />
-                  </Button>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent className="p-4">
-              <VisualCardDisplay
-                cards={filteredCards}
-                viewMode={viewMode}
-                onCardClick={openModal}
-              />
-            </CardContent>
-          </Card>
+        <div className="col-span-12 sm:col-span-6" style={{ maxHeight: 'calc(100vh - 140px)', overflow: 'auto' }}>
+          <div className="quantum-card-dense">
+            <VisualCardDisplay 
+              cards={filteredCards} 
+              viewMode={viewMode}
+              onCardClick={openModal}
+            />
+          </div>
         </div>
 
         {/* Coluna direita - Estatísticas */}
-        <div className="lg:col-span-3 space-y-4" style={{ maxHeight: 'calc(100vh - 180px)', overflow: 'auto' }}>
-          <Card className="bg-gray-800/40 border border-gray-700 shadow-md">
-            <CardHeader className="p-3 border-b border-gray-700 bg-gray-800/70">
-              <CardTitle className="text-gray-200 text-base flex items-center gap-2">
-                <Target className="w-4 h-4" />
-                Contagens
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-3 space-y-3">
-              <div className="grid grid-cols-2 gap-2 text-sm">
-                <div className="bg-gray-700/40 p-2 rounded-md text-center">
-                  <div className="text-blue-400 font-bold text-lg">{stats.mainboard}</div>
-                  <div className="text-gray-400 text-xs">Principal</div>
-                </div>
-                {stats.sideboard > 0 && (
-                  <div className="bg-gray-700/40 p-2 rounded-md text-center">
-                    <div className="text-green-400 font-bold text-lg">{stats.sideboard}</div>
-                    <div className="text-gray-400 text-xs">Sideboard</div>
-                  </div>
-                )}
-                {stats.commander > 0 && (
-                  <div className="bg-gray-700/40 p-2 rounded-md text-center">
-                    <div className="text-yellow-400 font-bold text-lg">{stats.commander}</div>
-                    <div className="text-gray-400 text-xs">Commander</div>
-                  </div>
-                )}
-                <div className="bg-gray-700/40 p-2 rounded-md text-center">
-                  <div className="text-white font-bold text-lg">{stats.total}</div>
-                  <div className="text-gray-400 text-xs">Total</div>
-                </div>
+        <div className="col-span-12 sm:col-span-3 space-y-2" style={{ maxHeight: 'calc(100vh - 140px)', overflow: 'auto' }}>
+          <div className="quantum-card-dense">
+            <div className="flex justify-between items-center border-b border-cyan-500/20 p-1">
+              <span className="text-xs font-semibold text-cyan-400">Distribuição</span>
+            </div>
+            <div className="p-2">
+              <div className="flex items-center justify-between text-xs mb-1">
+                <span className="text-gray-400">Main Deck</span>
+                <span className="text-white font-mono">{stats.mainboard}</span>
               </div>
-            </CardContent>
-          </Card>
+              {stats.commander > 0 && (
+                <div className="flex items-center justify-between text-xs mb-1">
+                  <span className="text-gray-400">Commander</span>
+                  <span className="text-white font-mono">{stats.commander}</span>
+                </div>
+              )}
+              {stats.sideboard > 0 && (
+                <div className="flex items-center justify-between text-xs mb-1">
+                  <span className="text-gray-400">Sideboard</span>
+                  <span className="text-white font-mono">{stats.sideboard}</span>
+                </div>
+              )}
+              <div className="h-px bg-gradient-to-r from-cyan-500/20 via-cyan-400/40 to-cyan-500/20 my-1"></div>
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-gray-300">Total</span>
+                <span className="text-cyan-400 font-mono font-bold">{stats.total}</span>
+              </div>
+            </div>
+          </div>
 
           <ManaCurveDisplay manaCurve={stats.manaCurve} />
           <TypeDistributionDisplay cards={deck.cards.filter(c => c.category === 'mainboard')} />
 
           {deck.description && (
-            <Card className="bg-gray-800/40 border border-gray-700 shadow-md">
-              <CardHeader className="p-3 border-b border-gray-700 bg-gray-800/70">
-                <CardTitle className="text-gray-200 text-base flex items-center gap-2">
-                  <FileText className="w-4 h-4" />
-                  Descrição
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-3">
-                <p className="text-gray-300 text-sm whitespace-pre-wrap">{deck.description}</p>
-              </CardContent>
-            </Card>
+            <div className="quantum-card-dense">
+              <div className="flex justify-between items-center border-b border-cyan-500/20 p-1">
+                <span className="text-xs font-semibold text-cyan-400">Descrição</span>
+              </div>
+              <div className="p-2 text-xs text-gray-300">{deck.description}</div>
+            </div>
           )}
         </div>
       </div>
+      
+      {/* Modal de Confirmação de Deleção */}
+      <Dialog open={showDeleteConfirm} onOpenChange={setShowDeleteConfirm}>
+        <DialogContent className="quantum-card">
+          <DialogHeader>
+            <h2 className="quantum-card-title text-red-400">Excluir Deck</h2>
+          </DialogHeader>
+          <div>
+            <p className="text-sm text-gray-300 mb-4">
+              Tem certeza que deseja excluir o deck <strong>{deck.name}</strong>? 
+              Esta ação não pode ser desfeita.
+            </p>
+            <div className="flex justify-end gap-2">
+              <Button className="quantum-btn" onClick={() => setShowDeleteConfirm(false)}>
+                Cancelar
+              </Button>
+              <Button className="quantum-btn primary" style={{background: 'rgba(239, 68, 68, 0.2)', borderColor: '#ef4444'}} onClick={handleDelete}>
+                <Trash2 className="w-4 h-4" />
+                Excluir Permanentemente
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

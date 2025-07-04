@@ -2,11 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import modern design system */
-@import '../styles/modern-layout.css';
-@import '../styles/visual-refinements.css';
-@import '../styles/enhanced-buttons.css';
-@import '../styles/text-contrast-enhanced.css';
+/* Import Mobile-First Design System */
+@import '../styles/mobile-first-design.css';
 
 @layer base {
   :root {

@@ -26,6 +26,7 @@ interface LoginDialogProps {
 }
 
 export default function LoginDialog({ isOpen, setIsOpen, onLogin }: LoginDialogProps) {
+  const [activeTab, setActiveTab] = useState<'login' | 'register'>('login')
   const [showPassword, setShowPassword] = useState(false)
   const [loginData, setLoginData] = useState({
     email: '',
@@ -132,240 +133,237 @@ export default function LoginDialog({ isOpen, setIsOpen, onLogin }: LoginDialogP
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="sm:max-w-md rounded-lg text-card-foreground bg-gray-800/80 backdrop-blur-xl shadow-2xl overflow-hidden border-0">
+      <DialogContent className="sm:max-w-md mtg-modal">
         <DialogHeader>
-          <DialogTitle className="text-white text-center text-2xl">
+          <DialogTitle className="text-center text-2xl text-white mb-6">
+            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-600 to-purple-700 flex items-center justify-center mb-4 mx-auto shadow-xl">
+              <User className="w-8 h-8 text-white" />
+            </div>
             Entrar no MTG Helper
           </DialogTitle>
         </DialogHeader>
 
-        <Tabs defaultValue="login" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="login">Entrar</TabsTrigger>
-            <TabsTrigger value="register">Criar Conta</TabsTrigger>
-          </TabsList>
+        <div className="w-full">
+          <div className="mtg-tabs mb-6">
+            <button
+              onClick={() => setActiveTab('login')}
+              className={`mtg-tab ${activeTab === 'login' ? 'mtg-tab-active' : ''}`}
+            >
+              <LogIn className="w-4 h-4" />
+              <span>Entrar</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('register')}
+              className={`mtg-tab ${activeTab === 'register' ? 'mtg-tab-active' : ''}`}
+            >
+              <UserPlus className="w-4 h-4" />
+              <span>Criar Conta</span>
+            </button>
+          </div>
 
-          <TabsContent value="login" className="space-y-4 mt-6">
-            <form onSubmit={handleLogin} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="email" className="text-gray-300">
-                  Email
-                </Label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="seu@email.com"
-                    value={loginData.email}
-                    onChange={(e) => setLoginData(prev => ({ ...prev, email: e.target.value }))}
-                    className="pl-10 bg-gray-800/50 border-gray-600/50 text-white"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="password" className="text-gray-300">
-                  Senha
-                </Label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <Input
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    placeholder="••••••••"
-                    value={loginData.password}
-                    onChange={(e) => setLoginData(prev => ({ ...prev, password: e.target.value }))}
-                    className="pl-10 pr-10 bg-gray-800/50 border-gray-600/50 text-white"
-                    required
-                  />
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 h-auto p-1 text-gray-400 hover:text-white"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                  </Button>
-                </div>
-              </div>
-
-              {error && (
-                <div className="text-red-400 text-sm text-center">
-                  {error}
-                </div>
-              )}
-
-              <Button
-                type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700"
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-                    Entrando...
+          {activeTab === 'login' && (
+            <div className="space-y-6">
+              <form onSubmit={handleLogin} className="space-y-6">
+                <div>
+                  <label className="mtg-label">Email</label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
+                    <Input
+                      type="email"
+                      placeholder="seu@email.com"
+                      value={loginData.email}
+                      onChange={(e) => setLoginData(prev => ({ ...prev, email: e.target.value }))}
+                      className="mtg-input pl-10"
+                      required
+                    />
                   </div>
-                ) : (
-                  <>
-                    <LogIn className="w-4 h-4 mr-2" />
-                    Entrar
-                  </>
-                )}
-              </Button>
-            </form>
+                </div>
 
-            <div className="text-center">
-              <Button variant="link" className="text-blue-400 hover:text-blue-300 text-sm">
-                Esqueceu sua senha?
-              </Button>
+                <div>
+                  <label className="mtg-label">Senha</label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
+                    <Input
+                      type={showPassword ? "text" : "password"}
+                      placeholder="••••••••"
+                      value={loginData.password}
+                      onChange={(e) => setLoginData(prev => ({ ...prev, password: e.target.value }))}
+                      className="mtg-input pl-10 pr-10"
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-white transition-colors"
+                    >
+                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    </button>
+                  </div>
+                </div>
+
+                {error && (
+                  <div className="text-red-400 text-sm text-center bg-red-500/10 border border-red-500/20 rounded-lg p-3">
+                    {error}
+                  </div>
+                )}
+
+                <button
+                  type="submit"
+                  className="mtg-button mtg-button-primary w-full"
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                      <span>Entrando...</span>
+                    </>
+                  ) : (
+                    <>
+                      <LogIn className="w-4 h-4" />
+                      <span>Entrar</span>
+                    </>
+                  )}
+                </button>
+              </form>
+
+              <div className="text-center">
+                <button className="text-blue-400 hover:text-blue-300 text-sm transition-colors">
+                  Esqueceu sua senha?
+                </button>
+              </div>
             </div>
-          </TabsContent>
+          )}
 
-          <TabsContent value="register" className="space-y-4 mt-6">
-            <form onSubmit={handleRegister} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="name" className="text-gray-300">
-                  Nome
-                </Label>
-                <div className="relative">
-                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <Input
-                    id="name"
-                    type="text"
-                    placeholder="Seu nome"
-                    value={registerData.name}
-                    onChange={(e) => setRegisterData(prev => ({ ...prev, name: e.target.value }))}
-                    className="pl-10 bg-gray-800/50 border-gray-600/50 text-white"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="register-email" className="text-gray-300">
-                  Email
-                </Label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <Input
-                    id="register-email"
-                    type="email"
-                    placeholder="seu@email.com"
-                    value={registerData.email}
-                    onChange={(e) => setRegisterData(prev => ({ ...prev, email: e.target.value }))}
-                    className="pl-10 bg-gray-800/50 border-gray-600/50 text-white"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="register-password" className="text-gray-300">
-                  Senha
-                </Label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <Input
-                    id="register-password"
-                    type="password"
-                    placeholder="••••••••"
-                    value={registerData.password}
-                    onChange={(e) => setRegisterData(prev => ({ ...prev, password: e.target.value }))}
-                    className="pl-10 bg-gray-800/50 border-gray-600/50 text-white"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="confirm-password" className="text-gray-300">
-                  Confirmar Senha
-                </Label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <Input
-                    id="confirm-password"
-                    type="password"
-                    placeholder="••••••••"
-                    value={registerData.confirmPassword}
-                    onChange={(e) => setRegisterData(prev => ({ ...prev, confirmPassword: e.target.value }))}
-                    className="pl-10 bg-gray-800/50 border-gray-600/50 text-white"
-                    required
-                  />
-                </div>
-              </div>
-
-              {error && (
-                <div className="text-red-400 text-sm text-center">
-                  {error}
-                </div>
-              )}
-
-              <Button
-                type="submit"
-                className="w-full bg-green-600 hover:bg-green-700"
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-                    Criando conta...
+          {activeTab === 'register' && (
+            <div className="space-y-6">
+              <form onSubmit={handleRegister} className="space-y-6">
+                <div>
+                  <label className="mtg-label">Nome</label>
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
+                    <Input
+                      type="text"
+                      placeholder="Seu nome"
+                      value={registerData.name}
+                      onChange={(e) => setRegisterData(prev => ({ ...prev, name: e.target.value }))}
+                      className="mtg-input pl-10"
+                      required
+                    />
                   </div>
-                ) : (
-                  <>
-                    <UserPlus className="w-4 h-4 mr-2" />
-                    Criar Conta
-                  </>
+                </div>
+
+                <div>
+                  <label className="mtg-label">Email</label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
+                    <Input
+                      type="email"
+                      placeholder="seu@email.com"
+                      value={registerData.email}
+                      onChange={(e) => setRegisterData(prev => ({ ...prev, email: e.target.value }))}
+                      className="mtg-input pl-10"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="mtg-label">Senha</label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
+                    <Input
+                      type="password"
+                      placeholder="••••••••"
+                      value={registerData.password}
+                      onChange={(e) => setRegisterData(prev => ({ ...prev, password: e.target.value }))}
+                      className="mtg-input pl-10"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="mtg-label">Confirmar Senha</label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
+                    <Input
+                      type="password"
+                      placeholder="••••••••"
+                      value={registerData.confirmPassword}
+                      onChange={(e) => setRegisterData(prev => ({ ...prev, confirmPassword: e.target.value }))}
+                      className="mtg-input pl-10"
+                      required
+                    />
+                  </div>
+                </div>
+
+                {error && (
+                  <div className="text-red-400 text-sm text-center bg-red-500/10 border border-red-500/20 rounded-lg p-3">
+                    {error}
+                  </div>
                 )}
-              </Button>
-            </form>
-          </TabsContent>
-        </Tabs>
 
-        {/* Divisor */}
-        <div className="relative my-4">
-          <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t border-gray-600" />
+                <button
+                  type="submit"
+                  className="mtg-button mtg-button-success w-full"
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                      <span>Criando conta...</span>
+                    </>
+                  ) : (
+                    <>
+                      <UserPlus className="w-4 h-4" />
+                      <span>Criar Conta</span>
+                    </>
+                  )}
+                </button>
+              </form>
+            </div>
+          )}
+
+          {/* Divisor */}
+          <div className="relative my-8">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t border-slate-700" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-slate-900 px-3 text-slate-400">Ou continue com</span>
+            </div>
           </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-gray-900 px-2 text-gray-400">Ou continue com</span>
+
+          {/* Login Social */}
+          <div className="grid grid-cols-2 gap-3 mb-6">
+            <button
+              onClick={() => handleSocialLogin('google')}
+              disabled={isLoading}
+              className="mtg-button mtg-button-secondary"
+            >
+              <Chrome className="w-4 h-4" />
+              <span>Google</span>
+            </button>
+            <button
+              onClick={() => handleSocialLogin('github')}
+              disabled={isLoading}
+              className="mtg-button mtg-button-secondary"
+            >
+              <Github className="w-4 h-4" />
+              <span>GitHub</span>
+            </button>
           </div>
-        </div>
 
-        {/* Login Social */}
-        <div className="grid grid-cols-2 gap-3">
-          <Button
-            variant="outline"
-            onClick={() => handleSocialLogin('google')}
-            disabled={isLoading}
-            className="border-gray-600 text-gray-300 hover:bg-gray-800"
-          >
-            <Chrome className="w-4 h-4 mr-2" />
-            Google
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() => handleSocialLogin('github')}
-            disabled={isLoading}
-            className="border-gray-600 text-gray-300 hover:bg-gray-800"
-          >
-            <Github className="w-4 h-4 mr-2" />
-            GitHub
-          </Button>
-        </div>
-
-        <div className="text-center text-xs text-gray-500 mt-4">
-          Ao continuar, você concorda com nossos{' '}
-          <Button variant="link" className="h-auto p-0 text-xs text-blue-400">
-            Termos de Uso
-          </Button>{' '}
-          e{' '}
-          <Button variant="link" className="h-auto p-0 text-xs text-blue-400">
-            Política de Privacidade
-          </Button>
+          <div className="text-center text-xs text-slate-500">
+            Ao continuar, você concorda com nossos{' '}
+            <button className="text-blue-400 hover:text-blue-300 underline">
+              Termos de Uso
+            </button>{' '}
+            e{' '}
+            <button className="text-blue-400 hover:text-blue-300 underline">
+              Política de Privacidade
+            </button>
+          </div>
         </div>
       </DialogContent>
     </Dialog>
