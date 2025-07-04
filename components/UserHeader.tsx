@@ -12,7 +12,20 @@ import {
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu"
 import LoginDialog from './LoginDialog'
-import { User, Settings, LogOut, Crown, Star, Trophy } from "lucide-react"
+import { 
+  User, 
+  Settings, 
+  LogOut, 
+  Crown, 
+  Star, 
+  Trophy, 
+  Shield,
+  Zap,
+  Bell,
+  ChevronDown,
+  Users,
+  BarChart3
+} from "lucide-react"
 
 interface User {
   id: string
@@ -40,10 +53,10 @@ export default function UserHeader({ user, onLogin, onLogout }: UserHeaderProps)
       <>
         <button 
           onClick={() => setIsLoginOpen(true)}
-          className="btn-modern-primary btn-modern-icon"
+          className="mtg-button mtg-button-primary"
         >
           <User className="w-4 h-4" />
-          Entrar
+          <span className="hidden sm:inline">Entrar</span>
         </button>
 
         <LoginDialog 
@@ -57,91 +70,164 @@ export default function UserHeader({ user, onLogin, onLogout }: UserHeaderProps)
 
   // Se o usuário existe, mostrar interface do usuário logado
   return (
-    <div className="flex items-center gap-lg">
-      {/* Estatísticas rápidas */}
-      <div className="hidden md:flex items-center gap-lg text-sm">
-        <div className="flex items-center gap-xs" style={{ color: 'var(--color-accent-primary)' }}>
-          <Trophy className="w-4 h-4" />
-          <span>{user.collectionsCount || 0} coleções</span>
+    <div className="flex items-center gap-3 lg:gap-6">
+      {/* Status Indicators - Hidden on mobile */}
+      <div className="hidden lg:flex items-center gap-4">
+        <div className="flex items-center gap-3 px-4 py-2 rounded-xl bg-slate-800/50 border border-slate-700/50">
+          <div className="flex items-center gap-2">
+            <Trophy className="w-4 h-4 text-blue-400" />
+            <div className="text-right">
+              <div className="text-sm font-semibold text-white">{user.collectionsCount || 0}</div>
+              <div className="text-xs text-slate-400">coleções</div>
+            </div>
+          </div>
+          <div className="w-px h-8 bg-slate-700"></div>
+          <div className="flex items-center gap-2">
+            <Star className="w-4 h-4 text-purple-400" />
+            <div className="text-right">
+              <div className="text-sm font-semibold text-white">{user.totalCards || 0}</div>
+              <div className="text-xs text-slate-400">cartas</div>
+            </div>
+          </div>
         </div>
-        <div className="flex items-center gap-xs text-purple-400">
-          <Star className="w-4 h-4" />
-          <span>{user.totalCards || 0} cartas</span>
+
+        {/* Quick Action Buttons */}
+        <div className="flex items-center gap-2">
+          <button className="w-10 h-10 rounded-xl bg-slate-800/50 border border-slate-700/50 hover:bg-slate-700/50 hover:border-slate-600 transition-all flex items-center justify-center">
+            <Bell className="w-4 h-4 text-slate-400" />
+          </button>
+          <button className="w-10 h-10 rounded-xl bg-slate-800/50 border border-slate-700/50 hover:bg-slate-700/50 hover:border-slate-600 transition-all flex items-center justify-center">
+            <Settings className="w-4 h-4 text-slate-400" />
+          </button>
         </div>
       </div>
 
-      {/* Menu do usuário */}
+      {/* User Menu */}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="relative h-10 w-10 rounded-full hover:bg-gray-600/20">
-            <Avatar className="h-10 w-10">
+          <Button 
+            variant="ghost" 
+            className="mtg-user-trigger"
+          >
+            <Avatar className="w-10 h-10 ring-2 ring-slate-700">
               <AvatarImage src={user.avatar} alt={user.name} />
-              <AvatarFallback style={{ background: 'var(--color-accent-primary)', color: 'white' }}>
+              <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white font-bold">
                 {user.name.charAt(0).toUpperCase()}
               </AvatarFallback>
             </Avatar>
+            <div className="hidden md:block text-left">
+              <div className="text-sm font-medium text-white">{user.name}</div>
+              <div className="text-xs text-slate-400">Online</div>
+            </div>
+            <ChevronDown className="w-4 h-4 text-slate-400 hidden md:block" />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-64" style={{ background: 'var(--color-bg-secondary)', border: '1px solid var(--color-border-soft)', borderRadius: 'var(--radius-xl)' }} align="end">
-          <DropdownMenuLabel style={{ color: 'var(--color-text-primary)' }}>
-            <div className="flex flex-col space-y-1">
-              <p className="text-sm font-medium leading-none">{user.name}</p>
-              <p className="text-xs leading-none" style={{ color: 'var(--color-text-quaternary)' }}>{user.email}</p>
+        <DropdownMenuContent 
+          className="mtg-dropdown mtg-user-menu" 
+          align="end"
+          sideOffset={8}
+        >
+          {/* User Profile Header */}
+          <DropdownMenuLabel className="pb-4">
+            <div className="flex items-center gap-4">
+              <Avatar className="w-14 h-14 ring-2 ring-blue-500/30">
+                <AvatarImage src={user.avatar} alt={user.name} />
+                <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white font-bold text-lg">
+                  {user.name.charAt(0).toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
+              <div className="flex-1 min-w-0">
+                <h3 className="font-semibold text-white text-base">{user.name}</h3>
+                <p className="text-sm text-slate-400 truncate">{user.email}</p>
+                <div className="flex items-center gap-2 mt-2">
+                  <div className="mtg-status mtg-status-success">
+                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                    Online
+                  </div>
+                  <div className="mtg-badge mtg-badge-primary text-xs">PRO</div>
+                </div>
+              </div>
             </div>
           </DropdownMenuLabel>
-          <DropdownMenuSeparator style={{ background: 'var(--color-border-soft)' }} />
           
-          {/* Estatísticas do usuário */}
-          <div className="px-2 py-2">
-            <div className="grid grid-cols-2 gap-2 text-xs">
-              <div className="text-center p-2 rounded" style={{ background: 'rgba(59, 130, 246, 0.1)' }}>
-                <div className="font-bold" style={{ color: 'var(--color-accent-primary)' }}>{user.collectionsCount || 0}</div>
-                <div style={{ color: 'var(--color-text-quaternary)' }}>Coleções</div>
+          <DropdownMenuSeparator className="bg-slate-700" />
+          
+          {/* User Stats */}
+          <div className="px-2 py-4">
+            <div className="mtg-grid-2 gap-3">
+              <div className="text-center p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
+                <div className="flex items-center justify-center gap-1 mb-1">
+                  <Trophy className="w-4 h-4 text-blue-400" />
+                </div>
+                <div className="text-xl font-bold text-blue-400">{user.collectionsCount || 0}</div>
+                <div className="text-xs text-slate-400">Coleções</div>
               </div>
-              <div className="text-center p-2 rounded" style={{ background: 'rgba(139, 92, 246, 0.1)' }}>
-                <div className="font-bold text-purple-400">{user.totalCards || 0}</div>
-                <div style={{ color: 'var(--color-text-quaternary)' }}>Cartas</div>
+              <div className="text-center p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
+                <div className="flex items-center justify-center gap-1 mb-1">
+                  <Star className="w-4 h-4 text-purple-400" />
+                </div>
+                <div className="text-xl font-bold text-purple-400">{user.totalCards || 0}</div>
+                <div className="text-xs text-slate-400">Cartas</div>
               </div>
             </div>
           </div>
 
-          {/* Conquistas recentes */}
+          {/* Recent Achievements */}
           {user.achievements && user.achievements.length > 0 && (
             <>
-              <DropdownMenuSeparator style={{ background: 'var(--color-border-soft)' }} />
-              <div className="px-2 py-2">
-                <div className="text-xs font-medium mb-2 flex items-center gap-1" style={{ color: 'var(--color-text-tertiary)' }}>
-                  <Crown className="w-3 h-3" />
-                  Conquistas Recentes
+              <DropdownMenuSeparator className="bg-slate-700" />
+              <div className="px-2 py-4">
+                <div className="flex items-center gap-2 mb-3">
+                  <Crown className="w-4 h-4 text-yellow-400" />
+                  <span className="font-medium text-slate-200">Conquistas Recentes</span>
                 </div>
-                {user.achievements.slice(0, 2).map((achievement, index) => (
-                  <div key={index} className="text-xs py-1 px-2 rounded mb-1" style={{ color: 'var(--color-text-quaternary)', background: 'rgba(245, 158, 11, 0.1)' }}>
-                    {achievement}
-                  </div>
-                ))}
+                <div className="space-y-2">
+                  {user.achievements.slice(0, 2).map((achievement, index) => (
+                    <div key={index} className="mtg-achievement-compact">
+                      <div className="w-7 h-7 rounded-lg bg-yellow-500/20 flex items-center justify-center">
+                        <Trophy className="w-4 h-4 text-yellow-400" />
+                      </div>
+                      <span className="text-sm text-slate-300 flex-1 font-medium">{achievement}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </>
           )}
 
-          <DropdownMenuSeparator style={{ background: 'var(--color-border-soft)' }} />
+          <DropdownMenuSeparator className="bg-slate-700" />
           
-          <DropdownMenuItem className="cursor-pointer hover:bg-gray-600/20" style={{ color: 'var(--color-text-tertiary)' }}>
-            <User className="mr-2 h-4 w-4" />
-            <span>Perfil</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem className="cursor-pointer hover:bg-gray-600/20" style={{ color: 'var(--color-text-tertiary)' }}>
-            <Settings className="mr-2 h-4 w-4" />
-            <span>Configurações</span>
-          </DropdownMenuItem>
-          <DropdownMenuSeparator style={{ background: 'var(--color-border-soft)' }} />
-          <DropdownMenuItem 
-            className="cursor-pointer hover:bg-red-600/10"
-            style={{ color: 'var(--color-accent-error)' }}
-            onClick={onLogout}
-          >
-            <LogOut className="mr-2 h-4 w-4" />
-            <span>Sair</span>
-          </DropdownMenuItem>
+          {/* Menu Items */}
+          <div className="py-2">
+            <DropdownMenuItem className="mtg-dropdown-item">
+              <User className="w-4 h-4" />
+              <span>Meu Perfil</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="mtg-dropdown-item">
+              <BarChart3 className="w-4 h-4" />
+              <span>Analytics</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="mtg-dropdown-item">
+              <Users className="w-4 h-4" />
+              <span>Comunidade</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="mtg-dropdown-item">
+              <Settings className="w-4 h-4" />
+              <span>Configurações</span>
+            </DropdownMenuItem>
+          </div>
+          
+          <DropdownMenuSeparator className="bg-slate-700" />
+          
+          <div className="py-2">
+            <DropdownMenuItem 
+              className="mtg-dropdown-item text-red-400 hover:bg-red-500/20 focus:bg-red-500/20"
+              onClick={onLogout}
+            >
+              <LogOut className="w-4 h-4" />
+              <span>Sair</span>
+            </DropdownMenuItem>
+          </div>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

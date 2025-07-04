@@ -70,7 +70,7 @@ const QuantityBadge = React.memo(({ card, collection }: { card: MTGCard; collect
   return (
     <Badge 
       variant="secondary" 
-      className="absolute top-2 left-2 bg-blue-600 text-white border-blue-500 z-10"
+      className="absolute top-2 left-2 bg-blue-600/90 text-white border-blue-500/50 z-10 backdrop-blur-sm"
     >
       {quantity}x na coleção
     </Badge>
@@ -79,9 +79,11 @@ const QuantityBadge = React.memo(({ card, collection }: { card: MTGCard; collect
 
 QuantityBadge.displayName = 'QuantityBadge';
 
-// Componente para controle de quantidade
+// Usando o componente QuantityControl melhorado
+import QuantityControlComponent from '@/components/QuantityControl';
+
+// Componente para controle de quantidade (wrapper para o novo componente)
 const QuantityControl = React.memo(({ onAdd, compact = false }: { onAdd: (quantity: number) => void; compact?: boolean }) => {
-  const [quantity, setQuantity] = useState(1);
   const [isAdding, setIsAdding] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -93,7 +95,7 @@ const QuantityControl = React.memo(({ onAdd, compact = false }: { onAdd: (quanti
     };
   }, []);
 
-  const handleAdd = useCallback(() => {
+  const handleAdd = useCallback((quantity: number) => {
     setIsAdding(true);
     onAdd(quantity);
     
@@ -106,95 +108,25 @@ const QuantityControl = React.memo(({ onAdd, compact = false }: { onAdd: (quanti
     timeoutRef.current = setTimeout(() => {
       setIsAdding(false);
     }, 1000);
-  }, [quantity, onAdd]);
-
-  const increaseQuantity = useCallback(() => {
-    setQuantity(prev => prev + 1);
-  }, []);
-
-  const decreaseQuantity = useCallback(() => {
-    setQuantity(prev => Math.max(1, prev - 1));
-  }, []);
-
-  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value) || 1;
-    setQuantity(Math.max(1, value));
-  }, []);
+  }, [onAdd]);
 
   if (compact) {
     return (
-      <div className="flex flex-col gap-1 w-full">
-        <div className="flex items-center border rounded text-xs">
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            onClick={decreaseQuantity}
-            className="h-6 w-6 p-0 text-xs"
-          >
-            <Minus className="h-3 w-3" />
-          </Button>
-          <Input
-            type="number"
-            value={quantity}
-            onChange={handleInputChange}
-            className="w-8 h-6 text-center border-0 rounded-none text-xs p-0"
-            min="1"
-          />
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            onClick={increaseQuantity}
-            className="h-6 w-6 p-0 text-xs"
-          >
-            <Plus className="h-3 w-3" />
-          </Button>
-        </div>
-        <Button 
-          onClick={handleAdd}
-          disabled={isAdding}
-          className="bg-blue-600 hover:bg-blue-700 text-white text-xs py-1 px-2 h-6"
-        >
-          {isAdding ? 'OK' : `+${quantity}`}
-        </Button>
-      </div>
+      <QuantityControlComponent
+        initialValue={1}
+        onChange={handleAdd}
+        showPresets={false}
+        className="scale-90 origin-top-left"
+      />
     );
   }
 
   return (
-    <div className="flex items-center gap-2">
-      <div className="flex items-center border rounded">
-        <Button 
-          variant="ghost" 
-          size="sm" 
-          onClick={decreaseQuantity}
-          className="h-8 w-8 p-0"
-        >
-          <Minus className="h-4 w-4" />
-        </Button>
-        <Input
-          type="number"
-          value={quantity}
-          onChange={handleInputChange}
-          className="w-16 h-8 text-center border-0 rounded-none"
-          min="1"
-        />
-        <Button 
-          variant="ghost" 
-          size="sm" 
-          onClick={increaseQuantity}
-          className="h-8 w-8 p-0"
-        >
-          <Plus className="h-4 w-4" />
-        </Button>
-      </div>
-      <Button 
-        onClick={handleAdd}
-        disabled={isAdding}
-        className="bg-blue-600 hover:bg-blue-700 text-white"
-      >
-        {isAdding ? 'Adicionando...' : `Adicionar ${quantity}x`}
-      </Button>
-    </div>
+    <QuantityControlComponent
+      initialValue={1}
+      onChange={handleAdd}
+      showPresets={true}
+    />
   );
 });
 
@@ -332,38 +264,38 @@ const SearchCardItem = React.memo(({
     if (!showVersions) return null;
 
     return (
-      <div className="mt-4 rounded-lg text-card-foreground bg-gray-800/80 backdrop-blur-xl shadow-2xl overflow-hidden border-0">
-        <div className="p-3 border-b border-gray-700/50">
-          <h5 className="text-sm font-semibold text-white flex items-center gap-2">
-            <Search className="w-4 h-4" />
-            Outras versões de "{card.name}"
-          </h5>
+      <div className="mt-4 mtg-card">
+        <div className="mtg-card-header">
+          <Search className="mtg-card-icon" />
+          <div className="mtg-card-content">
+            <h5 className="mtg-card-title text-sm">Outras versões de "{card.name}"</h5>
+          </div>
         </div>
 
-        <div className="max-h-60 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800">
+        <div className="max-h-60 overflow-y-auto px-6 pb-6">
           {versionsData.loading ? (
             <div className="flex items-center justify-center py-8">
               <Loader2 className="h-5 w-5 animate-spin text-blue-500 mr-2" />
-              <span className="text-gray-300 text-sm">Buscando versões...</span>
+              <span className="text-slate-300 text-sm">Buscando versões...</span>
             </div>
           ) : versionsData.error ? (
-            <div className="text-red-400 text-sm flex items-center gap-2 py-4 px-3">
+            <div className="text-red-400 text-sm flex items-center gap-2 py-4">
               <AlertCircle className="w-4 h-4" />
               <span>{versionsData.error}</span>
             </div>
           ) : versionsData.versions.length === 0 ? (
-            <div className="text-gray-400 text-sm py-4 text-center">
+            <div className="text-slate-400 text-sm py-4 text-center">
               Nenhuma versão alternativa encontrada
             </div>
           ) : (
-            <div className="p-3 space-y-2">
+            <div className="space-y-3">
               {versionsData.versions.map((version) => (
                 <div 
                   key={version.id} 
-                  className="flex items-center gap-3 p-2 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 transition-colors group"
+                  className="flex items-center gap-3 p-3 bg-slate-800/30 rounded-xl hover:bg-slate-800/50 transition-colors group border border-slate-700/30"
                 >
                   {/* Imagem miniatura */}
-                  <div className="w-12 h-16 bg-gray-900 rounded overflow-hidden border border-gray-600 flex-shrink-0">
+                  <div className="w-12 h-16 bg-slate-900 rounded-lg overflow-hidden border border-slate-600/50 flex-shrink-0">
                     {getCardImage(version) ? (
                       <img
                         src={getCardImage(version)}
@@ -373,7 +305,7 @@ const SearchCardItem = React.memo(({
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
-                        <span className="text-xs text-gray-500 text-center">
+                        <span className="text-xs text-slate-500 text-center">
                           {safeCardAccess.setCode(version)}
                         </span>
                       </div>
@@ -385,7 +317,7 @@ const SearchCardItem = React.memo(({
                     <div className="text-sm text-white font-medium truncate">
                       {safeCardAccess.setCode(version)}
                     </div>
-                    <div className="text-xs text-gray-400 truncate">
+                    <div className="text-xs text-slate-400 truncate">
                       {safeCardAccess.setName(version)}
                     </div>
                   </div>
@@ -413,14 +345,14 @@ const SearchCardItem = React.memo(({
         <QuantityBadge card={card} collection={collection} />
         
         <div 
-          className="cursor-pointer rounded-lg overflow-hidden flex flex-col border border-gray-700 hover:border-blue-500 hover:shadow-md hover:shadow-blue-500/20 transition-all"
+          className="cursor-pointer rounded-xl overflow-hidden flex flex-col border border-slate-700/50 hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-500/20 transition-all bg-slate-800/30 backdrop-blur-sm"
           onClick={handleViewDetails}
         >
           {imageUrl && !imageError ? (
-            <div className="aspect-[63/88] relative overflow-hidden bg-gray-900 flex items-center justify-center">
+            <div className="aspect-[63/88] relative overflow-hidden bg-slate-900 flex items-center justify-center">
               {isLoading && (
-                <div className="absolute inset-0 bg-gray-700 rounded animate-pulse flex items-center justify-center">
-                  <div className="text-gray-400 text-xs">Carregando...</div>
+                <div className="absolute inset-0 bg-slate-700 rounded-t-xl animate-pulse flex items-center justify-center">
+                  <div className="text-slate-400 text-xs">Carregando...</div>
                 </div>
               )}
               <Image
@@ -434,30 +366,28 @@ const SearchCardItem = React.memo(({
               />
             </div>
           ) : (
-            <div className="aspect-[63/88] bg-gray-800 flex items-center justify-center text-center p-2">
-              <span className="text-xs text-gray-400">{card.name}</span>
+            <div className="aspect-[63/88] bg-slate-800 flex items-center justify-center text-center p-2">
+              <span className="text-xs text-slate-400">{card.name}</span>
             </div>
           )}
           
-          <div className="bg-gray-800 p-2 min-h-[80px] flex flex-col items-center justify-center gap-1">
+          <div className="bg-slate-800/50 p-2 min-h-[80px] flex flex-col items-center justify-center gap-1">
             <div 
               className="opacity-0 group-hover:opacity-100 transition-opacity w-full" 
               onClick={(e) => e.stopPropagation()}
             >
               <QuantityControl onAdd={handleAddCard} compact={true} />
             </div>
-            <Button
-              size="sm"
-              variant="ghost"
+            <button
               onClick={(e) => {
                 e.stopPropagation();
                 toggleVersions();
               }}
-              className="opacity-0 group-hover:opacity-100 transition-opacity text-xs text-gray-400 hover:text-white h-5 px-1"
+              className="opacity-0 group-hover:opacity-100 transition-opacity text-xs text-blue-400 hover:text-blue-300 h-5 px-2 rounded border border-blue-500/30 bg-blue-500/10 hover:bg-blue-500/20 transition-colors flex items-center gap-1"
             >
               {showVersions ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
               Versões
-            </Button>
+            </button>
           </div>
         </div>
         
@@ -470,8 +400,8 @@ const SearchCardItem = React.memo(({
   if (viewMode === 'details') {
     return (
       <div data-card-name={card.id}>
-        <Card className="bg-gray-800/50 border-gray-700/50 hover:bg-gray-700/50 transition-colors">
-          <CardContent className="p-6">
+        <div className="mtg-card">
+          <div className="p-6">
             <div className="flex gap-6">
               <QuantityBadge card={card} collection={collection} />
               
@@ -479,21 +409,21 @@ const SearchCardItem = React.memo(({
                 {imageUrl && !imageError ? (
                   <div className="relative w-32 h-44">
                     {isLoading && (
-                      <div className="absolute inset-0 bg-gray-700 rounded animate-pulse"></div>
+                      <div className="absolute inset-0 bg-slate-700 rounded-lg animate-pulse"></div>
                     )}
                     <Image
                       src={imageUrl}
                       alt={card.name}
                       fill
-                      className={`object-cover rounded transition-opacity ${isLoading ? 'opacity-0' : 'opacity-100'}`}
+                      className={`object-cover rounded-lg transition-opacity ${isLoading ? 'opacity-0' : 'opacity-100'}`}
                       onLoad={handleImageLoad}
                       onError={handleImageError}
                       sizes="128px"
                     />
                   </div>
                 ) : (
-                  <div className="w-32 h-44 bg-gray-700 rounded flex items-center justify-center">
-                    <AlertCircle className="h-8 w-8 text-gray-400" />
+                  <div className="w-32 h-44 bg-slate-700 rounded-lg flex items-center justify-center">
+                    <AlertCircle className="h-8 w-8 text-slate-400" />
                   </div>
                 )}
               </div>
@@ -501,20 +431,20 @@ const SearchCardItem = React.memo(({
               <div className="flex-1 min-w-0 space-y-3">
                 <div>
                   <h3 className="text-white font-semibold text-lg">{card.name}</h3>
-                  <p className="text-gray-400">{card.set_name}</p>
-                  <p className="text-gray-500 text-sm">{card.type_line}</p>
+                  <p className="text-slate-400">{card.set_name}</p>
+                  <p className="text-slate-500 text-sm">{card.type_line}</p>
                 </div>
                 
                 {card.oracle_text && (
-                  <div className="text-gray-300 text-sm">
-                    <p className="font-medium text-gray-200 mb-1">Texto:</p>
+                  <div className="text-slate-300 text-sm">
+                    <p className="font-medium text-slate-200 mb-1">Texto:</p>
                     <p className="italic">{card.oracle_text}</p>
                   </div>
                 )}
                 
                 {(card.power || card.toughness) && (
-                  <div className="text-gray-300 text-sm">
-                    <span className="font-medium text-gray-200">P/T:</span> {card.power}/{card.toughness}
+                  <div className="text-slate-300 text-sm">
+                    <span className="font-medium text-slate-200">P/T:</span> {card.power}/{card.toughness}
                   </div>
                 )}
               </div>
@@ -522,30 +452,26 @@ const SearchCardItem = React.memo(({
               <div className="flex flex-col gap-3 items-end">
                 <QuantityControl onAdd={handleAddCard} />
                 <div className="flex gap-2">
-                  <Button 
-                    variant="outline" 
-                    size="sm"
+                  <button 
                     onClick={handleViewDetails}
-                    className="border-gray-600 text-gray-300 hover:bg-gray-700"
+                    className="mtg-button mtg-button-secondary"
                   >
-                    <Info className="h-4 w-4 mr-2" />
-                    Ver Detalhes
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    size="sm"
+                    <Info className="h-4 w-4" />
+                    <span>Ver Detalhes</span>
+                  </button>
+                  <button 
                     onClick={toggleVersions}
-                    className="border-gray-600 text-gray-300 hover:bg-gray-700"
+                    className="mtg-button mtg-button-ghost"
                   >
                     {showVersions ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-                  </Button>
+                  </button>
                 </div>
                 
                 {/* Seletor de Deck - apenas no modo detalhes */}
-                <div className="w-full mt-4 pt-4 border-t border-gray-700">
+                <div className="w-full mt-4 pt-4 border-t border-slate-700">
                   <div className="flex items-center gap-2 mb-2">
                     <Package className="w-4 h-4 text-blue-400" />
-                    <span className="text-sm font-medium text-gray-300">Adicionar a Deck</span>
+                    <span className="text-sm font-medium text-slate-300">Adicionar a Deck</span>
                   </div>
                   <DeckSelector 
                     card={card}
@@ -556,8 +482,8 @@ const SearchCardItem = React.memo(({
                 </div>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
         
         {renderVersionsPanel()}
       </div>
@@ -567,10 +493,8 @@ const SearchCardItem = React.memo(({
   // List view (versão horizontal compacta)
   return (
     <div data-card-name={card.id}>
-      <Card 
-        className="bg-gray-800/50 border-gray-700/50 hover:bg-gray-700/50 transition-colors"
-      >
-        <CardContent className="p-4">
+      <div className="mtg-card-mini">
+        <div className="p-4">
           <div className="flex items-center gap-4">
             <QuantityBadge card={card} collection={collection} />
             
@@ -578,53 +502,49 @@ const SearchCardItem = React.memo(({
               {imageUrl && !imageError ? (
                 <div className="relative w-16 h-20">
                   {isLoading && (
-                    <div className="absolute inset-0 bg-gray-700 rounded animate-pulse"></div>
+                    <div className="absolute inset-0 bg-slate-700 rounded-lg animate-pulse"></div>
                   )}
                   <Image
                     src={imageUrl}
                     alt={card.name}
                     fill
-                    className={`object-cover rounded transition-opacity ${isLoading ? 'opacity-0' : 'opacity-100'}`}
+                    className={`object-cover rounded-lg transition-opacity ${isLoading ? 'opacity-0' : 'opacity-100'}`}
                     onLoad={handleImageLoad}
                     onError={handleImageError}
                     sizes="64px"
                   />
                 </div>
               ) : (
-                <div className="w-16 h-20 bg-gray-700 rounded flex items-center justify-center">
-                  <AlertCircle className="h-6 w-6 text-gray-400" />
+                <div className="w-16 h-20 bg-slate-700 rounded-lg flex items-center justify-center">
+                  <AlertCircle className="h-6 w-6 text-slate-400" />
                 </div>
               )}
             </div>
 
             <div className="flex-1 min-w-0">
               <h3 className="text-white font-medium">{card.name}</h3>
-              <p className="text-gray-400 text-sm">{card.set_name}</p>
-              <p className="text-gray-500 text-xs">{card.type_line}</p>
+              <p className="text-slate-400 text-sm">{card.set_name}</p>
+              <p className="text-slate-500 text-xs">{card.type_line}</p>
             </div>
 
             <div className="flex items-center gap-2">
               <QuantityControl onAdd={handleAddCard} />
-              <Button 
-                variant="outline" 
-                size="sm"
+              <button 
                 onClick={handleViewDetails}
-                className="border-gray-600 text-gray-300 hover:bg-gray-700"
+                className="mtg-button mtg-button-ghost"
               >
                 <Info className="h-4 w-4" />
-              </Button>
-              <Button 
-                variant="outline" 
-                size="sm"
+              </button>
+              <button 
                 onClick={toggleVersions}
-                className="border-gray-600 text-gray-300 hover:bg-gray-700"
+                className="mtg-button mtg-button-ghost"
               >
                 {showVersions ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-              </Button>
+              </button>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
       
       {renderVersionsPanel()}
     </div>

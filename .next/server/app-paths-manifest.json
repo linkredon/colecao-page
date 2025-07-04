@@ -1,3 +1,8 @@
 {
+  "/colecao-simples": "app/colecao-simples.js",
+  "/colecao": "app/colecao.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/colecao-improved/page": "app/colecao-improved/page.js",
+  "/colecao-selector/page": "app/colecao-selector/page.js",
   "/page": "app/page.js"
 }

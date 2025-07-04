@@ -1,17 +1,8 @@
 "use client"
 
-import '../styles/deck-constructor.css'
-import { useState, useMemo } from 'react'
-import { useAppContext } from '@/contexts/AppContext'
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
-import DeckBuilder from '@/components/DeckBuilder'
-import DeckViewerComponent from '@/components/DeckViewerComponent'
-import DeckImporter from '@/components/DeckImporter'
+import CompactConstructor from './ConstrutorDecks-compact'
+
+export default CompactConstructor
 import { 
   Plus, 
   Trash2, 
@@ -28,7 +19,11 @@ import {
   Calendar,
   Eye,
   Upload,
-  Package
+  Package,
+  Hammer,
+  Sparkles,
+  Award,
+  TrendingUp
 } from "lucide-react"
 
 export default function ConstrutorDecks() {
@@ -102,63 +97,42 @@ export default function ConstrutorDecks() {
       setSelectedDeck(null)
       setViewMode('list')
     }
-    showNotification('success', 'Deck removido com sucesso!')
-  }
-
-  const toggleColor = (colorSymbol: string) => {
-    setNewDeckData(prev => ({
-      ...prev,
-      colors: prev.colors.includes(colorSymbol)
-        ? prev.colors.filter(c => c !== colorSymbol)
-        : [...prev.colors, colorSymbol]
-    }))
+    showNotification('success', 'Deck deletado com sucesso!')
   }
 
   // Filtrar e ordenar decks
-  const filteredAndSortedDecks = useMemo(() => {
-    let filtered = decks;
+  const filteredDecks = useMemo(() => {
+    let filtered = decks.filter(deck => {
+      const matchesSearch = deck.name.toLowerCase().includes(searchFilter.toLowerCase())
+      const matchesFormat = formatFilter === 'all' || deck.format === formatFilter
+      return matchesSearch && matchesFormat
+    })
 
-    // Filtro por nome
-    if (searchFilter.trim()) {
-      const search = searchFilter.toLowerCase();
-      filtered = filtered.filter(deck => 
-        deck.name.toLowerCase().includes(search) ||
-        (deck.description && deck.description.toLowerCase().includes(search))
-      );
-    }
-
-    // Filtro por formato
-    if (formatFilter !== 'all') {
-      filtered = filtered.filter(deck => deck.format === formatFilter);
-    }
-
-    // Ordenação
     filtered.sort((a, b) => {
-      let comparison = 0;
+      let comparison = 0
       
       switch (sortBy) {
         case 'name':
-          comparison = a.name.localeCompare(b.name);
-          break;
+          comparison = a.name.localeCompare(b.name)
+          break
         case 'date':
-          comparison = new Date(a.lastModified || a.createdAt).getTime() - 
-                      new Date(b.lastModified || b.createdAt).getTime();
-          break;
+          comparison = new Date(a.createdAt || 0).getTime() - new Date(b.createdAt || 0).getTime()
+          break
         case 'cards':
-          const aTotal = a.cards.reduce((sum, c) => sum + c.quantity, 0);
-          const bTotal = b.cards.reduce((sum, c) => sum + c.quantity, 0);
-          comparison = aTotal - bTotal;
-          break;
+          const aTotal = a.cards.reduce((sum, c) => sum + c.quantity, 0)
+          const bTotal = b.cards.reduce((sum, c) => sum + c.quantity, 0)
+          comparison = aTotal - bTotal
+          break
         case 'format':
-          comparison = a.format.localeCompare(b.format);
-          break;
+          comparison = a.format.localeCompare(b.format)
+          break
       }
       
-      return sortOrder === 'asc' ? comparison : -comparison;
-    });
+      return sortOrder === 'asc' ? comparison : -comparison
+    })
 
-    return filtered;
-  }, [decks, searchFilter, formatFilter, sortBy, sortOrder]);
+    return filtered
+  }, [decks, searchFilter, formatFilter, sortBy, sortOrder])
 
   // Se estiver visualizando um deck
   if (viewMode === 'viewer' && selectedDeck) {
@@ -193,438 +167,376 @@ export default function ConstrutorDecks() {
   }
 
   return (
-    <div className="p-4 md:p-6 space-y-6 max-w-7xl mx-auto">
-      {/* Notificação */}
+    <div className="mtg-section">
+      {/* Notification */}
       {notification.visible && (
-        <div className={`fixed top-4 right-4 z-50 p-4 rounded-lg text-card-foreground bg-gray-800/80 backdrop-blur-xl shadow-2xl overflow-hidden border-0 notification-enter ${
-          notification.type === 'success' ? 'border-green-500/30' :
-          notification.type === 'error' ? 'border-red-500/30' : 'border-blue-500/30'
-        } text-white border`}>
+        <div className={`mtg-notification mtg-notification-${notification.type}`}>
           {notification.message}
         </div>
       )}
 
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
-          Construtor de Decks
-        </h1>
-        <p className="text-gray-400 text-lg">
-          Crie, edite e gerencie seus decks de Magic: The Gathering
+      {/* Hero Section */}
+      <div className="mtg-card text-center mb-8">
+        <div className="mtg-card-header justify-center">
+          <div className="w-20 h-20 rounded-full bg-gradient-to-br from-purple-600 to-pink-700 flex items-center justify-center mb-6 mx-auto shadow-xl">
+            <Hammer className="w-10 h-10 text-white" />
+          </div>
+        </div>
+        <h1 className="mtg-section-title">Deck Builder Profissional</h1>
+        <p className="mtg-section-subtitle">
+          Construa, teste e otimize seus decks com ferramentas avançadas de análise e estatísticas
         </p>
+        <div className="flex items-center justify-center gap-4 mt-6">
+          <div className="mtg-status mtg-status-success">
+            <Package className="w-3 h-3" />
+            {decks.length} deck{decks.length !== 1 ? 's' : ''} criado{decks.length !== 1 ? 's' : ''}
+          </div>
+        </div>
       </div>
 
-      {/* Ações Rápidas */}
-      <Card className="bg-gray-800/50 border-gray-700/50">
-        <CardHeader>
-          <CardTitle className="text-white flex items-center gap-2">
-            <Upload className="w-5 h-5" />
-            Ações Rápidas
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <h4 className="text-sm font-medium text-gray-300">Criar Novo Deck</h4>
-              <Button
+      {/* Quick Actions */}
+      <div className="mtg-card mb-8">
+        <div className="mtg-card-header">
+          <Zap className="mtg-card-icon" />
+          <div className="mtg-card-content">
+            <h3 className="mtg-card-title">Ações Rápidas</h3>
+            <p className="mtg-card-description">Comece a construir seu próximo deck</p>
+          </div>
+        </div>
+        <div className="px-6 pb-6">
+          <div className="mtg-grid-2">
+            <div className="space-y-4">
+              <h4 className="font-semibold text-white">Criar Novo Deck</h4>
+              <button
                 onClick={() => setIsCreatingDeck(true)}
-                className="w-full bg-green-600 hover:bg-green-700"
+                className="mtg-button mtg-button-primary w-full"
               >
-                <Plus className="w-4 h-4 mr-2" />
-                Criar do Zero
-              </Button>
+                <Plus className="w-4 h-4" />
+                <span>Criar do Zero</span>
+              </button>
             </div>
-            <div className="space-y-2">
-              <h4 className="text-sm font-medium text-gray-300">Importar Lista de Deck</h4>
+            <div className="space-y-4">
+              <h4 className="font-semibold text-white">Importar Lista</h4>
               <DeckImporter 
                 onImportSuccess={() => showNotification('success', 'Deck importado com sucesso!')}
                 onImportError={(error: string) => showNotification('error', `Erro ao importar deck: ${error}`)}
               />
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
-      {/* Modal de Criação de Deck */}
+      {/* Create Deck Modal */}
       {isCreatingDeck && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 modal-backdrop">
-          <Card className="bg-gray-800 border-gray-700 w-full max-w-md modal-content">
-            <CardHeader>
-              <CardTitle className="text-white">Criar Novo Deck</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Nome do Deck *
-                </label>
-                <Input
-                  value={newDeckData.name}
-                  onChange={(e) => setNewDeckData(prev => ({ ...prev, name: e.target.value }))}
-                  placeholder="Ex: Aggro Vermelho"
-                  className="bg-gray-900/50 border-gray-600 text-white"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Formato
-                </label>
-                <Select 
-                  value={newDeckData.format} 
-                  onValueChange={(value) => setNewDeckData(prev => ({ ...prev, format: value }))}
-                >
-                  <SelectTrigger className="bg-gray-900/50 border-gray-600 text-white">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className="bg-gray-800 border-gray-600">
-                    <SelectItem value="Standard" className="text-white hover:bg-gray-700">Standard</SelectItem>
-                    <SelectItem value="Pioneer" className="text-white hover:bg-gray-700">Pioneer</SelectItem>
-                    <SelectItem value="Modern" className="text-white hover:bg-gray-700">Modern</SelectItem>
-                    <SelectItem value="Legacy" className="text-white hover:bg-gray-700">Legacy</SelectItem>
-                    <SelectItem value="Vintage" className="text-white hover:bg-gray-700">Vintage</SelectItem>
-                    <SelectItem value="Commander" className="text-white hover:bg-gray-700">Commander</SelectItem>
-                    <SelectItem value="Pauper" className="text-white hover:bg-gray-700">Pauper</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Cores
-                </label>
-                <div className="flex gap-2">
-                  {['W', 'U', 'B', 'R', 'G'].map(color => (
-                    <Button
-                      key={color}
-                      variant={newDeckData.colors.includes(color) ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => toggleColor(color)}
-                      className={`w-10 h-10 p-0 font-bold transition-all duration-200 ${
-                        newDeckData.colors.includes(color)
-                          ? color === 'W' ? 'bg-yellow-200 text-gray-900 border-yellow-300' :
-                            color === 'U' ? 'bg-blue-500 text-white border-blue-400' :
-                            color === 'B' ? 'bg-gray-900 text-white border-gray-400' :
-                            color === 'R' ? 'bg-red-500 text-white border-red-400' :
-                            'bg-green-500 text-white border-green-400'
-                          : 'border-gray-600 text-gray-300 hover:bg-gray-700 hover:border-gray-500'
-                      }`}
-                    >
-                      {color}
-                    </Button>
-                  ))}
+        <div className="mtg-modal-backdrop">
+          <div className="mtg-modal">
+            <div className="mtg-card">
+              <div className="mtg-card-header">
+                <Sparkles className="mtg-card-icon" />
+                <div className="mtg-card-content">
+                  <h3 className="mtg-card-title">Criar Novo Deck</h3>
+                  <p className="mtg-card-description">Configure as informações básicas do seu deck</p>
                 </div>
               </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Descrição
-                </label>
-                <Textarea
-                  value={newDeckData.description}
-                  onChange={(e) => setNewDeckData(prev => ({ ...prev, description: e.target.value }))}
-                  placeholder="Descrição opcional do deck..."
-                  className="bg-gray-900/50 border-gray-600 text-white"
-                  rows={3}
-                />
-              </div>
-
-              <div className="flex gap-2 pt-4">
-                <Button
-                  onClick={handleCreateDeck}
-                  className="flex-1 bg-green-600 hover:bg-green-700"
-                >
-                  <Save className="w-4 h-4 mr-2" />
-                  Criar Deck
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={() => {
-                    setIsCreatingDeck(false)
-                    setNewDeckData({ name: '', format: 'Standard', colors: [], description: '' })
-                  }}
-                  className="flex-1 border-gray-600 text-gray-300 hover:bg-gray-700"
-                >
-                  Cancelar
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      )}
-
-      {/* Lista de Decks */}
-      <div className="space-y-4">
-        {/* Header com filtros */}
-        <Card className="bg-gray-800/50 border-gray-700/50">
-          <CardContent className="p-4">
-            <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
-              <div className="flex-1">
-                <h2 className="text-xl font-semibold text-white mb-2">Meus Decks ({filteredAndSortedDecks.length})</h2>
-                
-                {/* Filtros */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div className="px-6 pb-6 space-y-6">
+                <div>
+                  <label className="mtg-label">Nome do Deck *</label>
                   <Input
-                    placeholder="Buscar decks..."
-                    value={searchFilter}
-                    onChange={(e) => setSearchFilter(e.target.value)}
-                    className="bg-gray-900/50 border-gray-600 text-white placeholder-gray-400"
+                    value={newDeckData.name}
+                    onChange={(e) => setNewDeckData(prev => ({ ...prev, name: e.target.value }))}
+                    placeholder="Ex: Aggro Vermelho"
+                    className="mtg-input"
                   />
-                  <Select value={formatFilter} onValueChange={setFormatFilter}>
-                    <SelectTrigger className="bg-gray-900/50 border-gray-600 text-white">
-                      <SelectValue placeholder="Formato" />
+                </div>
+
+                <div>
+                  <label className="mtg-label">Formato</label>
+                  <Select 
+                    value={newDeckData.format} 
+                    onValueChange={(value) => setNewDeckData(prev => ({ ...prev, format: value }))}
+                  >
+                    <SelectTrigger className="mtg-select">
+                      <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-gray-800 border-gray-600">
-                      <SelectItem value="all" className="text-white hover:bg-gray-700">Todos os formatos</SelectItem>
-                      <SelectItem value="Standard" className="text-white hover:bg-gray-700">Standard</SelectItem>
-                      <SelectItem value="Pioneer" className="text-white hover:bg-gray-700">Pioneer</SelectItem>
-                      <SelectItem value="Modern" className="text-white hover:bg-gray-700">Modern</SelectItem>
-                      <SelectItem value="Legacy" className="text-white hover:bg-gray-700">Legacy</SelectItem>
-                      <SelectItem value="Vintage" className="text-white hover:bg-gray-700">Vintage</SelectItem>
-                      <SelectItem value="Commander" className="text-white hover:bg-gray-700">Commander</SelectItem>
-                      <SelectItem value="Pauper" className="text-white hover:bg-gray-700">Pauper</SelectItem>
+                    <SelectContent className="mtg-dropdown">
+                      <SelectItem value="Standard" className="mtg-dropdown-item">Standard</SelectItem>
+                      <SelectItem value="Pioneer" className="mtg-dropdown-item">Pioneer</SelectItem>
+                      <SelectItem value="Modern" className="mtg-dropdown-item">Modern</SelectItem>
+                      <SelectItem value="Legacy" className="mtg-dropdown-item">Legacy</SelectItem>
+                      <SelectItem value="Vintage" className="mtg-dropdown-item">Vintage</SelectItem>
+                      <SelectItem value="Commander" className="mtg-dropdown-item">Commander</SelectItem>
+                      <SelectItem value="Pauper" className="mtg-dropdown-item">Pauper</SelectItem>
                     </SelectContent>
                   </Select>
-                  <div className="flex gap-2">
-                    <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
-                      <SelectTrigger className="bg-gray-900/50 border-gray-600 text-white">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent className="bg-gray-800 border-gray-600">
-                        <SelectItem value="date" className="text-white hover:bg-gray-700">Data</SelectItem>
-                        <SelectItem value="name" className="text-white hover:bg-gray-700">Nome</SelectItem>
-                        <SelectItem value="cards" className="text-white hover:bg-gray-700">Nº Cartas</SelectItem>
-                        <SelectItem value="format" className="text-white hover:bg-gray-700">Formato</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setSortOrder(prev => prev === 'asc' ? 'desc' : 'asc')}
-                      className="border-gray-600 text-gray-300 hover:bg-gray-700"
-                    >
-                      {sortOrder === 'asc' ? '↑' : '↓'}
-                    </Button>
+                </div>
+
+                <div>
+                  <label className="mtg-label">Cores</label>
+                  <div className="flex gap-3">
+                    {[
+                      { color: 'W', name: 'Branco', bg: 'from-yellow-400 to-orange-500' },
+                      { color: 'U', name: 'Azul', bg: 'from-blue-500 to-cyan-600' },
+                      { color: 'B', name: 'Preto', bg: 'from-gray-700 to-gray-900' },
+                      { color: 'R', name: 'Vermelho', bg: 'from-red-500 to-orange-600' },
+                      { color: 'G', name: 'Verde', bg: 'from-green-500 to-emerald-600' }
+                    ].map(({ color, name, bg }) => (
+                      <button
+                        key={color}
+                        onClick={() => {
+                          const newColors = newDeckData.colors.includes(color)
+                            ? newDeckData.colors.filter(c => c !== color)
+                            : [...newDeckData.colors, color]
+                          setNewDeckData(prev => ({ ...prev, colors: newColors }))
+                        }}
+                        className={`w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold transition-all ${
+                          newDeckData.colors.includes(color)
+                            ? `bg-gradient-to-br ${bg} scale-110 ring-2 ring-white/30`
+                            : 'bg-slate-700 hover:bg-slate-600'
+                        }`}
+                        title={name}
+                      >
+                        {color}
+                      </button>
+                    ))}
                   </div>
+                </div>
+
+                <div>
+                  <label className="mtg-label">Descrição (Opcional)</label>
+                  <Textarea
+                    value={newDeckData.description}
+                    onChange={(e) => setNewDeckData(prev => ({ ...prev, description: e.target.value }))}
+                    placeholder="Descreva a estratégia do seu deck..."
+                    className="mtg-textarea"
+                    rows={3}
+                  />
+                </div>
+
+                <div className="flex gap-3 pt-4">
+                  <button
+                    onClick={handleCreateDeck}
+                    className="mtg-button mtg-button-primary flex-1"
+                  >
+                    <Save className="w-4 h-4" />
+                    <span>Criar Deck</span>
+                  </button>
+                  <button
+                    onClick={() => {
+                      setIsCreatingDeck(false)
+                      setNewDeckData({ name: '', format: 'Standard', colors: [], description: '' })
+                    }}
+                    className="mtg-button mtg-button-secondary"
+                  >
+                    Cancelar
+                  </button>
                 </div>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
+      )}
 
-        {decks.length === 0 ? (
-          <Card className="bg-gray-800/50 border-gray-700/50">
-            <CardContent className="text-center py-12">
-              <Package className="w-16 h-16 mx-auto mb-4 text-gray-500" />
-              <h3 className="text-xl font-medium text-white mb-2">Nenhum deck criado</h3>
-              <p className="text-gray-400 mb-6">
-                Crie seu primeiro deck para começar a construir
-              </p>
-              <Button
+      {/* Filters and Search */}
+      <div className="mtg-card mb-8">
+        <div className="mtg-card-header">
+          <Filter className="mtg-card-icon" />
+          <div className="mtg-card-content">
+            <h3 className="mtg-card-title">Filtros e Busca</h3>
+            <p className="mtg-card-description">Encontre rapidamente o deck que você procura</p>
+          </div>
+        </div>
+        <div className="px-6 pb-6">
+          <div className="mtg-grid-3 gap-4">
+            <div>
+              <label className="mtg-label">Buscar</label>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
+                <Input
+                  placeholder="Nome do deck..."
+                  value={searchFilter}
+                  onChange={(e) => setSearchFilter(e.target.value)}
+                  className="mtg-input pl-10"
+                />
+              </div>
+            </div>
+            <div>
+              <label className="mtg-label">Formato</label>
+              <Select value={formatFilter} onValueChange={setFormatFilter}>
+                <SelectTrigger className="mtg-select">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="mtg-dropdown">
+                  <SelectItem value="all" className="mtg-dropdown-item">Todos os Formatos</SelectItem>
+                  <SelectItem value="Standard" className="mtg-dropdown-item">Standard</SelectItem>
+                  <SelectItem value="Pioneer" className="mtg-dropdown-item">Pioneer</SelectItem>
+                  <SelectItem value="Modern" className="mtg-dropdown-item">Modern</SelectItem>
+                  <SelectItem value="Legacy" className="mtg-dropdown-item">Legacy</SelectItem>
+                  <SelectItem value="Vintage" className="mtg-dropdown-item">Vintage</SelectItem>
+                  <SelectItem value="Commander" className="mtg-dropdown-item">Commander</SelectItem>
+                  <SelectItem value="Pauper" className="mtg-dropdown-item">Pauper</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <label className="mtg-label">Ordenar por</label>
+              <Select value={`${sortBy}-${sortOrder}`} onValueChange={(value) => {
+                const [field, order] = value.split('-') as [typeof sortBy, typeof sortOrder]
+                setSortBy(field)
+                setSortOrder(order)
+              }}>
+                <SelectTrigger className="mtg-select">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="mtg-dropdown">
+                  <SelectItem value="date-desc" className="mtg-dropdown-item">Mais Recente</SelectItem>
+                  <SelectItem value="date-asc" className="mtg-dropdown-item">Mais Antigo</SelectItem>
+                  <SelectItem value="name-asc" className="mtg-dropdown-item">Nome A-Z</SelectItem>
+                  <SelectItem value="name-desc" className="mtg-dropdown-item">Nome Z-A</SelectItem>
+                  <SelectItem value="cards-desc" className="mtg-dropdown-item">Mais Cartas</SelectItem>
+                  <SelectItem value="cards-asc" className="mtg-dropdown-item">Menos Cartas</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Deck List */}
+      <div className="space-y-6">
+        {filteredDecks.length === 0 ? (
+          <div className="mtg-card text-center py-12">
+            <div className="w-20 h-20 rounded-full bg-slate-800 flex items-center justify-center mx-auto mb-4">
+              <Package className="w-10 h-10 text-slate-400" />
+            </div>
+            <h3 className="text-xl font-semibold text-white mb-2">
+              {searchFilter || formatFilter !== 'all' ? 'Nenhum deck encontrado' : 'Nenhum deck criado ainda'}
+            </h3>
+            <p className="text-slate-400 mb-6">
+              {searchFilter || formatFilter !== 'all' 
+                ? 'Tente ajustar os filtros para encontrar o que procura'
+                : 'Comece criando seu primeiro deck personalizado'
+              }
+            </p>
+            {!searchFilter && formatFilter === 'all' && (
+              <button
                 onClick={() => setIsCreatingDeck(true)}
-                className="bg-green-600 hover:bg-green-700"
+                className="mtg-button mtg-button-primary"
               >
-                <Plus className="w-4 h-4 mr-2" />
-                Criar Primeiro Deck
-              </Button>
-            </CardContent>
-          </Card>
+                <Plus className="w-4 h-4" />
+                <span>Criar Primeiro Deck</span>
+              </button>
+            )}
+          </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {decks.map((deck) => {
-              // Calcular estatísticas do deck
-              const mainboardCount = deck.cards.filter(c => c.category === 'mainboard').reduce((sum, c) => sum + c.quantity, 0)
-              const sideboardCount = deck.cards.filter(c => c.category === 'sideboard').reduce((sum, c) => sum + c.quantity, 0)
-              const commanderCount = deck.cards.filter(c => c.category === 'commander').reduce((sum, c) => sum + c.quantity, 0)
-              const totalCards = mainboardCount + sideboardCount + commanderCount
-              
-              // Calcular CMC médio
-              const totalCmc = deck.cards.reduce((sum, c) => sum + (c.card.cmc * c.quantity), 0)
-              const avgCmc = totalCards > 0 ? (totalCmc / totalCards).toFixed(1) : '0'
-              
-              // Obter cartas por tipo para estatísticas rápidas
-              const creatures = deck.cards.filter(c => c.card.type_line.toLowerCase().includes('creature')).reduce((sum, c) => sum + c.quantity, 0)
-              const instants = deck.cards.filter(c => c.card.type_line.toLowerCase().includes('instant')).reduce((sum, c) => sum + c.quantity, 0)
-              const sorceries = deck.cards.filter(c => c.card.type_line.toLowerCase().includes('sorcery')).reduce((sum, c) => sum + c.quantity, 0)
-              const lands = deck.cards.filter(c => c.card.type_line.toLowerCase().includes('land')).reduce((sum, c) => sum + c.quantity, 0)
+          <div className="mtg-grid gap-6">
+            {filteredDecks.map(deck => {
+              const totalCards = deck.cards.reduce((sum, card) => sum + card.quantity, 0)
+              const colorCount = deck.colors?.length || 0
               
               return (
-                <Card key={deck.id} className="bg-gray-800/50 border-gray-700/50 hover:border-blue-500/50 transition-all duration-200 hover:shadow-lg group deck-card-hover deck-card-animate">
-                  <CardHeader className="pb-3">
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1 min-w-0">
-                        <CardTitle className="text-white text-lg font-bold truncate group-hover:text-blue-400 transition-colors">
-                          {deck.name}
-                        </CardTitle>
-                        <div className="flex items-center gap-2 mt-1">
-                          <Badge 
-                            variant="outline" 
-                            className={`text-xs border-0 ${
-                              deck.format === 'Standard' ? 'bg-blue-900/50 text-blue-300' :
-                              deck.format === 'Commander' ? 'bg-yellow-900/50 text-yellow-300' :
-                              deck.format === 'Modern' ? 'bg-green-900/50 text-green-300' :
-                              deck.format === 'Legacy' ? 'bg-purple-900/50 text-purple-300' :
-                              'bg-gray-700/50 text-gray-300'
-                            }`}
-                          >
-                            {deck.format}
-                          </Badge>
-                          {deck.colors.length > 0 && (
-                            <div className="flex gap-1">
-                              {deck.colors.map(color => (
-                                <div 
-                                  key={color}
-                                  className={`w-4 h-4 rounded-full border border-gray-600 text-xs flex items-center justify-center font-bold ${
-                                    color === 'W' ? 'bg-yellow-100 text-gray-900' :
-                                    color === 'U' ? 'bg-blue-500 text-white' :
-                                    color === 'B' ? 'bg-gray-900 text-white border-gray-400' :
-                                    color === 'R' ? 'bg-red-500 text-white' :
-                                    'bg-green-500 text-white'
-                                  }`}
-                                  title={`Mana ${color}`}
-                                >
-                                  {color}
-                                </div>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                      
-                      <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            handleDuplicateDeck(deck.id)
-                          }}
-                          className="h-8 w-8 p-0 text-gray-400 hover:text-blue-400 hover:bg-blue-900/20"
-                          title="Duplicar deck"
-                        >
-                          <Copy className="h-3 w-3" />
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            setSelectedDeck(deck.id)
-                            setViewMode('builder')
-                          }}
-                          className="h-8 w-8 p-0 text-gray-400 hover:text-green-400 hover:bg-green-900/20"
-                          title="Editar deck"
-                        >
-                          <Edit3 className="h-3 w-3" />
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            if (confirm(`Tem certeza que deseja deletar o deck "${deck.name}"?`)) {
-                              handleDeleteDeck(deck.id)
-                            }
-                          }}
-                          className="h-8 w-8 p-0 text-gray-400 hover:text-red-400 hover:bg-red-900/20"
-                          title="Deletar deck"
-                        >
-                          <Trash2 className="h-3 w-3" />
-                        </Button>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  
-                  <CardContent className="space-y-4">
-                    {/* Estatísticas rápidas */}
-                    <div className="grid grid-cols-2 gap-3 text-sm">
-                      <div className="bg-gray-900/50 rounded-lg p-3 text-center">
-                        <div className="text-blue-400 font-bold text-xl">{totalCards}</div>
-                        <div className="text-gray-400 text-xs">Total de Cartas</div>
-                      </div>
-                      <div className="bg-gray-900/50 rounded-lg p-3 text-center">
-                        <div className="text-green-400 font-bold text-xl">{avgCmc}</div>
-                        <div className="text-gray-400 text-xs">CMC Médio</div>
-                      </div>
-                    </div>
-
-                    {/* Distribuição por tipos */}
-                    <div className="space-y-2">
-                      <div className="text-xs text-gray-400 uppercase tracking-wider">Composição</div>
-                      <div className="grid grid-cols-2 gap-2 text-xs">
-                        {creatures > 0 && (
-                          <div className="flex justify-between">
-                            <span className="text-gray-400">Criaturas</span>
-                            <span className="text-green-400 font-medium">{creatures}</span>
-                          </div>
-                        )}
-                        {instants > 0 && (
-                          <div className="flex justify-between">
-                            <span className="text-gray-400">Instantes</span>
-                            <span className="text-blue-400 font-medium">{instants}</span>
-                          </div>
-                        )}
-                        {sorceries > 0 && (
-                          <div className="flex justify-between">
-                            <span className="text-gray-400">Feitiços</span>
-                            <span className="text-red-400 font-medium">{sorceries}</span>
-                          </div>
-                        )}
-                        {lands > 0 && (
-                          <div className="flex justify-between">
-                            <span className="text-gray-400">Terrenos</span>
-                            <span className="text-yellow-400 font-medium">{lands}</span>
-                          </div>
+                <div key={deck.id} className="mtg-card mtg-card-interactive">
+                  <div className="mtg-card-header">
+                    <div className="flex-1">
+                      <h3 className="mtg-card-title">{deck.name}</h3>
+                      <p className="mtg-card-description">
+                        {deck.description || 'Deck sem descrição'}
+                      </p>
+                      <div className="flex items-center gap-3 mt-3">
+                        <span className="mtg-badge mtg-badge-primary">{deck.format}</span>
+                        <span className="mtg-badge mtg-badge-secondary">
+                          {totalCards} carta{totalCards !== 1 ? 's' : ''}
+                        </span>
+                        {colorCount > 0 && (
+                          <span className="mtg-badge mtg-badge-accent">
+                            {colorCount} cor{colorCount !== 1 ? 'es' : ''}
+                          </span>
                         )}
                       </div>
                     </div>
-
-                    {/* Descrição */}
-                    {deck.description && (
-                      <div className="border-t border-gray-700/50 pt-3">
-                        <p className="text-gray-400 text-sm line-clamp-2">
-                          {deck.description}
-                        </p>
-                      </div>
-                    )}
-
-                    {/* Ações principais */}
-                    <div className="grid grid-cols-2 gap-2 pt-2">
-                      <Button
-                        size="sm"
+                    <div className="flex items-center gap-2">
+                      <button
                         onClick={() => {
                           setSelectedDeck(deck.id)
                           setViewMode('viewer')
                         }}
-                        className="bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 border border-blue-500/30 btn-gradient transition-all duration-200"
+                        className="mtg-button mtg-button-ghost"
+                        title="Visualizar deck"
                       >
-                        <Eye className="w-3 h-3 mr-1" />
-                        Visualizar
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="outline"
+                        <Eye className="w-4 h-4" />
+                      </button>
+                      <button
                         onClick={() => {
                           setSelectedDeck(deck.id)
                           setViewMode('builder')
                         }}
-                        className="border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200"
+                        className="mtg-button mtg-button-ghost"
+                        title="Editar deck"
                       >
-                        <Edit3 className="w-3 h-3 mr-1" />
-                        Editar
-                      </Button>
+                        <Edit3 className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() => handleDuplicateDeck(deck.id)}
+                        className="mtg-button mtg-button-ghost"
+                        title="Duplicar deck"
+                      >
+                        <Copy className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() => handleDeleteDeck(deck.id)}
+                        className="mtg-button mtg-button-ghost text-red-400 hover:text-red-300"
+                        title="Deletar deck"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
                     </div>
-                    
-                    {/* Data de modificação */}
-                    <div className="text-xs text-gray-500 text-center pt-2 border-t border-gray-700/30">
-                      Modificado em {new Date(deck.lastModified || deck.createdAt).toLocaleDateString('pt-BR')}
-                    </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               )
             })}
           </div>
         )}
       </div>
+
+      {/* Statistics Summary */}
+      {decks.length > 0 && (
+        <div className="mtg-card">
+          <div className="mtg-card-header">
+            <BarChart3 className="mtg-card-icon" />
+            <div className="mtg-card-content">
+              <h3 className="mtg-card-title">Estatísticas dos Decks</h3>
+              <p className="mtg-card-description">Resumo da sua coleção de decks</p>
+            </div>
+          </div>
+          <div className="px-6 pb-6">
+            <div className="mtg-grid">
+              <div className="text-center p-4 bg-blue-500/10 rounded-xl border border-blue-500/20">
+                <div className="text-2xl font-bold text-blue-400">{decks.length}</div>
+                <div className="text-sm text-slate-400">Total de Decks</div>
+              </div>
+              <div className="text-center p-4 bg-purple-500/10 rounded-xl border border-purple-500/20">
+                <div className="text-2xl font-bold text-purple-400">
+                  {decks.reduce((sum, deck) => sum + deck.cards.reduce((cardSum, card) => cardSum + card.quantity, 0), 0)}
+                </div>
+                <div className="text-sm text-slate-400">Total de Cartas</div>
+              </div>
+              <div className="text-center p-4 bg-green-500/10 rounded-xl border border-green-500/20">
+                <div className="text-2xl font-bold text-green-400">
+                  {new Set(decks.map(d => d.format)).size}
+                </div>
+                <div className="text-sm text-slate-400">Formatos Diferentes</div>
+              </div>
+              <div className="text-center p-4 bg-yellow-500/10 rounded-xl border border-yellow-500/20">
+                <div className="text-2xl font-bold text-yellow-400">
+                  {Math.round(decks.reduce((sum, deck) => 
+                    sum + deck.cards.reduce((cardSum, card) => cardSum + card.quantity, 0), 0
+                  ) / decks.length)}
+                </div>
+                <div className="text-sm text-slate-400">Média de Cartas</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

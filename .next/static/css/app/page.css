@@ -1,740 +1,2033 @@
-/*!******************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./styles/contrast-improvements.css ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************/
-/* Melhorias de contraste para acessibilidade e legibilidade */
+/*!***********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./styles/professional-mtg-interface.css ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************/
+/* Ultra-Modern MTG Collection Interface - Professional Grade */
 
-/* Variáveis CSS para cores com melhor contraste */
+/* Root System - Inspired by Modern MTG Platforms */
 :root {
-  /* Cores de fundo melhoradas */
-  --bg-primary: #0f172a;
-  --bg-secondary: #1e293b;
-  --bg-tertiary: #334155;
-  --bg-card: #1e293b;
-  --bg-modal: #1a202c;
+  /* Modern Spacing System */
+  --spacing-unit: 4px;
+  --space-1: calc(var(--spacing-unit) * 1);   /* 4px */
+  --space-2: calc(var(--spacing-unit) * 2);   /* 8px */
+  --space-3: calc(var(--spacing-unit) * 3);   /* 12px */
+  --space-4: calc(var(--spacing-unit) * 4);   /* 16px */
+  --space-6: calc(var(--spacing-unit) * 6);   /* 24px */
+  --space-8: calc(var(--spacing-unit) * 8);   /* 32px */
+  --space-12: calc(var(--spacing-unit) * 12); /* 48px */
+  --space-16: calc(var(--spacing-unit) * 16); /* 64px */
+  --space-20: calc(var(--spacing-unit) * 20); /* 80px */
   
-  /* Cores de texto melhoradas */
-  --text-primary: #f8fafc;
-  --text-secondary: #e2e8f0;
-  --text-muted: #cbd5e1;
-  --text-disabled: #94a3b8;
+  /* Professional Typography Scale */
+  --text-2xs: 0.625rem;   /* 10px */
+  --text-xs: 0.75rem;     /* 12px */
+  --text-sm: 0.875rem;    /* 14px */
+  --text-base: 1rem;      /* 16px */
+  --text-lg: 1.125rem;    /* 18px */
+  --text-xl: 1.25rem;     /* 20px */
+  --text-2xl: 1.5rem;     /* 24px */
+  --text-3xl: 1.875rem;   /* 30px */
+  --text-4xl: 2.25rem;    /* 36px */
+  --text-5xl: 3rem;       /* 48px */
   
-  /* Bordas com melhor definição */
-  --border-primary: #475569;
-  --border-secondary: #64748b;
-  --border-focus: #3b82f6;
+  /* Modern Weight Scale */
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-extrabold: 800;
   
-  /* Estados interativos */
-  --hover-bg: #2d3748;
-  --active-bg: #4a5568;
+  /* Professional Border Radius */
+  --radius-none: 0;
+  --radius-sm: 0.25rem;   /* 4px */
+  --radius-md: 0.375rem;  /* 6px */
+  --radius-lg: 0.5rem;    /* 8px */
+  --radius-xl: 0.75rem;   /* 12px */
+  --radius-2xl: 1rem;     /* 16px */
+  --radius-3xl: 1.5rem;   /* 24px */
+  --radius-full: 9999px;
   
-  /* Cores de estado com melhor contraste */
-  --success-bg: #166534;
-  --success-text: #dcfce7;
-  --error-bg: #dc2626;
-  --error-text: #fee2e2;
-  --warning-bg: #d97706;
-  --warning-text: #fed7aa;
-  --info-bg: #1d4ed8;
-  --info-text: #dbeafe;
-}
-
-/* Melhorias gerais de contraste */
-.text-white {
-  color: var(--text-primary) !important;
-}
-
-.text-gray-300 {
-  color: var(--text-secondary) !important;
-}
-
-.text-gray-400 {
-  color: var(--text-muted) !important;
-}
-
-.text-gray-500 {
-  color: var(--text-disabled) !important;
-}
-
-/* Cards e containers com melhor contraste */
-.bg-gray-800,
-.bg-gray-800\/50 {
-  background-color: var(--bg-card) !important;
-  border-color: var(--border-primary) !important;
-}
-
-.bg-gray-900,
-.bg-gray-900\/50 {
-  background-color: var(--bg-primary) !important;
-}
-
-/* Bordas mais visíveis */
-.border-gray-700,
-.border-gray-700\/50 {
-  border-color: var(--border-primary) !important;
-}
-
-.border-gray-600 {
-  border-color: var(--border-secondary) !important;
-}
-
-/* Estados de hover melhorados */
-.hover\:bg-gray-700:hover {
-  background-color: var(--hover-bg) !important;
-}
-
-.hover\:text-white:hover {
-  color: var(--text-primary) !important;
-}
-
-/* Inputs e controles com melhor visibilidade */
-input, textarea, select {
-  background-color: var(--bg-tertiary) !important;
-  border-color: var(--border-secondary) !important;
-  color: var(--text-primary) !important;
-}
-
-input::-moz-placeholder, textarea::-moz-placeholder {
-  color: var(--text-muted) !important;
-}
-
-input::placeholder,
-textarea::placeholder {
-  color: var(--text-muted) !important;
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-  border-color: var(--border-focus) !important;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3) !important;
-}
-
-/* Badges e labels com melhor contraste */
-.badge {
-  background-color: var(--bg-tertiary) !important;
-  color: var(--text-primary) !important;
-  border: 1px solid var(--border-secondary) !important;
-}
-
-/* Botões com melhor definição */
-.btn-outline {
-  border-color: var(--border-secondary) !important;
-  color: var(--text-secondary) !important;
-}
-
-.btn-outline:hover {
-  background-color: var(--hover-bg) !important;
-  color: var(--text-primary) !important;
-  border-color: var(--border-focus) !important;
-}
-
-/* Notificações com contraste adequado */
-.notification-success {
-  background-color: var(--success-bg) !important;
-  color: var(--success-text) !important;
-  border: 1px solid #15803d !important;
-}
-
-.notification-error {
-  background-color: var(--error-bg) !important;
-  color: var(--error-text) !important;
-  border: 1px solid #b91c1c !important;
-}
-
-.notification-warning {
-  background-color: var(--warning-bg) !important;
-  color: var(--warning-text) !important;
-  border: 1px solid #c2410c !important;
-}
-
-.notification-info {
-  background-color: var(--info-bg) !important;
-  color: var(--info-text) !important;
-  border: 1px solid #1e40af !important;
-}
-
-/* Melhorias específicas para badges de raridade */
-.rarity-common {
-  background-color: #374151 !important;
-  color: #f9fafb !important;
-  border: 1px solid #6b7280 !important;
-}
-
-.rarity-uncommon {
-  background-color: #1e40af !important;
-  color: #dbeafe !important;
-  border: 1px solid #3b82f6 !important;
-}
-
-.rarity-rare {
-  background-color: #7c2d12 !important;
-  color: #fed7aa !important;
-  border: 1px solid #ea580c !important;
-}
-
-.rarity-mythic {
-  background-color: #581c87 !important;
-  color: #e9d5ff !important;
-  border: 1px solid #8b5cf6 !important;
-}
-
-/* Símbolos de mana com melhor contraste */
-.mana-symbol {
-  font-weight: 600 !important;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
-  border: 1px solid rgba(0, 0, 0, 0.3) !important;
-}
-
-.mana-w {
-  background: linear-gradient(145deg, #fbbf24, #f59e0b) !important;
-  color: #111827 !important;
-}
-
-.mana-u {
-  background: linear-gradient(145deg, #3b82f6, #1d4ed8) !important;
-  color: #f8fafc !important;
-}
-
-.mana-b {
-  background: linear-gradient(145deg, #4b5563, #1f2937) !important;
-  color: #f8fafc !important;
-}
-
-.mana-r {
-  background: linear-gradient(145deg, #ef4444, #dc2626) !important;
-  color: #f8fafc !important;
-}
-
-.mana-g {
-  background: linear-gradient(145deg, #22c55e, #16a34a) !important;
-  color: #f8fafc !important;
-}
-
-/* Melhorias para seleções de formato */
-.format-standard {
-  background-color: #1e40af !important;
-  color: #dbeafe !important;
-}
-
-.format-pioneer {
-  background-color: #7c2d12 !important;
-  color: #fed7aa !important;
-}
-
-.format-modern {
-  background-color: #166534 !important;
-  color: #dcfce7 !important;
-}
-
-.format-legacy {
-  background-color: #581c87 !important;
-  color: #e9d5ff !important;
-}
-
-.format-commander {
-  background-color: #b45309 !important;
-  color: #fef3c7 !important;
-}
-
-/* Curva de mana com melhor visibilidade */
-.mana-curve-bar {
-  background: linear-gradient(90deg, #3b82f6, #1d4ed8) !important;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
-}
-
-.mana-curve-text {
-  color: var(--text-primary) !important;
-  font-weight: 600 !important;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7) !important;
-}
-
-/* Melhorias para estatísticas de deck */
-.stat-number {
-  color: var(--text-primary) !important;
-  font-weight: 700 !important;
-}
-
-.stat-label {
-  color: var(--text-muted) !important;
-  font-weight: 500 !important;
-}
-
-/* Contraste para links e elementos interativos */
-.interactive-element {
-  color: var(--text-secondary) !important;
-  transition: color 0.2s ease !important;
-}
-
-.interactive-element:hover {
-  color: var(--text-primary) !important;
-}
-
-/* Melhorias para dropdowns e selects */
-.dropdown-item {
-  background-color: var(--bg-card) !important;
-  color: var(--text-secondary) !important;
-  border-bottom: 1px solid var(--border-primary) !important;
-}
-
-.dropdown-item:hover {
-  background-color: var(--hover-bg) !important;
-  color: var(--text-primary) !important;
-}
-
-/* Melhorias para modais */
-.modal-overlay {
-  background-color: rgba(0, 0, 0, 0.8) !important;
-}
-
-.modal-content {
-  background-color: var(--bg-modal) !important;
-  border: 1px solid var(--border-primary) !important;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8) !important;
-}
-
-/* Melhorias para tooltips */
-.tooltip {
-  background-color: var(--bg-primary) !important;
-  color: var(--text-primary) !important;
-  border: 1px solid var(--border-secondary) !important;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5) !important;
-}
-
-/* Estados de foco melhorados para acessibilidade */
-.focus-visible:focus,
-button:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible {
-  outline: 2px solid #3b82f6 !important;
-  outline-offset: 2px !important;
-}
-
-/* Melhorias específicas para cartas adicionadas recentemente */
-.recent-card {
-  background-color: var(--bg-card) !important;
-  border: 1px solid var(--border-secondary) !important;
-}
-
-.recent-card .card-name {
-  color: var(--text-primary) !important;
-  font-weight: 600 !important;
-}
-
-.recent-card .card-time {
-  color: var(--text-muted) !important;
-  font-size: 0.875rem !important;
-}
-
-/* Melhorias para a seção de regras */
-.rules-section {
-  background-color: var(--bg-card) !important;
-  border: 1px solid var(--border-primary) !important;
-}
-
-.rules-title {
-  color: var(--text-primary) !important;
-  font-weight: 700 !important;
-}
-
-.rules-content {
-  color: var(--text-secondary) !important;
-  line-height: 1.6 !important;
-}
-
-.rules-category {
-  background-color: var(--bg-tertiary) !important;
-  color: var(--text-primary) !important;
-  border: 1px solid var(--border-secondary) !important;
-}
-
-/* Melhorias para filtros de pesquisa */
-.search-filter {
-  background-color: var(--bg-tertiary) !important;
-  border: 1px solid var(--border-secondary) !important;
-  color: var(--text-primary) !important;
-}
-
-.search-filter:focus {
-  border-color: var(--border-focus) !important;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25) !important;
-}
-
-.filter-tag {
-  background-color: var(--bg-card) !important;
-  color: var(--text-secondary) !important;
-  border: 1px solid var(--border-primary) !important;
-}
-
-.filter-tag:hover {
-  background-color: var(--hover-bg) !important;
-  color: var(--text-primary) !important;
-}
-
-/* Responsividade com contraste mantido */
-@media (max-width: 768px) {
-  .mobile-text {
-    font-size: 1rem !important;
-    line-height: 1.5 !important;
-  }
+  /* Modern Dark Theme - Professional Grade */
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+  --color-slate-950: #020617;
   
-  .mobile-contrast {
-    background-color: var(--bg-card) !important;
-    padding: 1rem !important;
-    border-radius: 0.5rem !important;
+  /* Primary Brand Colors */
+  --color-blue-50: #eff6ff;
+  --color-blue-100: #dbeafe;
+  --color-blue-500: #3b82f6;
+  --color-blue-600: #2563eb;
+  --color-blue-700: #1d4ed8;
+  --color-blue-900: #1e3a8a;
+  
+  /* Secondary Colors */
+  --color-purple-500: #8b5cf6;
+  --color-purple-600: #7c3aed;
+  --color-purple-700: #6d28d9;
+  
+  /* Status Colors */
+  --color-green-500: #10b981;
+  --color-green-600: #059669;
+  --color-yellow-500: #f59e0b;
+  --color-red-500: #ef4444;
+  --color-red-600: #dc2626;
+  
+  /* Theme Variables */
+  --bg-primary: var(--color-slate-950);
+  --bg-secondary: var(--color-slate-900);
+  --bg-tertiary: var(--color-slate-800);
+  --bg-card: rgba(30, 41, 59, 0.5);
+  --bg-card-hover: rgba(30, 41, 59, 0.8);
+  
+  --border-primary: rgba(71, 85, 105, 0.3);
+  --border-secondary: rgba(71, 85, 105, 0.5);
+  --border-focus: var(--color-blue-500);
+  
+  --text-primary: var(--color-slate-50);
+  --text-secondary: var(--color-slate-300);
+  --text-tertiary: var(--color-slate-400);
+  --text-muted: var(--color-slate-500);
+  
+  /* Professional Shadows */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  
+  /* Professional Backdrop Filter */
+  --backdrop-blur: blur(16px) saturate(180%);
+  
+  /* Animation Timing */
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 350ms;
+  
+  /* Easing Functions */
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  /* Z-Index Scale */
+  --z-base: 0;
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-modal: 1040;
+  --z-tooltip: 1060;
+}
+
+/* Base Application Layout */
+.mtg-app {
+  min-height: 100vh;
+  background: linear-gradient(
+    135deg,
+    var(--bg-primary) 0%,
+    var(--bg-secondary) 25%,
+    var(--bg-tertiary) 50%,
+    var(--bg-secondary) 75%,
+    var(--bg-primary) 100%
+  );
+  color: var(--text-primary);
+  font-family: 
+    -apple-system, 
+    BlinkMacSystemFont, 
+    "Segoe UI", 
+    "SF Pro Display", 
+    "Inter", 
+    "Helvetica Neue", 
+    Arial, 
+    sans-serif;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.mtg-app::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: 
+    radial-gradient(ellipse at top left, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at top right, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Professional Container System */
+.mtg-container {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+}
+
+@media (min-width: 640px) {
+  .mtg-container {
+    padding: 0 var(--space-6);
   }
 }
 
-/* Print styles com contraste adequado */
+@media (min-width: 1024px) {
+  .mtg-container {
+    padding: 0 var(--space-8);
+  }
+}
+
+/* Modern Header Design */
+.mtg-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  background: rgba(2, 6, 23, 0.9);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+          backdrop-filter: var(--backdrop-blur);
+  border-bottom: 1px solid var(--border-primary);
+  padding: var(--space-4) 0;
+  margin-bottom: var(--space-8);
+}
+
+.mtg-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+}
+
+.mtg-header-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  text-decoration: none;
+  color: inherit;
+}
+
+.mtg-header-logo {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--color-blue-600), var(--color-purple-600));
+  border-radius: var(--radius-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-bold);
+  font-size: var(--text-lg);
+  color: white;
+  box-shadow: var(--shadow-lg);
+}
+
+.mtg-header-title {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.mtg-header-title h1 {
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  line-height: 1.1;
+  margin: 0;
+  background: linear-gradient(135deg, var(--text-primary), var(--color-blue-400));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.mtg-header-subtitle {
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.mtg-header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+/* Professional Navigation System */
+.mtg-nav {
+  margin-bottom: var(--space-8);
+  position: relative;
+}
+
+.mtg-nav-wrapper {
+  background: var(--bg-card);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+          backdrop-filter: var(--backdrop-blur);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-2);
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+.mtg-nav-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-secondary), transparent);
+}
+
+.mtg-nav-list {
+  display: flex;
+  gap: var(--space-2);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: var(--space-2);
+}
+
+.mtg-nav-list::-webkit-scrollbar {
+  display: none;
+}
+
+.mtg-nav-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-xl);
+  border: 1px solid transparent;
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-tertiary);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all var(--duration-normal) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+}
+
+.mtg-nav-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--bg-card-hover), rgba(59, 130, 246, 0.1));
+  opacity: 0;
+  transition: opacity var(--duration-normal) var(--ease-out);
+}
+
+.mtg-nav-item:hover::before {
+  opacity: 1;
+}
+
+.mtg-nav-item:hover {
+  color: var(--text-secondary);
+  border-color: var(--border-secondary);
+  transform: translateY(-1px);
+}
+
+.mtg-nav-item[data-state="active"] {
+  color: var(--text-primary);
+  background: linear-gradient(135deg, var(--color-blue-600), var(--color-purple-600));
+  border-color: var(--color-blue-500);
+  box-shadow: var(--shadow-lg), 0 0 20px rgba(59, 130, 246, 0.3);
+  transform: translateY(-2px);
+}
+
+.mtg-nav-item[data-state="active"]::before {
+  opacity: 0;
+}
+
+.mtg-nav-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  transition: transform var(--duration-normal) var(--ease-spring);
+}
+
+.mtg-nav-item:hover .mtg-nav-icon {
+  transform: scale(1.1);
+}
+
+.mtg-nav-text {
+  display: none;
+  font-weight: var(--font-semibold);
+}
+
+@media (min-width: 480px) {
+  .mtg-nav-text {
+    display: block;
+  }
+}
+
+@media (min-width: 768px) {
+  .mtg-nav-list {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--space-3);
+    overflow: visible;
+  }
+}
+
+/* Content Area System */
+.mtg-content {
+  animation: mtg-fade-in var(--duration-slow) var(--ease-out);
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.mtg-content[data-state="inactive"] {
+  display: none;
+}
+
+@keyframes mtg-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Professional Card System */
+.mtg-card {
+  background: var(--bg-card);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+          backdrop-filter: var(--backdrop-blur);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-6);
+  transition: all var(--duration-normal) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.mtg-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-secondary), transparent);
+  opacity: 0;
+  transition: opacity var(--duration-normal) var(--ease-out);
+}
+
+.mtg-card:hover {
+  border-color: var(--border-secondary);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+}
+
+.mtg-card:hover::before {
+  opacity: 1;
+}
+
+/* Card Variants */
+.mtg-card-compact {
+  padding: var(--space-4);
+}
+
+.mtg-card-interactive {
+  cursor: pointer;
+}
+
+.mtg-card-interactive:hover {
+  transform: translateY(-6px) scale(1.01);
+}
+
+.mtg-card-interactive:active {
+  transform: translateY(-2px) scale(0.99);
+  transition: transform var(--duration-fast) var(--ease-in-out);
+}
+
+/* Card Content */
+.mtg-card-header {
+  margin-bottom: var(--space-6);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.mtg-card-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--color-blue-400);
+  flex-shrink: 0;
+  margin-top: var(--space-1);
+}
+
+.mtg-card-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.mtg-card-title {
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  line-height: 1.3;
+  color: var(--text-primary);
+  margin: 0 0 var(--space-2) 0;
+}
+
+.mtg-card-description {
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: var(--text-tertiary);
+  margin: 0;
+}
+
+/* Professional Grid System */
+.mtg-grid {
+  display: grid;
+  gap: var(--space-6);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .mtg-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .mtg-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-8);
+  }
+}
+
+@media (min-width: 1280px) {
+  .mtg-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.mtg-grid-2 {
+  display: grid;
+  gap: var(--space-6);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .mtg-grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-8);
+  }
+}
+
+.mtg-grid-auto {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-6);
+}
+
+/* Professional Statistics Cards */
+.mtg-stat-card {
+  background: var(--bg-card);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+          backdrop-filter: var(--backdrop-blur);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  text-align: center;
+  transition: all var(--duration-normal) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+}
+
+.mtg-stat-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--border-secondary);
+}
+
+.mtg-stat-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto var(--space-4) auto;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(135deg, var(--color-blue-600), var(--color-purple-600));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: var(--shadow-lg);
+  transition: transform var(--duration-normal) var(--ease-spring);
+}
+
+.mtg-stat-card:hover .mtg-stat-icon {
+  transform: scale(1.05);
+}
+
+.mtg-stat-value {
+  font-size: var(--text-3xl);
+  font-weight: var(--font-bold);
+  line-height: 1;
+  color: var(--text-primary);
+  margin: 0 0 var(--space-2) 0;
+  background: linear-gradient(135deg, var(--text-primary), var(--color-blue-400));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.mtg-stat-label {
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-tertiary);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Professional Button System */
+.mtg-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  line-height: 1;
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-out);
+  text-decoration: none;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  color: inherit;
+}
+
+.mtg-button-primary {
+  background: linear-gradient(135deg, var(--color-blue-600), var(--color-purple-600));
+  color: white;
+  border-color: var(--color-blue-500);
+  box-shadow: var(--shadow-md);
+}
+
+.mtg-button-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-xl);
+}
+
+.mtg-button-secondary {
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border-color: var(--border-primary);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+          backdrop-filter: var(--backdrop-blur);
+}
+
+.mtg-button-secondary:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-secondary);
+  color: var(--text-primary);
+}
+
+.mtg-button-ghost {
+  color: var(--text-tertiary);
+}
+
+.mtg-button-ghost:hover {
+  background: var(--bg-card);
+  color: var(--text-secondary);
+}
+
+/* Professional Badge System */
+.mtg-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--text-2xs);
+  font-weight: var(--font-semibold);
+  line-height: 1;
+  border-radius: var(--radius-md);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.mtg-badge-primary {
+  background: var(--color-blue-500);
+  color: white;
+}
+
+.mtg-badge-secondary {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-secondary);
+}
+
+.mtg-badge-success {
+  background: var(--color-green-500);
+  color: white;
+}
+
+.mtg-badge-warning {
+  background: var(--color-yellow-500);
+  color: var(--color-slate-900);
+}
+
+/* Professional Layout Utilities */
+.mtg-section {
+  margin-bottom: var(--space-8);
+}
+
+.mtg-section-title {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  margin: 0 0 var(--space-6) 0;
+  line-height: 1.2;
+}
+
+.mtg-section-subtitle {
+  font-size: var(--text-base);
+  color: var(--text-tertiary);
+  margin: 0 0 var(--space-8) 0;
+  line-height: 1.5;
+}
+
+/* Responsive Helpers */
+.mtg-hide-mobile {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .mtg-hide-mobile {
+    display: block;
+  }
+}
+
+.mtg-show-mobile {
+  display: block;
+}
+
+@media (min-width: 640px) {
+  .mtg-show-mobile {
+    display: none;
+  }
+}
+
+/* Focus and Accessibility */
+.mtg-focus-ring:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+/* Performance Optimizations */
+.mtg-gpu {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Print Styles */
 @media print {
-  * {
+  .mtg-nav,
+  .mtg-header-actions {
+    display: none !important;
+  }
+  
+  .mtg-app {
     background: white !important;
     color: black !important;
   }
   
-  .no-print {
-    display: none !important;
+  .mtg-card {
+    border: 1px solid #000 !important;
+    background: white !important;
+    -moz-column-break-inside: avoid;
+         break-inside: avoid;
   }
 }
 
-/*!********************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./styles/critical-contrast-fixes.css ***!
-  \********************************************************************************************************************************************************************************************************************************************************************************/
-/* Correções específicas de contraste baseadas na análise das imagens fornecidas */
+/*!**************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./styles/mobile-navigation.css ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************/
+/* Mobile Navigation and Header Styles */
 
-/* Melhorias específicas para badges de raridade - mais contraste */
-.rarity-common,
-[class*="common"] {
-  background-color: #4b5563 !important;
-  color: #f9fafb !important;
-  border: 1px solid #9ca3af !important;
-  font-weight: 600 !important;
+/* Header Container */
+.mobile-header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background: linear-gradient(180deg, rgba(17, 24, 39, 0.95) 0%, rgba(15, 23, 42, 0.9) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px); /* Safari support */
+  border-bottom: 1px solid rgba(99, 102, 241, 0.15);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
-.rarity-uncommon,
-[class*="uncommon"] {
-  background-color: #1e40af !important;
-  color: #dbeafe !important;
-  border: 1px solid #60a5fa !important;
-  font-weight: 600 !important;
+/* Scrolled Header State */
+.mobile-header-scrolled {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(99, 102, 241, 0.2);
+  background: linear-gradient(180deg, rgba(10, 15, 30, 0.98) 0%, rgba(13, 17, 35, 0.95) 100%);
+  border-bottom: 1px solid rgba(99, 102, 241, 0.2);
 }
 
-.rarity-rare,
-[class*="rare"] {
-  background-color: #dc2626 !important;
-  color: #fecaca !important;
-  border: 1px solid #f87171 !important;
-  font-weight: 600 !important;
+/* Header Content Container */
+.mobile-header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  position: relative;
+  overflow: hidden;
 }
 
-.rarity-mythic,
-[class*="mythic"] {
-  background-color: #7c2d12 !important;
-  color: #fed7aa !important;
-  border: 1px solid #fb923c !important;
-  font-weight: 600 !important;
+/* Logo Container */
+.mobile-logo-container {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
 }
 
-/* Textos sobre fundos escuros - melhor contraste */
-.text-gray-400 {
-  color: #cbd5e1 !important; /* Mais claro que o original */
+/* Logo Badge */
+.mobile-logo-badge {
+  width: 2.25rem;
+  height: 2.25rem;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #3b82f6 100%);
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: white;
+  font-size: 0.875rem;
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
 }
 
-.text-gray-500 {
-  color: #9ca3af !important; /* Mais claro que o original */
+.mobile-logo-badge::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  z-index: -1;
+  animation: shimmer 3s linear infinite;
 }
 
-/* Tempo/data nas cartas recentes - melhor visibilidade */
-.recent-card .card-time,
-.card-time {
-  color: #d1d5db !important;
-  font-weight: 500 !important;
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
-/* Texto de pesquisa vazio - melhor contraste */
-.search-empty-state {
-  color: #e5e7eb !important;
-  font-size: 1.1rem !important;
-  line-height: 1.6 !important;
+/* Logo Text */
+.mobile-logo-text {
+  display: flex;
+  flex-direction: column;
+  position: relative;
 }
 
-/* Placeholders com melhor visibilidade */
-::-moz-placeholder {
-  color: #9ca3af !important;
-  opacity: 1 !important;
-}
-::placeholder {
-  color: #9ca3af !important;
-  opacity: 1 !important;
-}
-
-/* Melhorias específicas para botões de pesquisa */
-.search-button {
-  background-color: #2563eb !important;
-  color: #ffffff !important;
-  border: 1px solid #1d4ed8 !important;
-  font-weight: 600 !important;
+.mobile-logo-title {
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: white;
+  line-height: 1.1;
+  background: linear-gradient(90deg, #fff, #a5b4fc);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 30px rgba(99, 102, 241, 0.3);
+  letter-spacing: -0.01em;
 }
 
-.search-button:hover {
-  background-color: #1d4ed8 !important;
-  border-color: #1e40af !important;
+.mobile-logo-subtitle {
+  font-size: 0.625rem;
+  color: rgba(179, 183, 247, 0.8);
+  line-height: 1.2;
+  letter-spacing: 0.03em;
+  font-weight: 500;
+  margin-top: 0.125rem;
 }
 
-/* Tags de exemplo de pesquisa */
-.search-example-tag {
-  background-color: #374151 !important;
-  color: #e5e7eb !important;
-  border: 1px solid #6b7280 !important;
-  padding: 0.5rem 1rem !important;
-  border-radius: 0.5rem !important;
-  font-weight: 500 !important;
+/* Mobile Navigation Toggle Button */
+.mobile-nav-toggle {
+  width: 2.25rem;
+  height: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(31, 41, 55, 0.7) 0%, rgba(47, 55, 80, 0.7) 100%);
+  border: 1px solid rgba(75, 85, 99, 0.3);
+  border-radius: 0.375rem;
+  color: rgb(209, 213, 219);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-.search-example-tag:hover {
-  background-color: #4b5563 !important;
-  color: #f9fafb !important;
-  border-color: #9ca3af !important;
+.mobile-nav-toggle:before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #3b82f6, #8b5cf6, #3b82f6);
+  z-index: -1;
+  border-radius: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-/* Melhorias para categorias de regras */
-.rules-category-active {
-  background-color: #1d4ed8 !important;
-  color: #ffffff !important;
-  border: 1px solid #2563eb !important;
+.mobile-nav-toggle:hover {
+  background-color: rgba(55, 65, 81, 0.8);
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
 }
 
-.rules-category-inactive {
-  background-color: #374151 !important;
-  color: #d1d5db !important;
-  border: 1px solid #6b7280 !important;
+.mobile-nav-toggle:hover:before {
+  opacity: 0.4;
 }
 
-.rules-category-inactive:hover {
-  background-color: #4b5563 !important;
-  color: #f9fafb !important;
-  border-color: #9ca3af !important;
+.mobile-nav-toggle:active {
+  transform: scale(0.95);
 }
 
-/* Texto em dropdowns - melhor legibilidade */
-.dropdown-option {
-  background-color: #1f2937 !important;
-  color: #e5e7eb !important;
-  padding: 0.75rem 1rem !important;
-  border-bottom: 1px solid #374151 !important;
+/* Mobile Navigation Menu */
+.mobile-nav-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 85%;
+  max-width: 320px;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.97) 0%, rgba(23, 28, 52, 0.97) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 100;
+  box-shadow: 
+    -5px 0 25px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(99, 102, 241, 0.2);
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid rgba(99, 102, 241, 0.2);
 }
 
-.dropdown-option:hover {
-  background-color: #374151 !important;
-  color: #f9fafb !important;
+.mobile-nav-menu.open {
+  transform: translateX(0);
 }
 
-.dropdown-option:last-child {
-  border-bottom: none !important;
+.mobile-nav-menu::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 5px;
+  height: 100%;
+  background: linear-gradient(to bottom, #4f46e5, #3b82f6, #8b5cf6);
+  opacity: 0.5;
 }
 
-/* Notificações com contraste aprimorado */
-.notification {
-  padding: 1rem 1.5rem !important;
-  border-radius: 0.5rem !important;
-  font-weight: 500 !important;
-  border-width: 1px !important;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3) !important;
+/* Mobile Menu Header */
+.mobile-menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid rgba(99, 102, 241, 0.15);
+  background: linear-gradient(90deg, rgba(15, 23, 42, 0.5), rgba(30, 41, 59, 0.5));
 }
 
-.notification-success {
-  background-color: #065f46 !important;
-  color: #d1fae5 !important;
-  border-color: #059669 !important;
+.mobile-menu-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: white;
+  position: relative;
+  padding-left: 1rem;
 }
 
-.notification-error {
-  background-color: #991b1b !important;
-  color: #fee2e2 !important;
-  border-color: #dc2626 !important;
+.mobile-menu-title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.25rem;
+  bottom: 0.25rem;
+  width: 3px;
+  background: linear-gradient(to bottom, #4f46e5, #8b5cf6);
+  border-radius: 4px;
 }
 
-.notification-warning {
-  background-color: #92400e !important;
-  color: #fed7aa !important;
-  border-color: #d97706 !important;
+.mobile-menu-close {
+  width: 2.25rem;
+  height: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(31, 41, 55, 0.7) 0%, rgba(47, 55, 80, 0.7) 100%);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 0.5rem;
+  color: rgb(209, 213, 219);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-.notification-info {
-  background-color: #1e40af !important;
-  color: #dbeafe !important;
-  border-color: #2563eb !important;
+.mobile-menu-close:hover {
+  background-color: rgba(55, 65, 81, 0.8);
+  color: white;
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
 }
 
-/* Cards de deck com melhor definição */
-.deck-card {
-  background-color: #1e293b !important;
-  border: 1px solid #475569 !important;
-  border-radius: 0.75rem !important;
+.mobile-menu-close:active {
+  transform: scale(0.95);
 }
 
-.deck-card:hover {
-  border-color: #64748b !important;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4) !important;
+/* Mobile Menu Content */
+.mobile-menu-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.75rem 0;
 }
 
-.deck-card-title {
-  color: #f8fafc !important;
-  font-weight: 700 !important;
-  font-size: 1.125rem !important;
+/* Mobile Navigation Links */
+.mobile-nav-links {
+  display: flex;
+  flex-direction: column;
 }
 
-.deck-card-description {
-  color: #cbd5e1 !important;
-  line-height: 1.5 !important;
+.mobile-nav-link {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1.25rem;
+  color: rgb(209, 213, 219);
+  transition: all 0.2s ease;
+  text-decoration: none;
+  font-size: 0.875rem;
+  position: relative;
+  border-radius: 0.25rem;
+  margin: 0 0.5rem 0.25rem;
 }
 
-/* Estatísticas com números mais visíveis */
-.stat-container {
-  background-color: #334155 !important;
-  border-radius: 0.5rem !important;
-  padding: 1rem !important;
-  border: 1px solid #475569 !important;
+.mobile-nav-link.active {
+  color: rgb(59, 130, 246);
+  background-color: rgba(59, 130, 246, 0.1);
 }
 
-.stat-number {
-  color: #f8fafc !important;
-  font-size: 1.875rem !important;
-  font-weight: 800 !important;
+.mobile-nav-link.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: linear-gradient(to bottom, #3b82f6, #8b5cf6);
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
 }
 
-.stat-label {
-  color: #cbd5e1 !important;
-  font-size: 0.875rem !important;
-  font-weight: 600 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.05em !important;
+.mobile-nav-link:hover:not(.active) {
+  transform: translateX(2px);
+  background-color: rgba(55, 65, 81, 0.3);
+  color: white;
 }
 
-/* Mana symbols com melhor contraste */
-.mana-symbol {
-  font-weight: 700 !important;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
-  border: 2px solid rgba(0, 0, 0, 0.3) !important;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+.mobile-nav-link-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.75rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  opacity: 0.8;
 }
 
-/* Melhorias para labels de formulário */
-.form-label {
-  color: #e2e8f0 !important;
-  font-weight: 600 !important;
-  margin-bottom: 0.5rem !important;
-  display: block !important;
+/* Mobile Menu Footer */
+.mobile-menu-footer {
+  padding: 1rem;
+  border-top: 1px solid rgba(75, 85, 99, 0.2);
+  font-size: 0.75rem;
+  color: rgba(156, 163, 175, 1);
+  text-align: center;
 }
 
-/* Botões com estados bem definidos */
-.btn-primary {
-  background-color: #1d4ed8 !important;
-  color: #ffffff !important;
-  border: 1px solid #1e40af !important;
-  font-weight: 600 !important;
+/* Mobile User Profile Section */
+.mobile-user-profile {
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(75, 85, 99, 0.2);
 }
 
-.btn-primary:hover {
-  background-color: #1e40af !important;
-  border-color: #1e3a8a !important;
-  transform: translateY(-1px) !important;
+.mobile-user-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  margin-right: 0.75rem;
+  border: 2px solid rgba(255, 255, 255, 0.1);
 }
 
-.btn-secondary {
-  background-color: #374151 !important;
-  color: #e5e7eb !important;
-  border: 1px solid #6b7280 !important;
-  font-weight: 500 !important;
+.mobile-user-info {
+  flex: 1;
+  min-width: 0;
 }
 
-.btn-secondary:hover {
-  background-color: #4b5563 !important;
-  color: #f9fafb !important;
-  border-color: #9ca3af !important;
+.mobile-user-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* Links com melhor visibilidade */
-.link-primary {
-  color: #60a5fa !important;
-  text-decoration: underline !important;
-  text-underline-offset: 2px !important;
+.mobile-user-stats {
+  font-size: 0.75rem;
+  color: rgba(156, 163, 175, 1);
 }
 
-.link-primary:hover {
-  color: #93c5fd !important;
+/* Overlay when menu is open */
+.mobile-nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 90;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
 }
 
-/* Foco visível para acessibilidade */
-.focus-visible:focus,
-*:focus-visible {
-  outline: 3px solid #60a5fa !important;
-  outline-offset: 2px !important;
-  border-radius: 0.25rem !important;
+.mobile-nav-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
 }
 
-/* Melhorias para modais */
-.modal-header {
-  border-bottom: 1px solid #475569 !important;
-  padding-bottom: 1rem !important;
-  margin-bottom: 1.5rem !important;
+/* Subheaders for different sections */
+.mobile-subheader {
+  padding: 0.75rem 1rem;
+  background: linear-gradient(90deg, rgba(15, 23, 42, 0.85) 0%, rgba(30, 41, 59, 0.85) 50%, rgba(15, 23, 42, 0.85) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(99, 102, 241, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
 }
 
-.modal-title {
-  color: #f8fafc !important;
-  font-size: 1.5rem !important;
-  font-weight: 700 !important;
+.mobile-subheader::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(99, 102, 241, 0.7), 
+    transparent
+  );
 }
 
-.modal-body {
-  color: #e2e8f0 !important;
-  line-height: 1.6 !important;
+.mobile-subheader-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 700;
+  position: relative;
+  padding-bottom: 0.125rem;
 }
 
-/* Tooltips melhorados */
-.tooltip {
-  background-color: #0f172a !important;
-  color: #f8fafc !important;
-  border: 1px solid #475569 !important;
-  padding: 0.5rem 0.75rem !important;
-  font-size: 0.875rem !important;
-  font-weight: 500 !important;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5) !important;
+.mobile-subheader-title::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #4f46e5, #7c3aed);
+  opacity: 0;
+  transform: scaleX(0.7);
+  transition: all 0.3s ease;
 }
 
-/* Correções específicas para o layout de 3 colunas */
+.mobile-subheader-title:active::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.mobile-subheader-title svg {
+  color: #818cf8;
+  filter: drop-shadow(0 0 8px rgba(99, 102, 241, 0.5));
+}
+
+.mobile-subheader-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.mobile-subheader-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.875rem;
+  height: 1.875rem;
+  border-radius: 0.5rem;
+  background: linear-gradient(135deg, rgba(31, 41, 55, 0.7) 0%, rgba(47, 55, 80, 0.7) 100%);
+  color: rgb(209, 213, 219);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.mobile-subheader-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(99, 102, 241, 0.5), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.mobile-subheader-button:hover {
+  background-color: rgba(55, 65, 81, 0.8);
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(99, 102, 241, 0.3);
+}
+
+.mobile-subheader-button:hover::before {
+  opacity: 0.5;
+}
+
+.mobile-subheader-button:active {
+  transform: translateY(1px);
+}
+
+/* Enhanced header variants */
+.mobile-header-elevated {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  background-color: rgba(11, 15, 25, 0.98);
+}
+
+.mobile-header-transparent {
+  background-color: transparent;
+  -webkit-backdrop-filter: none;
+          backdrop-filter: none;
+  border-bottom: none;
+}
+
+.mobile-header-colored {
+  background: linear-gradient(135deg, rgba(17, 24, 39, 0.95) 0%, rgba(31, 41, 55, 0.95) 100%);
+}
+
+/* Responsive adjustments */
+@media (min-width: 640px) {
+  .mobile-header-container {
+    padding: 0.75rem 1.5rem;
+  }
+  
+  .mobile-subheader {
+    padding: 0.75rem 1.5rem;
+  }
+}
+
+/* Animation for header transitions */
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.mobile-header-animate-in {
+  animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.mobile-header-content-animate {
+  animation: fadeIn 0.5s 0.2s both;
+}
+
+/* Search bar animations */
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.animate-slideUp {
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Hide mobile components on larger screens */
 @media (min-width: 1024px) {
-  .deck-viewer-sidebar {
-    min-width: 280px !important;
+  .mobile-only {
+    display: none;
   }
-  
-  .deck-viewer-main {
-    flex: 1 !important;
-    min-width: 0 !important;
+}
+/*!****************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./styles/header-enhancements.css ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************/
+/* Enhanced header variants */
+.mobile-header-glass {
+  background: rgba(15, 23, 42, 0.8);
+  -webkit-backdrop-filter: blur(20px);
+          backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(99, 102, 241, 0.3);
+  box-shadow: 
+    0 10px 30px -10px rgba(0, 0, 0, 0.3),
+    0 1px 0 0 rgba(255, 255, 255, 0.05) inset;
+}
+
+.mobile-header-gradient {
+  background: linear-gradient(135deg, rgba(79, 70, 229, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+  -webkit-backdrop-filter: blur(16px);
+          backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+/* Enhanced notification badge */
+.notification-badge {
+  position: absolute;
+  top: -0.25rem;
+  right: -0.25rem;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4f46e5 0%, #e11d48 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.625rem;
+  font-weight: 700;
+  color: white;
+  box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.9);
+}
+
+/* Interactive header elements */
+.interactive-header-element {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.interactive-header-element::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.2), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.interactive-header-element:active::after {
+  opacity: 1;
+}
+
+/* Header navigation indicator */
+.header-nav-indicator {
+  position: absolute;
+  bottom: -1px;
+  left: 1rem;
+  right: 1rem;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 1), transparent);
+  opacity: 0;
+  transform: scaleX(0.7);
+  transition: all 0.3s ease;
+}
+
+.header-nav-active .header-nav-indicator {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+/* Floating Action Button */
+@keyframes floatButton {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+/* Bottom Navigation with Labels */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(15, 23, 42, 0.9);
+  -webkit-backdrop-filter: blur(16px);
+          backdrop-filter: blur(16px);
+  display: flex;
+  justify-content: space-around;
+  padding: 0.5rem 0;
+  border-top: 1px solid rgba(99, 102, 241, 0.2);
+  z-index: 50;
+}
+
+.bottom-nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem 0;
+  color: rgb(156, 163, 175);
+  font-size: 0.625rem;
+  transition: all 0.2s ease;
+}
+
+.bottom-nav-item.active {
+  color: rgb(99, 102, 241);
+}
+
+.bottom-nav-icon {
+  margin-bottom: 0.25rem;
+  position: relative;
+}
+
+.bottom-nav-item.active .bottom-nav-icon::after {
+  content: '';
+  position: absolute;
+  bottom: -0.375rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1rem;
+  height: 0.125rem;
+  background: rgb(99, 102, 241);
+  border-radius: 0.25rem;
+}
+
+/*!**********************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./styles/tabs-enhanced.css ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************/
+/* Estilos refinados para o container de navegação */
+.navigation-tabs {
+  --tab-highlight: rgb(99, 102, 241);
+  --tab-glow: rgba(99, 102, 241, 0.5);
+}
+
+.compact-tabs-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s ease-in-out;
+  background-size: 400% 400%;
+  border-width: 1px;
+  border-style: solid;
+  -o-border-image: linear-gradient(
+    to bottom,
+    rgba(130, 130, 255, 0.3),
+    rgba(80, 70, 170, 0.2) 50%,
+    rgba(50, 50, 130, 0.1)
+  ) 1;
+     border-image: linear-gradient(
+    to bottom,
+    rgba(130, 130, 255, 0.3),
+    rgba(80, 70, 170, 0.2) 50%,
+    rgba(50, 50, 130, 0.1)
+  ) 1;
+}
+
+.ambient-glow {
+  position: absolute;
+  width: 120%;
+  height: 120%;
+  top: -10%;
+  left: -10%;
+  background: 
+    radial-gradient(
+      circle at 30% 40%, 
+      rgba(99, 102, 241, 0.08) 0%, 
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 70% 60%, 
+      rgba(76, 81, 191, 0.08) 0%, 
+      transparent 50%
+    );
+  opacity: 0.6;
+  filter: blur(40px);
+  z-index: -2;
+  animation: ambientPulse 8s infinite alternate ease-in-out;
+}
+
+@keyframes ambientPulse {
+  0% { opacity: 0.4; transform: scale(1); }
+  100% { opacity: 0.7; transform: scale(1.05); }
+}
+
+.compact-tabs-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(60, 60, 100, 0.4) 0%,
+      rgba(30, 30, 50, 0.6) 50%,
+      rgba(20, 20, 40, 0.5) 100%
+    ),
+    linear-gradient(
+      to bottom right,
+      rgba(50, 50, 80, 0.1) 0%,
+      rgba(20, 20, 30, 0.3) 100%
+    );
+  z-index: -1;
+  border-radius: inherit;
+  box-shadow: 
+    inset 0 1px 1px rgba(255, 255, 255, 0.08),
+    0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+/* Estilos refinados para as guias individuais */
+.quantum-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.625rem 1rem;
+  border-radius: 0.55rem;
+  font-weight: 500;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  background: rgba(30, 30, 50, 0.6);
+  border: 1px solid;
+  -o-border-image: linear-gradient(to bottom, rgba(100, 100, 180, 0.4), rgba(70, 70, 140, 0.2)) 1;
+     border-image: linear-gradient(to bottom, rgba(100, 100, 180, 0.4), rgba(70, 70, 140, 0.2)) 1;
+  color: rgba(200, 200, 230, 0.85);
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  -webkit-backdrop-filter: blur(4px);
+          backdrop-filter: blur(4px);
+}
+
+/* Conteúdo interno das abas */
+.tab-content {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* Container e animação para ícones */
+.icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.tab-icon {
+  transition: all 0.3s ease;
+  will-change: transform;
+}
+
+.tab-label {
+  transition: all 0.3s ease;
+  will-change: transform, color;
+}
+
+/* Efeito de brilho na superfície */
+.tab-shine {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.8s;
+}
+
+.quantum-tab:hover .tab-shine {
+  transform: translateX(100%);
+}
+
+.quantum-tab:hover {
+  background: rgba(50, 50, 90, 0.7);
+  color: rgba(230, 230, 255, 0.95);
+  -o-border-image: linear-gradient(to bottom, rgba(130, 130, 220, 0.5), rgba(80, 80, 180, 0.3)) 1;
+     border-image: linear-gradient(to bottom, rgba(130, 130, 220, 0.5), rgba(80, 80, 180, 0.3)) 1;
+  transform: translateY(-2px);
+  box-shadow: 
+    0 4px 10px -1px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+}
+
+.quantum-tab:hover .tab-icon {
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 3px rgba(120, 120, 255, 0.5));
+}
+
+.quantum-tab:hover .tab-label {
+  color: rgba(240, 240, 255, 1);
+  text-shadow: 0 0 8px rgba(150, 150, 255, 0.4);
+}
+
+.quantum-tab[data-state="active"] {
+  background: linear-gradient(135deg, 
+    rgba(80, 70, 180, 0.4) 0%, 
+    rgba(60, 60, 160, 0.5) 50%,
+    rgba(90, 70, 200, 0.4) 100%
+  );
+  -o-border-image: linear-gradient(to bottom, rgba(150, 150, 255, 0.6), rgba(100, 100, 220, 0.4)) 1;
+     border-image: linear-gradient(to bottom, rgba(150, 150, 255, 0.6), rgba(100, 100, 220, 0.4)) 1;
+  box-shadow: 
+    0 0 0 1px rgba(140, 140, 255, 0.3),
+    0 4px 10px -1px rgba(0, 0, 40, 0.4),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 1);
+  transform: translateY(-2px);
+}
+
+.quantum-tab[data-state="active"] .tab-icon {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 5px rgba(150, 150, 255, 0.6));
+}
+
+.quantum-tab[data-state="active"] .tab-label {
+  font-weight: 600;
+  text-shadow: 0 0 10px rgba(150, 150, 255, 0.5);
+}
+
+/* Efeito de brilho para as abas */
+.tab-glow {
+  background: radial-gradient(
+    circle at center,
+    var(--tab-glow) 0%,
+    transparent 70%
+  );
+  filter: blur(8px);
+  z-index: 1;
+}
+
+/* Indicador de abas avançado */
+.tab-indicator-container {
+  height: 3px;
+  width: 80px;
+  background: rgba(100, 100, 150, 0.15);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  z-index: 10;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.tab-indicator-active {
+  height: 100%;
+  width: 30px;
+  background: linear-gradient(90deg, 
+    rgba(120, 120, 255, 0.7), 
+    var(--tab-highlight), 
+    rgba(138, 180, 248, 0.9)
+  );
+  border-radius: 4px;
+  position: absolute;
+  left: calc(50% - 15px);
+  animation: pulseAndShift 3s infinite alternate;
+  box-shadow: 
+    0 0 10px rgba(99, 102, 241, 0.5),
+    0 0 20px rgba(99, 102, 241, 0.2);
+}
+
+.tab-indicator-glow {
+  position: absolute;
+  height: 15px;
+  width: 40px;
+  top: -6px;
+  left: calc(50% - 20px);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(99, 102, 241, 0.4) 0%,
+    rgba(99, 102, 241, 0) 70%
+  );
+  filter: blur(5px);
+  opacity: 0.7;
+  animation: glowPulse 3s infinite alternate;
+}
+
+.tabs-bottom-decoration {
+  margin-top: 0.75rem;
+  position: relative;
+  width: 100%;
+  height: 6px;
+  overflow: hidden;
+}
+
+.tabs-decoration-line {
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(99, 102, 241, 0.2) 20%,
+    rgba(99, 102, 241, 0.4) 50%,
+    rgba(99, 102, 241, 0.2) 80%,
+    transparent 100%
+  );
+}
+
+@keyframes pulseAndShift {
+  0% {
+    opacity: 0.7;
+    transform: translateX(-5px);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.8;
+    transform: translateX(5px);
   }
 }
 
-/* Melhorias para dispositivos móveis */
-@media (max-width: 768px) {
-  .mobile-improved-contrast {
-    background-color: #1e293b !important;
-    padding: 1rem !important;
-    margin: 0.5rem !important;
-    border-radius: 0.75rem !important;
-    border: 1px solid #475569 !important;
+@keyframes glowPulse {
+  0% {
+    opacity: 0.5;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+}
+
+/* Área de conteúdo refinada */
+.content-wrapper {
+  position: relative;
+  animation: fadeSlideUp 0.3s ease-out forwards;
+  transform-origin: top center;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0.7;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Layout de grade responsivo para abas em mobile */
+.mobile-tabs-grid {
+  display: flex;
+  width: 100%;
+  position: relative;
+}
+
+.mobile-tabs-grid::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(99, 102, 241, 0.1) 20%,
+    rgba(99, 102, 241, 0.2) 50%,
+    rgba(99, 102, 241, 0.1) 80%,
+    transparent 100%
+  );
+}
+
+@media (max-width: 640px) {
+  .mobile-tabs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+    gap: 0.5rem;
+    width: 100%;
+    justify-content: center;
+    padding-bottom: 0.5rem;
   }
   
-  .mobile-text {
-    font-size: 1rem !important;
-    line-height: 1.6 !important;
-    color: #e2e8f0 !important;
+  .quantum-tab {
+    width: 100%;
+    padding: 0.625rem 0.5rem;
+    font-size: 0.7rem;
+    height: 100%;
+    background: rgba(40, 40, 70, 0.6);
+    -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+    box-shadow:
+      0 2px 4px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
   }
   
-  .mobile-title {
-    font-size: 1.25rem !important;
-    font-weight: 700 !important;
-    color: #f8fafc !important;
-    margin-bottom: 0.5rem !important;
+  .tab-content {
+    flex-direction: column;
+  }
+  
+  .quantum-tab .mr-2 {
+    margin-right: 0.5rem;
+  }
+  
+  .quantum-tab[data-state="active"] {
+    background: linear-gradient(to bottom, 
+      rgba(80, 70, 180, 0.4) 0%, 
+      rgba(70, 65, 180, 0.35) 100%
+    );
+  }
+}
+
+/* Ajustes responsivos para diferentes tamanhos de tela */
+@media (max-width: 640px) {
+  .compact-tabs-container {
+    margin: 0;
+    border-radius: 0.75rem;
+    padding: 1rem 0.75rem;
+    border-width: 1px;
+    border-style: solid;
+    -o-border-image: linear-gradient(
+      to bottom,
+      rgba(120, 120, 200, 0.3),
+      rgba(60, 60, 150, 0.2)
+    ) 1;
+       border-image: linear-gradient(
+      to bottom,
+      rgba(120, 120, 200, 0.3),
+      rgba(60, 60, 150, 0.2)
+    ) 1;
+    box-shadow: 
+      0 5px 15px rgba(0, 0, 0, 0.25),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+  }
+  
+  .tab-indicator-container {
+    width: 60px;
+    margin-top: 0.5rem;
+  }
+  
+  .tab-indicator-active {
+    width: 25px;
+    left: calc(50% - 12.5px);
+  }
+  
+  .tabs-decoration-line {
+    left: 5%;
+    right: 5%;
+  }
+}
+
+@media (max-width: 375px) {
+  .mobile-tabs-grid {
+    grid-template-columns: repeat(auto-fit, minmax(65px, 1fr));
+    gap: 0.375rem;
+  }
+  
+  .quantum-tab {
+    padding: 0.5rem 0.375rem;
+  }
+  
+  .quantum-tab .tab-icon {
+    margin-bottom: 0.375rem !important;
+  }
+  
+  .tab-indicator-container {
+    width: 50px;
+  }
+}
+
+/*!****************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./styles/content-refinements.css ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************/
+/* Refinamentos para a área de conteúdo */
+
+.quantum-content-area {
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+.quantum-content-area:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, 
+    rgba(99, 102, 241, 0.2),
+    rgba(138, 180, 248, 0.4),
+    rgba(99, 102, 241, 0.2)
+  );
+  opacity: 0;
+  transform: scaleX(0.7);
+  transition: all 0.3s ease;
+  border-radius: 3px 3px 0 0;
+  z-index: 5;
+}
+
+.quantum-content-area.active:before {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+/* Efeitos de profundidade para cards */
+.quantum-card-dense {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  will-change: transform, box-shadow;
+}
+
+.quantum-card-dense:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Melhorias para animações */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.shimmer-effect {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.03) 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.03) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2.5s infinite;
+}
+
+/* Melhorias para visualização mobile */
+@media (max-width: 640px) {
+  .mtg-container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+  
+  .quantum-content-area {
+    margin-top: 1rem;
+  }
+}
+
+/* Efeito de foco para elementos interativos */
+.interactive-focus {
+  transition: outline 0.2s ease;
+}
+
+.interactive-focus:focus-visible {
+  outline: 2px solid rgba(99, 102, 241, 0.6);
+  outline-offset: 2px;
+}
+
+/*!*********************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./styles/mobile-fixes.css ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************/
+/* Estilos complementares para corrigir problemas em mobile */
+.responsive-nav {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* Evitar sombras duplicadas em mobile */
+@media (max-width: 640px) {
+  /* Ajuste para container principal */
+  .mtg-container {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  
+  /* Ajuste para conteúdos internos das abas */
+  .compact-tabs-container {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Layout de abas refinado para telas muito pequenas */
+  @media (max-width: 360px) {
+    .mobile-tabs-grid {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: repeat(auto-fill, 1fr);
+    }
+    
+    .tab-indicator-container {
+      display: none;
+    }
   }
 }
 
@@ -1042,239 +2335,6 @@ body {
     color: rgba(236, 237, 238, 0.8);
   }
 }
-/*!*************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./styles/deck-constructor.css ***!
-  \*************************************************************************************************************************************************************************************************************************************************************************/
-/* Estilos para animações e transições do construtor de decks */
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.7;
-  }
-}
-
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.deck-card-hover {
-  transition: all 0.3s ease;
-}
-
-.deck-card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-}
-
-.deck-card-animate {
-  animation: slideIn 0.5s ease-out;
-}
-
-.notification-enter {
-  animation: slideIn 0.3s ease-out;
-}
-
-.modal-backdrop {
-  animation: fadeIn 0.2s ease-out;
-}
-
-.modal-content {
-  animation: scaleIn 0.2s ease-out;
-}
-
-.loading-pulse {
-  animation: pulse 2s infinite;
-}
-
-/* Gradientes personalizados */
-.gradient-deck-bg {
-  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-}
-
-.gradient-mana-w {
-  background: linear-gradient(45deg, #fef3c7, #f59e0b);
-}
-
-.gradient-mana-u {
-  background: linear-gradient(45deg, #dbeafe, #3b82f6);
-}
-
-.gradient-mana-b {
-  background: linear-gradient(45deg, #f3f4f6, #374151);
-}
-
-.gradient-mana-r {
-  background: linear-gradient(45deg, #fee2e2, #ef4444);
-}
-
-.gradient-mana-g {
-  background: linear-gradient(45deg, #dcfce7, #22c55e);
-}
-
-/* Scrollbar personalizada */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(55, 65, 81, 0.3);
-  border-radius: 3px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(107, 114, 128, 0.7);
-  border-radius: 3px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(107, 114, 128, 0.9);
-}
-
-/* Efeitos de hover para cartas */
-.card-hover-effect {
-  transition: all 0.2s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.card-hover-effect::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-  transition: left 0.5s ease;
-}
-
-.card-hover-effect:hover::before {
-  left: 100%;
-}
-
-.card-hover-effect:hover {
-  transform: scale(1.02);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-}
-
-/* Animações para estatísticas */
-.stat-bar {
-  transition: width 0.8s ease-in-out;
-}
-
-.stat-number {
-  animation: slideIn 0.6s ease-out;
-}
-
-/* Botões com efeitos */
-.btn-gradient {
-  background: linear-gradient(45deg, #3b82f6, #8b5cf6);
-  transition: all 0.3s ease;
-}
-
-.btn-gradient:hover {
-  background: linear-gradient(45deg, #2563eb, #7c3aed);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
-}
-
-/* Loading states */
-.loading-shimmer {
-  background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
-  background-size: 200% 100%;
-  animation: shimmer 2s infinite;
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
-
-/* Responsive melhorias */
-@media (max-width: 768px) {
-  .deck-card-hover:hover {
-    transform: none;
-  }
-  
-  .card-hover-effect:hover {
-    transform: none;
-  }
-}
-
-/* Tooltips personalizados */
-.tooltip {
-  position: relative;
-}
-
-.tooltip::after {
-  content: attr(data-tooltip);
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #1f2937;
-  color: white;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 12px;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease;
-  z-index: 1000;
-}
-
-.tooltip:hover::after {
-  opacity: 1;
-}
-
-/* Melhorias para acessibilidade */
-.focus-visible:focus {
-  outline: 2px solid #3b82f6;
-  outline-offset: 2px;
-}
-
-/* Estados de carregamento para cards */
-.card-loading {
-  background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-}
-
 /*!*****************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./styles/moxfield.css ***!
   \*****************************************************************************************************************************************************************************************************************************************************************/
@@ -1439,5 +2499,113 @@ body {
 *:hover > .card-tooltip {
   visibility: visible;
   opacity: 1;
+}
+
+/*!****************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./styles/deck-viewer-compact.css ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************/
+/* Estilos compactos específicos para o DeckViewer */
+.quantum-card-dense {
+  background-color: rgba(0, 0, 0, 0.4);
+  -webkit-backdrop-filter: blur(4px);
+          backdrop-filter: blur(4px);
+  border: 1px solid rgba(6, 182, 212, 0.1);
+  border-radius: 0.375rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), inset 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* Versão mais compacta dos elementos UI */
+.quantum-btn.compact {
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  height: 1.75rem;
+  font-size: 0.75rem;
+  min-height: 1.75rem;
+}
+
+/* Ajustes específicos para grids de cartas compactos */
+.card-grid-compact {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 0.25rem;
+}
+
+.card-grid-compact .card-item {
+  position: relative;
+  transition: transform 0.15s ease-in-out;
+}
+
+.card-grid-compact .card-item:hover {
+  transform: translateY(-2px);
+  z-index: 10;
+}
+
+/* Tooltips para informações rápidas */
+.card-tooltip {
+  position: absolute;
+  bottom: calc(100% + 5px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  color: white;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s ease-in-out, visibility 0.15s ease-in-out;
+  z-index: 50;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+}
+
+.card-item:hover .card-tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Efeito de hover mais sutil */
+.hover-highlight {
+  transition: all 0.15s ease;
+}
+
+.hover-highlight:hover {
+  background: rgba(6, 182, 212, 0.1);
+  border-color: rgba(6, 182, 212, 0.5);
+}
+
+/* Estilo para informações numéricas */
+.stat-value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  color: rgba(6, 182, 212, 0.9);
+}
+
+/* Espaçamentos mais reduzidos */
+.compact-space-y > * + * {
+  margin-top: 0.25rem;
+}
+
+.compact-space-x > * + * {
+  margin-left: 0.25rem;
+}
+
+/* Colunas responsivas mais densas */
+@media (min-width: 640px) {
+  .deck-viewer-layout {
+    display: grid;
+    grid-template-columns: minmax(180px, 1fr) minmax(300px, 3fr) minmax(180px, 1fr);
+    gap: 0.5rem;
+    height: calc(100vh - 140px);
+  }
+  
+  .deck-viewer-column {
+    overflow-y: auto;
+    padding-right: 2px;
+  }
 }
 
