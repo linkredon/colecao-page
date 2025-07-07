@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
@@ -183,19 +182,17 @@ const QuadroFiltros: React.FC<QuadroFiltrosProps> = ({
   };
 
   return (
-    <div className="space-y-6 p-4 bg-gray-800/50 rounded-lg border border-gray-600">
+    <div className="space-y-6 p-4 filters-container rounded-lg border">
       
       {/* Header */}
       <div className="flex justify-between items-center">
         <h3 className="text-lg font-semibold text-white">Filtros Avançados</h3>
-        <Button 
+        <button 
           onClick={clearAllFilters}
-          variant="outline" 
-          size="sm"
-          className="text-gray-300 border-gray-600 hover:bg-gray-700"
+          className="quantum-btn compact"
         >
           Limpar Filtros
-        </Button>
+        </button>
       </div>
 
       {/* Busca por nome */}
@@ -217,12 +214,16 @@ const QuadroFiltros: React.FC<QuadroFiltrosProps> = ({
         <div className="space-y-2">
           <label className="block text-sm font-medium text-gray-300">Raridade</label>
           <Select value={raridade || "all"} onValueChange={setRaridade}>
-            <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
-              <SelectValue placeholder="Selecione uma raridade" />
+            <SelectTrigger className="bg-gray-700 border-gray-600 text-white hover:bg-gray-600 focus:ring-blue-500">
+              <SelectValue placeholder="Selecione uma raridade" className="text-white" />
             </SelectTrigger>
             <SelectContent className="bg-gray-700 border-gray-600">
               {(raridades || []).map((r) => (
-                <SelectItem key={r} value={r} className="text-white hover:bg-gray-600">
+                <SelectItem 
+                  key={r} 
+                  value={r} 
+                  className="text-white hover:bg-gray-600 focus:bg-gray-600 cursor-pointer"
+                >
                   {translateRarity(r)}
                 </SelectItem>
               ))}
@@ -246,12 +247,16 @@ const QuadroFiltros: React.FC<QuadroFiltrosProps> = ({
         <div className="space-y-2">
           <label className="block text-sm font-medium text-gray-300">Foil</label>
           <Select value={foil || "all"} onValueChange={setFoil}>
-            <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
-              <SelectValue placeholder="Selecione foil/não foil" />
+            <SelectTrigger className="bg-gray-700 border-gray-600 text-white hover:bg-gray-600 focus:ring-blue-500">
+              <SelectValue placeholder="Selecione foil/não foil" className="text-white" />
             </SelectTrigger>
             <SelectContent className="bg-gray-700 border-gray-600">
               {(foils || []).map((f) => (
-                <SelectItem key={f} value={f} className="text-white hover:bg-gray-600">
+                <SelectItem 
+                  key={f} 
+                  value={f} 
+                  className="text-white hover:bg-gray-600 focus:bg-gray-600 cursor-pointer"
+                >
                   {translateFoil(f)}
                 </SelectItem>
               ))}
@@ -268,12 +273,16 @@ const QuadroFiltros: React.FC<QuadroFiltrosProps> = ({
         <div className="space-y-2">
           <label className="block text-sm font-medium text-gray-300">Tipo</label>
           <Select value={tipo || "all"} onValueChange={setTipo}>
-            <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
-              <SelectValue placeholder="Selecione um tipo" />
+            <SelectTrigger className="bg-gray-700 border-gray-600 text-white hover:bg-gray-600 focus:ring-blue-500">
+              <SelectValue placeholder="Selecione um tipo" className="text-white" />
             </SelectTrigger>
             <SelectContent className="bg-gray-700 border-gray-600">
               {(tipos || []).map((t) => (
-                <SelectItem key={t} value={t} className="text-white hover:bg-gray-600">
+                <SelectItem 
+                  key={t} 
+                  value={t} 
+                  className="text-white hover:bg-gray-600 focus:bg-gray-600 cursor-pointer"
+                >
                   {translateType(t)}
                 </SelectItem>
               ))}
@@ -285,12 +294,16 @@ const QuadroFiltros: React.FC<QuadroFiltrosProps> = ({
         <div className="space-y-2">
           <label className="block text-sm font-medium text-gray-300">Subtipo</label>
           <Select value={subtipo || "all"} onValueChange={setSubtipo}>
-            <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
-              <SelectValue placeholder="Selecione um subtipo" />
+            <SelectTrigger className="bg-gray-700 border-gray-600 text-white hover:bg-gray-600 focus:ring-blue-500">
+              <SelectValue placeholder="Selecione um subtipo" className="text-white" />
             </SelectTrigger>
             <SelectContent className="bg-gray-700 border-gray-600">
               {(subtipos || []).map((st) => (
-                <SelectItem key={st} value={st} className="text-white hover:bg-gray-600">
+                <SelectItem 
+                  key={st} 
+                  value={st} 
+                  className="text-white hover:bg-gray-600 focus:bg-gray-600 cursor-pointer"
+                >
                   {st === "all" ? "Todos os Subtipos" : st}
                 </SelectItem>
               ))}
@@ -302,12 +315,16 @@ const QuadroFiltros: React.FC<QuadroFiltrosProps> = ({
         <div className="space-y-2">
           <label className="block text-sm font-medium text-gray-300">Supertipo</label>
           <Select value={supertipo || "all"} onValueChange={setSupertipo}>
-            <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
-              <SelectValue placeholder="Selecione um supertipo" />
+            <SelectTrigger className="bg-gray-700 border-gray-600 text-white hover:bg-gray-600 focus:ring-blue-500">
+              <SelectValue placeholder="Selecione um supertipo" className="text-white" />
             </SelectTrigger>
             <SelectContent className="bg-gray-700 border-gray-600">
               {(supertipos || []).map((spt) => (
-                <SelectItem key={spt} value={spt} className="text-white hover:bg-gray-600">
+                <SelectItem 
+                  key={spt} 
+                  value={spt} 
+                  className="text-white hover:bg-gray-600 focus:bg-gray-600 cursor-pointer"
+                >
                   {translateSupertype(spt)}
                 </SelectItem>
               ))}
@@ -340,17 +357,10 @@ const QuadroFiltros: React.FC<QuadroFiltrosProps> = ({
             const isSelected = Array.isArray(manaColors) && manaColors.includes(color);
             
             return (
-              <Button
+              <button
                 key={color}
                 onClick={() => toggleManaColor(color)}
-                variant={isSelected ? "default" : "outline"}
-                className={`
-                  flex items-center gap-2 px-4 py-2 font-semibold transition-all duration-200
-                  ${isSelected 
-                    ? `bg-opacity-90 text-white border-2 shadow-lg transform scale-105` 
-                    : `bg-gray-700 text-gray-300 border-gray-600 hover:bg-gray-600`
-                  }
-                `}
+                className={`quantum-btn ${isSelected ? 'primary' : 'compact'}`}
                 style={isSelected ? {
                   backgroundColor: colorInfo.darkColor,
                   borderColor: colorInfo.darkColor,
@@ -359,7 +369,7 @@ const QuadroFiltros: React.FC<QuadroFiltrosProps> = ({
               >
                 <span className="text-lg font-bold">{colorInfo.symbol}</span>
                 <span className="hidden sm:inline text-sm">{colorInfo.name}</span>
-              </Button>
+              </button>
             );
           })}
         </div>

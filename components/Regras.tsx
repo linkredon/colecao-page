@@ -358,7 +358,7 @@ Reduza os pontos de vida dos seus oponentes de 20 para 0, ou faça com que eles 
                       <Button
                         variant="ghost"
                         onClick={() => setSelectedRule(null)}
-                        className="mtg-button-ghost mb-4"
+                        className="quantum-btn quantum-btn-compact mb-4"
                       >
                         ← Voltar às regras
                       </Button>
@@ -383,7 +383,7 @@ Reduza os pontos de vida dos seus oponentes de 20 para 0, ou faça com que eles 
                         <Button
                           variant="ghost"
                           onClick={() => toggleFavorite(selectedRule.id)}
-                          className="mtg-button-ghost text-slate-400 hover:text-yellow-400"
+                          className="quantum-btn quantum-btn-compact text-slate-400 hover:text-yellow-400"
                         >
                           <Star className="w-5 h-5" />
                         </Button>
@@ -443,7 +443,7 @@ Reduza os pontos de vida dos seus oponentes de 20 para 0, ou faça com que eles 
                                 e.stopPropagation()
                                 toggleFavorite(rule.id)
                               }}
-                              className="mtg-button-ghost text-slate-400 hover:text-yellow-400"
+                              className="quantum-btn quantum-btn-compact text-slate-400 hover:text-yellow-400"
                             >
                               <Star className="w-4 h-4" />
                             </Button>

@@ -6,6 +6,7 @@ import '../styles/deck-viewer-compact.css'
 import '../styles/compact-layout.css'
 import '../styles/quantum-compact-theme.css'
 import '../styles/add-card-enhancements.css'
+import '../styles/card-search-enhanced.css'
 import { AppProvider } from '@/contexts/AppContext'
 import CardModalWrapper from '@/components/CardModalWrapper'
 

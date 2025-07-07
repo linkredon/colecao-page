@@ -13,6 +13,7 @@ import { useAppContext } from "@/contexts/AppContext"
 import CardViewOptions from "@/components/CardViewOptions"
 import CardList from "@/components/CardList"
 import SearchCardList from "@/components/SearchCardList"
+import EnhancedSearchCardList from "@/components/EnhancedSearchCardList"
 import { translatePtToEn, cardMatchesSearchTerm } from '@/utils/translationService'
 import { getImageUrl, getDoubleFacedImageUrls } from '@/utils/imageService'
 import { searchCardsWithTranslation, getAllPrintsByNameWithTranslation } from '@/utils/scryfallService'
@@ -20,6 +21,7 @@ import ExpandableCardGrid from '@/components/ExpandableCardGrid'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { Search, Library, Plus, Minus, Download, AlertCircle, Save, Upload, Copy, Grid3X3, Settings, User, Clock, Bookmark, Heart, Trash2, Star, Filter, Eye, EyeOff, RefreshCw, ExternalLink, Package, Edit3 } from "lucide-react"
 import "@/styles/palette.css"
+import "@/styles/card-search-enhanced.css"
 
 // Função utilitária para seguramente acessar propriedades de cartas
 const safeCardAccess = {
@@ -200,9 +202,27 @@ export default function ColecaoCompact({
   const [filtroCorColecao, setFiltroCorColecao] = useState("all")
   const [buscaColecao, setBuscaColecao] = useState("")
   
+  // Estados para ordenação da busca
+  const [ordenacaoBusca, setOrdenacaoBusca] = useState<'name' | 'set' | 'rarity' | 'released'>('name')
+  const [direcaoOrdenacaoBusca, setDirecaoOrdenacaoBusca] = useState<'asc' | 'desc'>('asc')
+  
   const [resultadoPesquisa, setResultadoPesquisa] = useState<MTGCard[]>([])
   const [carregandoPesquisa, setCarregandoPesquisa] = useState(false)
   const [erroPesquisa, setErroPesquisa] = useState<string | null>(null)
+  
+  // Estados para paginação
+  const [paginacaoInfo, setPaginacaoInfo] = useState<{
+    hasMore: boolean;
+    totalCards: number | null;
+    nextPageUrl: string | null;
+    currentPage: number;
+  }>({
+    hasMore: false,
+    totalCards: null,
+    nextPageUrl: null,
+    currentPage: 1
+  });
+  const [carregandoProximaPagina, setCarregandoProximaPagina] = useState(false);
   
   // Estados para busca rápida e histórico
   const [buscaRapida, setBuscaRapida] = useState("")
@@ -329,6 +349,25 @@ export default function ColecaoCompact({
     }
   }, [ordenacao]);
 
+  // Função para lidar com mudanças de ordenação na busca
+  const handleSortChange = useCallback((mode: string, direction: string) => {
+    console.log(`Mudança de ordenação: ${mode} ${direction}`);
+    setOrdenacaoBusca(mode as 'name' | 'set' | 'rarity' | 'released');
+    setDirecaoOrdenacaoBusca(direction as 'asc' | 'desc');
+  }, []);
+
+  // Effect para re-pesquisar quando ordenação muda
+  useEffect(() => {
+    if (resultadoPesquisa.length > 0) {
+      console.log('Ordenação mudou, re-executando pesquisa...');
+      // Evitar loop infinito: usar setTimeout para quebrar o ciclo
+      const timer = setTimeout(() => {
+        pesquisarCartas();
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [ordenacaoBusca, direcaoOrdenacaoBusca]);
+
   // Função para pesquisar cartas
   const pesquisarCartas = async () => {
     // Se não há filtros, não pesquisa
@@ -346,7 +385,7 @@ export default function ColecaoCompact({
       // Construir query para Scryfall
       let queryParts = []
       
-      if (busca.trim()) queryParts.push(encodeURIComponent(busca.trim()))
+      if (busca.trim()) queryParts.push(busca.trim())
       if (raridade !== "all") queryParts.push(`rarity:${raridade}`)
       if (tipo !== "all") queryParts.push(`type:${tipo}`)
       if (subtipo !== "all") queryParts.push(`type:${subtipo}`)
@@ -359,16 +398,17 @@ export default function ColecaoCompact({
       }
       if (foil === "foil") queryParts.push("is:foil")
       if (foil === "nonfoil") queryParts.push("-is:foil")
-      if (oracleText.trim()) queryParts.push(`oracle:"${encodeURIComponent(oracleText.trim())}"`)
+      if (oracleText.trim()) queryParts.push(`oracle:"${oracleText.trim()}"`)
       if (manaColors.length > 0) {
         queryParts.push(`colors:${manaColors.join("")}`)
       }
       
       const query = queryParts.join(" ")
       console.log("Query construída:", query)
+      console.log("Ordenação busca:", ordenacaoBusca, direcaoOrdenacaoBusca)
       
       // Fazer requisição para Scryfall usando o serviço com tradução
-      const response = await searchCardsWithTranslation(query)
+      const response = await searchCardsWithTranslation(query, ordenacaoBusca, direcaoOrdenacaoBusca)
       
       if (!response.ok) {
         if (response.status === 404) {
@@ -383,6 +423,14 @@ export default function ColecaoCompact({
       const data = await response.json()
       setResultadoPesquisa(data.data || [])
       
+      // Atualizar informações de paginação
+      setPaginacaoInfo({
+        hasMore: data.has_more || false,
+        totalCards: data.total_cards || null,
+        nextPageUrl: data.next_page || null,
+        currentPage: 1
+      });
+      
       if (data.data && data.data.length === 0) {
         setErroPesquisa("Nenhuma carta encontrada com os filtros especificados")
       }
@@ -391,10 +439,58 @@ export default function ColecaoCompact({
       console.error("Erro ao pesquisar cartas:", error)
       setErroPesquisa("Erro ao pesquisar cartas. Tente novamente.")
       setResultadoPesquisa([])
+      setPaginacaoInfo({
+        hasMore: false,
+        totalCards: null,
+        nextPageUrl: null,
+        currentPage: 1
+      });
     } finally {
       setCarregandoPesquisa(false)
     }
   }
+
+  // Função para carregar próxima página
+  const carregarProximaPagina = async () => {
+    if (!paginacaoInfo.nextPageUrl || carregandoProximaPagina) return;
+    
+    setCarregandoProximaPagina(true);
+    
+    try {
+      const response = await fetch(paginacaoInfo.nextPageUrl);
+      
+      if (!response.ok) {
+        throw new Error(`Erro na API: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      
+      // Adicionar as novas cartas aos resultados existentes
+      setResultadoPesquisa(prev => [...prev, ...(data.data || [])]);
+      
+      // Atualizar informações de paginação
+      setPaginacaoInfo(prev => ({
+        hasMore: data.has_more || false,
+        totalCards: data.total_cards || prev.totalCards,
+        nextPageUrl: data.next_page || null,
+        currentPage: prev.currentPage + 1
+      }));
+      
+    } catch (error) {
+      console.error("Erro ao carregar próxima página:", error);
+      setNotification({
+        type: 'error',
+        message: 'Erro ao carregar mais cartas. Tente novamente.',
+        visible: true
+      });
+      
+      setTimeout(() => {
+        setNotification(prev => ({ ...prev, visible: false }));
+      }, 3000);
+    } finally {
+      setCarregandoProximaPagina(false);
+    }
+  };
 
   // Função para limpar filtros
   const limparFiltros = () => {
@@ -409,6 +505,12 @@ export default function ColecaoCompact({
     setManaColors([])
     setResultadoPesquisa([])
     setErroPesquisa(null)
+    setPaginacaoInfo({
+      hasMore: false,
+      totalCards: null,
+      nextPageUrl: null,
+      currentPage: 1
+    });
   }
 
   // Função para pesquisar ao pressionar Enter
@@ -452,16 +554,8 @@ export default function ColecaoCompact({
     }
   }
 
-  // Import do componente CollectionPageLink
-  const CollectionPageLink = React.lazy(() => import('@/components/CollectionPageLink'));
-
   return (
     <div className="quantum-compact">
-      {/* Link para a nova versão da coleção */}
-      <React.Suspense fallback={<div className="mb-4 p-4 bg-blue-900/20 border border-blue-700/30 rounded-lg">Carregando...</div>}>
-        <CollectionPageLink />
-      </React.Suspense>
-      
       {/* Notificação */}
       {notification.visible && (
         <div className={`quantum-notification ${
@@ -782,10 +876,22 @@ export default function ColecaoCompact({
                   <p className="text-gray-400 text-sm">Pesquisando cartas...</p>
                 </div>
               ) : resultadoPesquisa.length > 0 ? (
-                <SearchCardList
+                <EnhancedSearchCardList
                   cards={resultadoPesquisa}
                   collection={currentCollection.cards}
                   onAddCard={adicionarCarta}
+                  searchResults={{
+                    hasMore: paginacaoInfo.hasMore,
+                    nextPage: carregarProximaPagina,
+                    totalCards: paginacaoInfo.totalCards || undefined,
+                    currentPage: paginacaoInfo.currentPage,
+                    isLoadingMore: carregandoProximaPagina
+                  }}
+                  onSortChange={handleSortChange}
+                  currentSort={{
+                    mode: ordenacaoBusca,
+                    direction: direcaoOrdenacaoBusca
+                  }}
                 />
               ) : (
                 <div className="text-center py-4">

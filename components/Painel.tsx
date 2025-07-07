@@ -371,7 +371,7 @@ export default function Painel() {
               <h3 className="mtg-card-title">Adições Recentes</h3>
               <p className="mtg-card-description">Últimas cartas adicionadas à sua coleção</p>
             </div>
-            <Button variant="ghost" size="sm" className="mtg-button-ghost">
+            <Button variant="ghost" size="sm" className="quantum-btn compact">
               <Eye className="w-4 h-4 mr-2" />
               Ver todas
             </Button>

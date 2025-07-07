@@ -2,7 +2,9 @@
 
 import '../styles/professional-mtg-interface.css'
 import '../styles/mobile-navigation.css'
+import '../styles/mobile-navigation-refined.css'
 import '../styles/header-enhancements.css'
+import '../styles/header-refined.css'
 import '../styles/tabs-enhanced.css'
 import '../styles/content-refinements.css'
 import '../styles/mobile-fixes.css'
@@ -318,20 +320,30 @@ export default function Home() {
     <div className="mtg-app quantum-compact">
       {/* Desktop Header - Escondido em telas pequenas */}
       <div className="hidden md:block">
-        <header className="compact-header">
-          <div className="mtg-container">
+        <header className="compact-header sticky top-0 z-50 backdrop-blur-md bg-gray-900/80 border-b border-indigo-900/30 shadow-lg">
+          <div className="mtg-container py-3">
             <div className="flex items-center justify-between">
-              <a href="#" className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-700 rounded-md flex items-center justify-center text-white text-xs font-bold">
-                  MTG
+              <a href="#" className="flex items-center gap-3 group">
+                <div className="w-10 h-10 bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 rounded-lg flex items-center justify-center text-white font-bold shadow-lg shadow-blue-700/20 group-hover:shadow-blue-500/30 transition-all">
+                  <span className="text-sm font-black tracking-wider">MTG</span>
                 </div>
-                <div>
-                  <h1 className="text-base font-bold text-white m-0">MTG Helper</h1>
-                  <p className="text-xs text-gray-400 m-0">Collection Manager</p>
+                <div className="relative">
+                  <h1 className="text-lg font-bold text-white m-0 tracking-tight flex items-center">
+                    MTG Helper
+                    <span className="ml-2 px-2 py-0.5 bg-blue-600/20 border border-blue-500/30 rounded-full text-[10px] font-medium text-blue-300">v2.5</span>
+                  </h1>
+                  <p className="text-xs text-blue-300 m-0">Premium Collection Manager</p>
+                  <div className="absolute h-0.5 w-0 bg-blue-400 bottom-0 left-0 group-hover:w-full transition-all duration-300"></div>
                 </div>
               </a>
               
-              <div>
+              <div className="flex items-center gap-3">
+                <div className="hidden lg:flex items-center gap-2">
+                  <a href="#" className="px-3 py-1 text-sm text-blue-200 hover:text-white transition-colors">
+                    Suporte
+                  </a>
+                </div>
+                <div className="h-6 w-px bg-indigo-800/50 hidden lg:block"></div>
                 <UserHeader 
                   user={user}
                   onLogin={handleLogin}

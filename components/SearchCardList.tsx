@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { useCardModal } from '@/contexts/CardModalContext';
 import DeckSelector from '@/components/DeckSelector';
+import CardViewOptions from '@/components/CardViewOptions';
 import { Plus, Minus, Info, AlertCircle, Eye, ChevronDown, ChevronUp, Loader2, Search, Package } from 'lucide-react';
 import Image from 'next/image';
 import type { MTGCard } from '@/types/mtg';
@@ -452,19 +453,21 @@ const SearchCardItem = React.memo(({
               <div className="flex flex-col gap-3 items-end">
                 <QuantityControl onAdd={handleAddCard} />
                 <div className="flex gap-2">
-                  <button 
+                  <Button 
                     onClick={handleViewDetails}
-                    className="mtg-button mtg-button-secondary"
+                    variant="outline"
+                    className="quantum-btn compact"
                   >
                     <Info className="h-4 w-4" />
                     <span>Ver Detalhes</span>
-                  </button>
-                  <button 
+                  </Button>
+                  <Button 
                     onClick={toggleVersions}
-                    className="mtg-button mtg-button-ghost"
+                    variant="outline"
+                    className="quantum-btn compact"
                   >
                     {showVersions ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-                  </button>
+                  </Button>
                 </div>
                 
                 {/* Seletor de Deck - apenas no modo detalhes */}
@@ -529,18 +532,20 @@ const SearchCardItem = React.memo(({
 
             <div className="flex items-center gap-2">
               <QuantityControl onAdd={handleAddCard} />
-              <button 
+              <Button 
                 onClick={handleViewDetails}
-                className="mtg-button mtg-button-ghost"
+                variant="outline"
+                className="quantum-btn compact"
               >
                 <Info className="h-4 w-4" />
-              </button>
-              <button 
+              </Button>
+              <Button 
                 onClick={toggleVersions}
-                className="mtg-button mtg-button-ghost"
+                variant="outline"
+                className="quantum-btn compact"
               >
                 {showVersions ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -566,18 +571,40 @@ export default function SearchCardList({ cards, collection, onAddCard, className
         return `space-y-3 ${className}`;
     }
   }, [visualizationType, className]);
+  
+  // Componente de controle de visualização
+  const ViewControls = () => (
+    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-4 bg-slate-800/30 p-3 rounded-md border border-slate-700/50">
+      <div>
+        <h3 className="text-white font-medium flex items-center">
+          <Search className="w-4 h-4 mr-2 text-blue-400" />
+          Resultados da Pesquisa
+        </h3>
+        <p className="text-xs text-slate-400 mt-1">
+          Foram encontradas {cards.length} cartas correspondentes à sua busca
+        </p>
+      </div>
+      <div className="flex items-center bg-slate-800/70 rounded-md p-1.5 border border-slate-700/30">
+        <span className="text-xs text-slate-400 mr-2 hidden sm:inline-block">Visualização:</span>
+        <CardViewOptions size="sm" className="inline-flex" />
+      </div>
+    </div>
+  );
 
   return (
-    <div className={containerClass}>
-      {cards.map((card) => (
-        <SearchCardItem
-          key={`search-card-item-${card.id}`}
-          card={card}
-          collection={collection}
-          onAddCard={onAddCard}
-          viewMode={visualizationType}
-        />
-      ))}
-    </div>
+    <>
+      <ViewControls />
+      <div className={containerClass}>
+        {cards.map((card) => (
+          <SearchCardItem
+            key={`search-card-item-${card.id}`}
+            card={card}
+            collection={collection}
+            onAddCard={onAddCard}
+            viewMode={visualizationType}
+          />
+        ))}
+      </div>
+    </>
   );
 }

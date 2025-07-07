@@ -207,9 +207,9 @@ export default function LoginDialog({ isOpen, setIsOpen, onLogin }: LoginDialogP
                   </div>
                 )}
 
-                <button
+                <Button
                   type="submit"
-                  className="mtg-button mtg-button-primary w-full"
+                  className="quantum-btn w-full primary"
                   disabled={isLoading}
                 >
                   {isLoading ? (
@@ -223,7 +223,7 @@ export default function LoginDialog({ isOpen, setIsOpen, onLogin }: LoginDialogP
                       <span>Entrar</span>
                     </>
                   )}
-                </button>
+                </Button>
               </form>
 
               <div className="text-center">
@@ -303,9 +303,9 @@ export default function LoginDialog({ isOpen, setIsOpen, onLogin }: LoginDialogP
                   </div>
                 )}
 
-                <button
+                <Button
                   type="submit"
-                  className="mtg-button mtg-button-success w-full"
+                  className="quantum-btn w-full primary"
                   disabled={isLoading}
                 >
                   {isLoading ? (
@@ -319,7 +319,7 @@ export default function LoginDialog({ isOpen, setIsOpen, onLogin }: LoginDialogP
                       <span>Criar Conta</span>
                     </>
                   )}
-                </button>
+                </Button>
               </form>
             </div>
           )}
@@ -336,22 +336,22 @@ export default function LoginDialog({ isOpen, setIsOpen, onLogin }: LoginDialogP
 
           {/* Login Social */}
           <div className="grid grid-cols-2 gap-3 mb-6">
-            <button
+            <Button
               onClick={() => handleSocialLogin('google')}
               disabled={isLoading}
-              className="mtg-button mtg-button-secondary"
+              className="quantum-btn compact"
             >
               <Chrome className="w-4 h-4" />
               <span>Google</span>
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => handleSocialLogin('github')}
               disabled={isLoading}
-              className="mtg-button mtg-button-secondary"
+              className="quantum-btn compact"
             >
               <Github className="w-4 h-4" />
               <span>GitHub</span>
-            </button>
+            </Button>
           </div>
 
           <div className="text-center text-xs text-slate-500">

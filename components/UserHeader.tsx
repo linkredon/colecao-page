@@ -50,10 +50,9 @@ export default function UserHeader({ user, onLogin, onLogout }: UserHeaderProps)
   // Se o usuário não existe, mostrar botão de login
   if (!user) {
     return (
-      <>
-        <button 
+      <>        <button
           onClick={() => setIsLoginOpen(true)}
-          className="mtg-button mtg-button-primary"
+          className="quantum-btn quantum-btn-primary"
         >
           <User className="w-4 h-4" />
           <span className="hidden sm:inline">Entrar</span>

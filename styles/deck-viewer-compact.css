@@ -7,6 +7,26 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), inset 0 1px rgba(255, 255, 255, 0.05);
 }
 
+/* Estilo para scrollbar compatível com o tema */
+.quantum-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.quantum-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.quantum-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(6, 182, 212, 0.3);
+  border-radius: 3px;
+}
+
+.quantum-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(6, 182, 212, 0.5);
+}
+
 /* Versão mais compacta dos elementos UI */
 .quantum-btn.compact {
   padding-top: 0.125rem;

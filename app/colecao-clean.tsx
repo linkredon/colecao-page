@@ -346,7 +346,7 @@ export default function Colecao({
       // Construir query para Scryfall
       let queryParts = []
       
-      if (busca.trim()) queryParts.push(encodeURIComponent(busca.trim()))
+      if (busca.trim()) queryParts.push(busca.trim())
       if (raridade !== "all") queryParts.push(`rarity:${raridade}`)
       if (tipo !== "all") queryParts.push(`type:${tipo}`)
       if (subtipo !== "all") queryParts.push(`type:${subtipo}`)
@@ -359,7 +359,7 @@ export default function Colecao({
       }
       if (foil === "foil") queryParts.push("is:foil")
       if (foil === "nonfoil") queryParts.push("-is:foil")
-      if (oracleText.trim()) queryParts.push(`oracle:"${encodeURIComponent(oracleText.trim())}"`)
+      if (oracleText.trim()) queryParts.push(`oracle:"${oracleText.trim()}"`)
       if (manaColors.length > 0) {
         queryParts.push(`colors:${manaColors.join("")}`)
       }

@@ -216,7 +216,7 @@ export default function ConstrutorDecks() {
               <h4 className="font-semibold text-white">Criar Novo Deck</h4>
               <button
                 onClick={() => setIsCreatingDeck(true)}
-                className="mtg-button mtg-button-primary w-full"
+                className="quantum-btn quantum-btn-primary w-full"
               >
                 <Plus className="w-4 h-4" />
                 <span>Criar do Zero</span>
@@ -322,7 +322,7 @@ export default function ConstrutorDecks() {
                 <div className="flex gap-3 pt-4">
                   <button
                     onClick={handleCreateDeck}
-                    className="mtg-button mtg-button-primary flex-1"
+                    className="quantum-btn quantum-btn-primary flex-1"
                   >
                     <Save className="w-4 h-4" />
                     <span>Criar Deck</span>
@@ -332,7 +332,7 @@ export default function ConstrutorDecks() {
                       setIsCreatingDeck(false)
                       setNewDeckData({ name: '', format: 'Standard', colors: [], description: '' })
                     }}
-                    className="mtg-button mtg-button-secondary"
+                    className="quantum-btn quantum-btn-compact"
                   >
                     Cancelar
                   </button>
@@ -427,7 +427,7 @@ export default function ConstrutorDecks() {
             {!searchFilter && formatFilter === 'all' && (
               <button
                 onClick={() => setIsCreatingDeck(true)}
-                className="mtg-button mtg-button-primary"
+                className="quantum-btn quantum-btn-primary"
               >
                 <Plus className="w-4 h-4" />
                 <span>Criar Primeiro Deck</span>
@@ -466,7 +466,7 @@ export default function ConstrutorDecks() {
                           setSelectedDeck(deck.id)
                           setViewMode('viewer')
                         }}
-                        className="mtg-button mtg-button-ghost"
+                        className="quantum-btn quantum-btn-compact"
                         title="Visualizar deck"
                       >
                         <Eye className="w-4 h-4" />
@@ -476,21 +476,21 @@ export default function ConstrutorDecks() {
                           setSelectedDeck(deck.id)
                           setViewMode('builder')
                         }}
-                        className="mtg-button mtg-button-ghost"
+                        className="quantum-btn quantum-btn-compact"
                         title="Editar deck"
                       >
                         <Edit3 className="w-4 h-4" />
                       </button>
                       <button
                         onClick={() => handleDuplicateDeck(deck.id)}
-                        className="mtg-button mtg-button-ghost"
+                        className="quantum-btn quantum-btn-compact"
                         title="Duplicar deck"
                       >
                         <Copy className="w-4 h-4" />
                       </button>
                       <button
                         onClick={() => handleDeleteDeck(deck.id)}
-                        className="mtg-button mtg-button-ghost text-red-400 hover:text-red-300"
+                        className="quantum-btn quantum-btn-compact text-red-400 hover:text-red-300"
                         title="Deletar deck"
                       >
                         <Trash2 className="w-4 h-4" />

@@ -441,19 +441,19 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({ deckId, onSave, onCancel }) =
               onImportError={(error) => console.error(error)}
             />
             
-            <button
+            <Button
               onClick={handleSaveDeck}
               disabled={!deckInfo.name.trim()}
-              className="mtg-button mtg-button-primary"
+              className="quantum-btn compact primary"
             >
               <Save className="w-4 h-4" />
               <span>{existingDeck ? 'Salvar Alterações' : 'Salvar Deck'}</span>
-            </button>
+            </Button>
             
             {onCancel && (
-              <button onClick={onCancel} className="mtg-button mtg-button-secondary">
+              <Button onClick={onCancel} className="quantum-btn compact">
                 Cancelar
-              </button>
+              </Button>
             )}
           </div>
         </div>
@@ -606,13 +606,14 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({ deckId, onSave, onCancel }) =
                 <h3 className="mtg-card-title">Filtros de Busca</h3>
                 <p className="mtg-card-description">Configure os parâmetros para encontrar as cartas perfeitas</p>
               </div>
-              <button
+              <Button
                 onClick={clearSearchFilters}
-                className="mtg-button mtg-button-ghost"
+                variant="outline"
+                className="quantum-btn compact"
                 title="Limpar filtros"
               >
                 <RefreshCw className="w-4 h-4" />
-              </button>
+              </Button>
             </div>
             <div className="px-6 pb-6 space-y-6">
               <div>
@@ -703,15 +704,15 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({ deckId, onSave, onCancel }) =
                 </div>
               </div>
               
-              <button 
-                className="mtg-button mtg-button-primary w-full"
+              <Button 
+                className="quantum-btn w-full primary"
                 onClick={searchCards}
                 disabled={isSearching}
               >
                 <Search className="w-4 h-4" />
                 <span>{isSearching ? 'Buscando...' : 'Buscar Cartas'}</span>
                 {isSearching && <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin ml-2" />}
-              </button>
+              </Button>
             </div>
           </div>
           
@@ -739,12 +740,12 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({ deckId, onSave, onCancel }) =
                   <div className="text-center py-12 text-slate-400">
                     <AlertCircle className="w-12 h-12 mx-auto mb-4 opacity-50 text-red-400" />
                     <p className="text-red-400">{searchError}</p>
-                    <button 
+                    <Button 
                       onClick={searchCards}
-                      className="mtg-button mtg-button-secondary mt-4"
+                      className="quantum-btn compact mt-4"
                     >
                       Tentar novamente
-                    </button>
+                    </Button>
                   </div>
                 )}
                 

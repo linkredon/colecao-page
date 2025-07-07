@@ -5,6 +5,9 @@
 /* Import Mobile-First Design System */
 @import '../styles/mobile-first-design.css';
 
+/* Import Enhanced Filters Styles */
+@import '../styles/filters-enhanced.css';
+
 @layer base {
   :root {
     --background: 0 0% 100%;
